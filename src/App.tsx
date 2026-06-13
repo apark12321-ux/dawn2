@@ -188,7 +188,7 @@ export default function App() {
   const [screenerMessage, setScreenerMessage] = useState<string>("");
 
   // Value Screener Selection
-  const [activeValuePreset, setActiveValuePreset] = useState<"growth" | "value" | "dividend">("growth");
+  const [activeValuePreset, setActiveValuePreset] = useState<"growth" | "value" | "dividend" | "surging" | "supply">("growth");
 
   // Quant Backtester State
   const [backtestStrategy, setBacktestStrategy] = useState<string>("golden-cross");
@@ -214,7 +214,7 @@ export default function App() {
     { title: "증시 핵심 일정", desc: "국제 매크로 지표 공시시간 및 어닝 어젠다", icon: Calendar },
     { title: "글로벌 야간 브리핑", desc: "미국 장가 실황 및 해외 외교 긴장 요인", icon: HelpCircle },
     { title: "위험 대응 시나리오", desc: "투자 대응 체크리스트 및 흔들기 제어", icon: Shield },
-    { title: "가치주 스크리너", desc: "고성장·저PBR·고배당 검증 밸류 레일", icon: Award },
+    { title: "마켓 멀티 스크리너", desc: "성장·가치·배당·급등·수급 전천후 5대 필터링", icon: Award },
     { title: "탐색기 & 백테스터", desc: "AI 장전 서치 및 퀀트 전략 백테스트 기기", icon: Sliders }
   ];
 
@@ -1713,34 +1713,65 @@ export default function App() {
                 </div>
               )}
 
-              {/* PAGE 13: 가치주 스크리너 (Hyper Growth / Deep Value / High Yield Presets) */}
+              {/* PAGE 13: 마켓 멀티 스크리너 (성장 / 가치 / 배당 / 급등 / 수급 교차 비교 분석 레일) */}
               {expertPage === 12 && (
                 <div className="space-y-6">
-                  {/* Preset Tab switcher */}
-                  <div className="flex bg-slate-950 p-1.5 rounded-xl border border-slate-800">
+                  {/* Preset Tab switcher with desktop stretch and mobile grid spacing optimization */}
+                  <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 bg-slate-950/80 p-2 rounded-xl border border-slate-800/80">
                     <button
-                      onClick={() => setActiveValuePreset("growth")}
-                      className={`flex-1 text-center py-2 rounded-lg text-xs font-bold transition-all focus:outline-none cursor-pointer ${
-                        activeValuePreset === "growth" ? "bg-sky-500 text-slate-950" : "text-slate-400 hover:text-slate-200"
+                      onClick={() => {
+                        setActiveValuePreset("growth");
+                        showToast("성장형 코스피/코스닥 우량주 스크리너를 선택했습니다.");
+                      }}
+                      className={`text-center py-2.5 px-1 rounded-lg text-[11px] font-bold transition-all focus:outline-none cursor-pointer ${
+                        activeValuePreset === "growth" ? "bg-sky-500 text-slate-950 shadow-md" : "text-slate-400 hover:text-slate-200 hover:bg-slate-900/30"
                       }`}
                     >
-                      🚀 고성장 우량주 리포트
+                      🚀 고성장 우량 (성장)
                     </button>
                     <button
-                      onClick={() => setActiveValuePreset("value")}
-                      className={`flex-1 text-center py-2 rounded-lg text-xs font-bold transition-all focus:outline-none cursor-pointer ${
-                        activeValuePreset === "value" ? "bg-sky-500 text-slate-950" : "text-slate-400 hover:text-slate-200"
+                      onClick={() => {
+                        setActiveValuePreset("value");
+                        showToast("PBR 0.x배 저평가 밸류업 스크리너를 선택했습니다.");
+                      }}
+                      className={`text-center py-2.5 px-1 rounded-lg text-[11px] font-bold transition-all focus:outline-none cursor-pointer ${
+                        activeValuePreset === "value" ? "bg-sky-500 text-slate-950 shadow-md" : "text-slate-400 hover:text-slate-200 hover:bg-slate-900/30"
                       }`}
                     >
-                      💎 저평가 밸류업 수혜주
+                      💎 저평가 밸류 (가치)
                     </button>
                     <button
-                      onClick={() => setActiveValuePreset("dividend")}
-                      className={`flex-1 text-center py-2 rounded-lg text-xs font-bold transition-all focus:outline-none cursor-pointer ${
-                        activeValuePreset === "dividend" ? "bg-sky-500 text-slate-950" : "text-slate-400 hover:text-slate-200"
+                      onClick={() => {
+                        setActiveValuePreset("dividend");
+                        showToast("안정 배당 귀족주 스크리너를 선택했습니다.");
+                      }}
+                      className={`text-center py-2.5 px-1 rounded-lg text-[11px] font-bold transition-all focus:outline-none cursor-pointer ${
+                        activeValuePreset === "dividend" ? "bg-sky-500 text-slate-950 shadow-md" : "text-slate-400 hover:text-slate-200 hover:bg-slate-900/30"
                       }`}
                     >
-                      💰 고배당 안전배당주
+                      💰 고배당 안전 (배당)
+                    </button>
+                    <button
+                      onClick={() => {
+                        setActiveValuePreset("surging");
+                        showToast("최근 거래대금 폭발 및 급등주 스크리너를 선택했습니다.");
+                      }}
+                      className={`text-center py-2.5 px-1 rounded-lg text-[11px] font-bold transition-all focus:outline-none cursor-pointer ${
+                        activeValuePreset === "surging" ? "bg-sky-500 text-slate-950 shadow-md" : "text-slate-400 hover:text-slate-200 hover:bg-slate-900/30"
+                      }`}
+                    >
+                      🔥 거래대금 폭발 (급등)
+                    </button>
+                    <button
+                      onClick={() => {
+                        setActiveValuePreset("supply");
+                        showToast("외인·기관 쌍끌이 수급주 스크리너를 선택했습니다.");
+                      }}
+                      className={`col-span-2 sm:col-span-1 text-center py-2.5 px-1 rounded-lg text-[11px] font-bold transition-all focus:outline-none cursor-pointer ${
+                        activeValuePreset === "supply" ? "bg-sky-500 text-slate-950 shadow-md" : "text-slate-400 hover:text-slate-200 hover:bg-slate-900/30"
+                      }`}
+                    >
+                      📊 수급 최상위 (수급)
                     </button>
                   </div>
 
