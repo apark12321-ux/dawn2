@@ -912,21 +912,69 @@ export default function App() {
             </section>
 
             {/* 5. Tactical Checklist (위험 대응 시나리오) - Tab 0 Bottom */}
-            <section className="space-y-4">
-              <h3 className="text-lg font-bold flex items-center">
-                <span className="text-[#06B6D4] mr-2">✦</span> 오늘 장전 뇌동매매 방어 대응
-              </h3>
-              <div className="space-y-3">
-                {checklist.map((item) => (
-                  <div 
-                    key={item.id}
-                    className={`p-4 rounded-2xl border transition-all flex items-start space-x-3 ${
-                      item.checked 
-                        ? "bg-[#06B6D4]/5 border-[#06B6D4]/30" 
-                        : themeCard
-                    }`}
-                  >
-                    <button
+            <section className="space-y-5" id="mental-defense-protocol">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#06B6D4]/10 pb-3">
+                <div className="space-y-1">
+                  <h3 className="text-xl font-extrabold flex items-center tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[#FF5B72] via-[#34D6E8] to-[#92feff]">
+                    <Shield className="w-5.5 h-5.5 text-[#FF5B72] mr-2 animate-pulse" />
+                     아침 뇌동매매 방어 대응 프로토콜
+                  </h3>
+                  <p className="text-xs opacity-70 font-light">
+                    장이 개시되기 전, 극단적 시초가 뇌동 추격을 완전 차단하기 위한 필수 행동 강령
+                  </p>
+                </div>
+                
+                {/* Protocol charging state */}
+                <div className="shrink-0 flex items-center space-x-2.5">
+                  <span className="text-[10px] font-mono opacity-80 uppercase tracking-widest">방막 충전율 :</span>
+                  <div className="w-28 bg-slate-950/80 rounded-full h-3 p-0.5 border border-slate-800 flex items-center">
+                    <div 
+                      className="bg-gradient-to-r from-red-500 via-[#06B6D4] to-emerald-400 h-2 rounded-full transition-all duration-500" 
+                      style={{ 
+                        width: `${(checklist.filter(c => c.checked).length / checklist.length) * 100}%` 
+                      }}
+                    />
+                  </div>
+                  <span className="text-xs font-bold font-mono text-[#34D6E8]">
+                    {Math.round((checklist.filter(c => c.checked).length / checklist.length) * 100)}%
+                  </span>
+                </div>
+              </div>
+
+              {/* Complete Overlay Badge */}
+              {checklist.every(c => c.checked) ? (
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="bg-gradient-to-r from-emerald-950/40 via-cyan-950/30 to-slate-950 border border-emerald-500/35 p-4.5 rounded-2xl flex items-center justify-between space-x-3.5 shadow-lg shadow-emerald-500/5 scanline-effect relative overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-[#06B6D4]/3 opacity-[0.02] mind-alert-pulse-bg" />
+                  <div className="flex items-center space-x-3.5 z-10">
+                    <div className="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/40 shrink-0">
+                      <Sparkles className="w-5 h-5 animate-spin" style={{ animationDuration: "5s" }} />
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-bold text-emerald-300">정신 방어 통제관인 장막 완전 영구 가동</h4>
+                      <p className="text-xs opacity-80 font-light mt-0.5">뇌동매매 방어 수칙을 전원 각인 완료하였습니다. 평정심을 바탕으로 시장을 이기십시오.</p>
+                    </div>
+                  </div>
+                  <div className="text-[10px] font-mono text-emerald-400 font-bold bg-emerald-500/10 border border-emerald-500/25 px-3 py-1.5 rounded-lg shrink-0 hidden md:block">
+                    PRO PROTOCOL ACTIVE
+                  </div>
+                </motion.div>
+              ) : (
+                <div className="bg-red-500/5 border border-red-500/15 p-3 rounded-xl flex items-center space-x-2.5 text-xs text-red-200">
+                  <AlertCircle className="w-4 h-4 text-red-400 shrink-0 animate-bounce" />
+                  <span>경보 파동 감지: 눈으로 숙지하고 마음을 꺾지 않을 경우, 아침 동시호가에 뇌동 진입을 허용해 자산이 흔들릴 수 있습니다.</span>
+                </div>
+              )}
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {checklist.map((item) => {
+                  const isChecked = item.checked;
+                  return (
+                    <div
+                      key={item.id}
                       onClick={() => {
                         const updated = checklist.map(cell => {
                           if (cell.id === item.id) {
@@ -935,22 +983,82 @@ export default function App() {
                           return cell;
                         });
                         setChecklist(updated);
-                        showToast(item.checked ? "체크를 해제했습니다." : "시나리오 숙지 체크 완료!", "success");
+                        showToast(
+                          isChecked 
+                            ? `[${item.scenario.slice(0, 7)}...] 수칙 다짐을 유예했습니다.` 
+                            : `[${item.scenario.slice(0, 10)}...] 뇌동 자제 및 정밀 전술을 마음 속에 완벽히 명심했습니다.`,
+                          isChecked ? "info" : "success"
+                        );
                       }}
-                      className={`w-5 h-5 rounded border flex items-center justify-center shrink-0 mt-0.5 cursor-pointer focus:outline-none ${
-                        item.checked 
-                          ? "bg-[#06B6D4] border-[#06B6D4] text-slate-950" 
-                          : "border-slate-500 hover:border-slate-400"
+                      className={`relative p-5 rounded-2xl border transition-all duration-500 cursor-pointer flex flex-col justify-between overflow-hidden select-none select-none min-h-[220px] group ${
+                        isChecked
+                          ? "bg-emerald-950/30 border-emerald-500/50 shadow-md shadow-emerald-950/10 text-[#EAFBFF]"
+                          : "bg-slate-950/90 hover:bg-slate-900 border-dashed mind-alert-glow-card"
                       }`}
                     >
-                      {item.checked && <Check className="w-4 h-4 stroke-[3]" />}
-                    </button>
-                    <div>
-                      <span className="text-[10px] opacity-60 font-mono block">상황 : {item.scenario}</span>
-                      <p className="text-xs font-semibold mt-1">{item.action}</p>
+                      {/* Abstract pulse background for non-clicked states */}
+                      {!isChecked && (
+                        <div className="absolute inset-0 bg-red-500/[0.02] pointer-events-none animate-pulse" />
+                      )}
+
+                      {/* Header block with status indication */}
+                      <div className="space-y-3 z-10">
+                        <div className="flex items-center justify-between">
+                          <span className={`text-[10px] tracking-wide font-mono px-2 py-0.5 rounded-md border font-semibold ${
+                            isChecked 
+                              ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" 
+                              : "bg-[#FF5B72]/10 text-[#FF5B72] border-[#FF5B72]/20"
+                          }`}>
+                            {isChecked ? "🛡️ 뇌동 보호 해제" : "🚨 통제 프로토콜"}
+                          </span>
+                          
+                          <div className={`w-3 h-3 rounded-full ${
+                            isChecked ? "bg-emerald-500 animate-pulse" : "bg-red-500 animate-ping"
+                          }`} />
+                        </div>
+
+                        <div className="space-y-1.5">
+                          <span className="text-[10px] opacity-60 font-mono font-bold block uppercase">
+                            [상황 조건]
+                          </span>
+                          <h4 className="text-sm font-bold leading-relaxed">
+                            {item.scenario}
+                          </h4>
+                        </div>
+                      </div>
+
+                      {/* Body Action details with glow underline */}
+                      <div className="space-y-4 z-10 pt-4 border-t border-[#153440]/40">
+                        <p className={`text-xs leading-relaxed font-light ${
+                          isChecked ? "text-slate-300" : "text-[#EAFBFF]"
+                        }`}>
+                          {item.action}
+                        </p>
+
+                        {/* Interactive Seal Button */}
+                        <div className="pt-2">
+                          <div className={`w-full py-2 px-3 rounded-xl border text-[11px] font-bold tracking-wider flex items-center justify-center space-x-2 transition-all ${
+                            isChecked
+                              ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30 font-extrabold"
+                              : "bg-[#FF5B72]/10 hover:bg-[#FF5B72]/20 text-[#FF5B72] border-[#FF5B72]/30 animate-pulse"
+                          }`}>
+                            {isChecked ? (
+                              <>
+                                <Check className="w-3.5 h-3.5 stroke-[3]" />
+                                <span>정치·심리 숙지 완료</span>
+                              </>
+                            ) : (
+                              <>
+                                <AlertCircle className="w-3.5 h-3.5 animate-bounce" />
+                                <span>서약 후 발광 해제하기</span>
+                              </>
+                            )}
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </section>
 
@@ -1257,78 +1365,61 @@ export default function App() {
                 <span className="text-[#06B6D4] mr-2">✦</span> 마켓 멀티 스크리너 5대 필터
               </h3>
 
-              {mode === "expert" ? (
-                <div className="space-y-6">
-                  {/* Presets switchers */}
-                  <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 bg-[#021117] p-1.5 rounded-xl border border-[#153440]">
-                    {[
-                      { id: "growth", emoji: "🚀", label: "고성장 우량" },
-                      { id: "value", emoji: "💎", label: "저평가 밸류" },
-                      { id: "dividend", emoji: "💰", label: "고배당 안전" },
-                      { id: "surging", emoji: "🔥", label: "급등 폭발" },
-                      { id: "supply", emoji: "📊", label: "수급 강세" }
-                    ].map(p => (
-                      <button
-                        key={p.id}
-                        onClick={() => {
-                          setActiveValuePreset(p.id as any);
-                          showToast(`${p.label} 스크리너 필터가 기동되었습니다.`, "info");
-                        }}
-                        className={`py-2 px-1 rounded-lg text-[11px] font-bold transition-all focus:outline-none cursor-pointer ${
-                          activeValuePreset === p.id 
-                            ? "bg-[#06B6D4] text-slate-950 font-black shadow-md" 
-                            : "opacity-70 hover:opacity-100"
-                        }`}
-                      >
-                        {p.emoji} {p.label}
-                      </button>
-                    ))}
-                  </div>
+              <div className="space-y-6">
+                {/* Presets switchers */}
+                <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 bg-[#021117] p-1.5 rounded-xl border border-[#153440]">
+                  {[
+                    { id: "growth", emoji: "🚀", label: "고성장 우량" },
+                    { id: "value", emoji: "💎", label: "저평가 밸류" },
+                    { id: "dividend", emoji: "💰", label: "고배당 안전" },
+                    { id: "surging", emoji: "🔥", label: "급등 폭발" },
+                    { id: "supply", emoji: "📊", label: "수급 강세" }
+                  ].map(p => (
+                    <button
+                      key={p.id}
+                      onClick={() => {
+                        setActiveValuePreset(p.id as any);
+                        showToast(`${p.label} 스크리너 필터가 기동되었습니다.`, "info");
+                      }}
+                      className={`py-2 px-1 rounded-lg text-[11px] font-bold transition-all focus:outline-none cursor-pointer ${
+                        activeValuePreset === p.id 
+                          ? "bg-[#06B6D4] text-slate-950 font-black shadow-md" 
+                          : "opacity-70 hover:opacity-100"
+                      }`}
+                    >
+                      {p.emoji} {p.label}
+                    </button>
+                  ))}
+                </div>
 
-                  {/* Screener Output Rows */}
-                  <div className="space-y-4">
-                    {briefing.valueScreenerPresets[activeValuePreset]?.map((st: any) => (
-                      <div key={st.code} className={`p-5 rounded-2xl border ${themeCard} space-y-3 hover:scale-[1.01] transition-transform`}>
-                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-[#153440]/30 pb-2.5">
-                          <div>
-                            <div className="flex items-center space-x-1.5">
-                              <span className="text-sm font-bold text-transparent bg-clip-text bg-gradient-to-tr from-[#34D6E8] to-[#92feff]">{st.name}</span>
-                              <span className="text-xs font-mono opacity-50">({st.code})</span>
-                            </div>
-                            <span className="text-[9px] bg-[#06B6D4]/15 text-[#34D6E8] px-2 py-0.5 rounded border border-[#34D6E8]/20 inline-block mt-1 font-bold">{st.highlight}</span>
+                {/* Screener Output Rows */}
+                <div className="space-y-4">
+                  {briefing.valueScreenerPresets[activeValuePreset]?.map((st: any) => (
+                    <div key={st.code} className={`p-5 rounded-2xl border ${themeCard} space-y-3 hover:scale-[1.01] transition-transform`}>
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-[#153440]/30 pb-2.5">
+                        <div>
+                          <div className="flex items-center space-x-1.5">
+                            <span className="text-sm font-bold text-transparent bg-clip-text bg-gradient-to-tr from-[#34D6E8] to-[#92feff]">{st.name}</span>
+                            <span className="text-xs font-mono opacity-50">({st.code})</span>
                           </div>
-                          
-                          <div className="flex space-x-4 text-[11px] font-mono opacity-80">
-                            <span>PER: <strong className="text-[#34D6E8]">{st.pe}배</strong></span>
-                            <span>ROE: <strong className="text-emerald-400">{st.roe}%</strong></span>
-                            <span>배당: <strong>{st.divYield}%</strong></span>
-                          </div>
+                          <span className="text-[9px] bg-[#06B6D4]/15 text-[#34D6E8] px-2 py-0.5 rounded border border-[#34D6E8]/20 inline-block mt-1 font-bold">{st.highlight}</span>
                         </div>
-
-                        <div className="pt-1.5 space-y-1">
-                          <span className="text-[10px] text-[#06B6D4] font-bold block uppercase font-mono">가치 연계해설</span>
-                          <p className="text-xs opacity-90 leading-relaxed font-light">{st.reason}</p>
+                        
+                        <div className="flex space-x-4 text-[11px] font-mono opacity-80">
+                          <span>PER: <strong className="text-[#34D6E8]">{st.pe}배</strong></span>
+                          <span>ROE: <strong className="text-emerald-400">{st.roe}%</strong></span>
+                          <span>배당: <strong>{st.divYield}%</strong></span>
                         </div>
                       </div>
-                    ))}
-                  </div>
+
+                      <div className="pt-1.5 space-y-1">
+                        <span className="text-[10px] text-[#06B6D4] font-bold block uppercase font-mono">가치 연계해설</span>
+                        <p className="text-xs opacity-90 leading-relaxed font-light">{st.reason}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ) : (
-                <div className={`p-6 rounded-2xl border ${themeCard} text-center space-y-4`}>
-                  <p className="text-xs opacity-75 font-light leading-relaxed max-w-md mx-auto">
-                    🔒 <strong>고수 전용 밸류 레이더:</strong> 카테고리별 정밀 스크리닝 기능 (가치·성장·배당·급등·수급)은 고수 모드 전용입니다. 우측 상단의 <strong>'📊 고수 모드'</strong>로 전환하여 분석을 시작하십시오.
-                  </p>
-                  <button
-                    onClick={() => {
-                      setMode("expert");
-                      showToast("고수 모드로 전격 전환되었습니다. 스크리너를 가동합니다.", "success");
-                    }}
-                    className={`text-xs font-bold px-4 py-2 rounded-xl transition-all font-mono ${themeAccentBtn}`}
-                  >
-                    📊 고수모드 즉시 전환
-                  </button>
-                </div>
-              )}
+              </div>
             </section>
 
           </div>
@@ -1866,12 +1957,9 @@ export default function App() {
       {/* FOOTER COMMON LEGAL COMPLIANCE DISCLAIMER COMPULSORY */}
       <footer className={`mt-16 border-t ${themeBorder} py-10 ${isDark ? "bg-[#020d12]" : "bg-[#e5f1f3]"} relative z-20 px-6 text-center transition-colors`}>
         <div className="max-w-2xl mx-auto space-y-4">
-          <p className="text-xs opacity-60 font-mono">
-            DAWN · 빌드 에디터: 에이브로(AVRO) · SEOUL FINANCE RESEARCH GROUP · v27
-          </p>
           <div className={`text-[11px] opacity-80 px-4 py-3.5 rounded-xl border ${themeBorder} ${isDark ? "bg-[#071a22]/80" : "bg-white/80"} max-w-xl mx-auto leading-relaxed`}>
-            📢 <span className="font-extrabold uppercase block mb-1">유사투자자문 가이드 조항 준수 안내</span>
-            개별 종목 투자 유도 성격의 점수, 종목 메리트 배급, 비밀 리딩방 모집과는 어떠한 상호 연동도 제공하지 않는 장전 공개 수치 집약체입니다. 각 시나리오 백테스트 실행 데이터는 임의 모델링 궤적으로, 실제 손실 보장 또는 이익 수장을 보증하지 않습니다.
+            📢 <span className="font-extrabold uppercase block mb-1">핵심 안내 및 유의사항</span>
+            여명(DAWN)은 개별 종목을 추천하거나 투자를 유도하지 않으며, 불법 리딩방 등과 무관한 장전 공개 데이터 요약 서비스입니다. 분석 결과 및 백테스트 데이터는 과거 기준 추산 모델일 뿐 실제 투자 수익을 보장하지 않습니다.
           </div>
           <p className="text-xs font-bold text-amber-500 font-sans select-none leading-relaxed">
             &ldquo; 투자 참고용 정보입니다. 최종 투자 판단과 책임은 본인에게 있습니다. &rdquo;
