@@ -816,80 +816,81 @@ export default function App() {
     return s.name.toLowerCase().includes(stockSearchTerm.toLowerCase()) || s.code.includes(stockSearchTerm);
   });
 
-  // Theme Constants Mapper - High contrast primary red and blue (원색 계열) with unified typography
-  const themeBg = isDark ? "bg-[#020914] text-[#F8FAFC]" : "bg-[#F1F5F9] text-[#0F172A]";
-  const themeCard = isDark ? "bg-[#070f1e] border-2 border-red-600 shadow-2xl shadow-red-950/20" : "bg-white border-2 border-blue-600 shadow-xl shadow-blue-500/5";
-  const themeText = isDark ? "text-white" : "text-black";
-  const themeTextMuted = isDark ? "text-slate-300 font-semibold" : "text-slate-700 font-semibold";
-  const themeHeading = isDark ? "text-white font-sans font-extrabold" : "text-black font-sans font-extrabold";
-  const themeAccentText = isDark ? "text-[#ef4444]" : "text-[#2563eb]";
-  const themeAccentBg = isDark ? "bg-red-950/40 text-[#ef4444] border-2 border-[#ef4444]" : "bg-blue-50 text-[#2563eb] border-2 border-[#2563eb]";
-  const themeAccentBtn = isDark ? "bg-[#ef4444] text-white hover:bg-[#dc2626]" : "bg-[#2563eb] text-white hover:bg-[#1d4ed8]";
-  const themeBorder = isDark ? "border-[#ef4444]" : "border-[#2563eb]";
-  const themeSubBg = isDark ? "bg-[#0b1424]" : "bg-[#e5ecf6]";
-  const themeBadge = isDark ? "bg-red-950/20 text-[#ef4444] border-2 border-[#ef4444]" : "bg-blue-50 text-[#2563eb] border-2 border-[#2563eb]";
+  // Theme Constants Mapper - High contrast matching modern clean Toss Securities UI (solid color tones, bold typography, safe contrast)
+  const themeBg = isDark ? "bg-[#101012] text-[#E5E8EB]" : "bg-[#F2F4F6] text-[#191F28]";
+  const themeCard = isDark ? "bg-[#1C1C1E] border border-[#2C2C2E] shadow-lg rounded-[24px]" : "bg-[#FFFFFF] border border-[#E5E8EB] shadow-sm rounded-[24px]";
+  const themeText = isDark ? "text-white" : "text-[#191F28]";
+  const themeTextMuted = isDark ? "text-slate-400 font-semibold text-xs md:text-sm" : "text-[#4E5968] font-bold text-xs md:text-sm";
+  const themeHeading = isDark ? "text-white font-sans font-black" : "text-[#191F28] font-sans font-black";
+  const themeAccentText = "text-[#3182F6]";
+  const themeAccentBg = isDark ? "bg-[#3182F6]/10 text-[#3182F6] border border-[#3182F6]/25" : "bg-[#F2F8FF] text-[#3182F6] border border-[#E5E8EB]";
+  const themeAccentBtn = "bg-[#3182F6] text-white hover:bg-[#1B64DA] font-bold rounded-xl shadow-sm transition-all";
+  const themeBorder = isDark ? "border-[#2C2C2E]" : "border-[#E5E8EB]";
+  const themeSubBg = isDark ? "bg-[#252528]" : "bg-[#F8F9FA]";
+  const themeBadge = isDark ? "bg-[#2C2C2E] text-[#3182F6] border border-[#3182F6]/30 px-3 py-1 text-xs font-bold rounded-full" : "bg-[#E8F3FF] text-[#3182F6] border border-transparent px-3 py-1 text-xs font-bold rounded-full";
 
   // --- RENDER 2: BRAND STARTUP WELCOME GATE (CENTERED DEEP BLUE HOVER LAUNCHER) ---
   if (mode === null) {
     return (
-      <div className="min-h-screen bg-[#020914] text-[#F8FAFC] flex flex-col justify-between p-4 relative overflow-hidden font-sans">
-        {/* Deep tech grid pattern backing */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#00e5ff06_1px,transparent_1px),linear-gradient(to_bottom,#00e5ff06_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none" />
+      <div className="min-h-screen bg-[#101012] text-[#E5E8EB] flex flex-col justify-between p-6 relative overflow-hidden font-sans">
+        {/* Subtle grid pattern backing */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#3182f604_1px,transparent_1px),linear-gradient(to_bottom,#3182f604_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none" />
 
         {/* Top discrete status */}
-        <header className="max-w-7xl mx-auto w-full flex items-center justify-between z-10 pt-1 pb-2 border-b border-red-500/10">
-          <div className="flex items-center space-x-2">
-            <div className="w-6 h-6 rounded-md bg-red-600 flex items-center justify-center shadow-md">
-              <Sun className="w-3.5 h-3.5 text-white font-extrabold animate-pulse" />
+        <header className="max-w-7xl mx-auto w-full flex items-center justify-between z-10 pt-2 pb-3 border-b border-zinc-800/40">
+          <div className="flex items-center space-x-2.5">
+            <div className="w-8 h-8 rounded-xl bg-[#3182F6] flex items-center justify-center shadow-lg shadow-[#3182F6]/20">
+              <Sun className="w-4 h-4 text-white font-extrabold animate-pulse" />
             </div>
-            <span className="text-sm font-black tracking-widest font-mono text-red-500">HERO STOCK GATE</span>
+            <span className="text-base font-black tracking-widest text-[#3182F6]">HERO STOCK</span>
           </div>
           <div className="text-right">
-            <p className="text-[10px] font-mono text-slate-400">HERO STOCK SYSTEM • v2.8</p>
+            <p className="text-xs font-mono text-zinc-400 font-semibold">HERO STOCK SYSTEM • v3.0</p>
           </div>
         </header>
 
         {/* Centralized High-End Terminal Desk Card */}
-        <main className="max-w-md mx-auto w-full py-6 flex flex-col items-center justify-center text-center z-10 my-auto">
-          <div className="bg-[#0b1424] border-2 border-red-600 p-6 md:p-8 rounded-[24px] w-full shadow-2xl space-y-4 relative overflow-hidden">
+        <main className="max-w-md mx-auto w-full py-8 flex flex-col items-center justify-center text-center z-10 my-auto">
+          <div className="bg-[#1C1C1E] border border-[#2C2C2E] p-8 md:p-10 rounded-[32px] w-full shadow-2xl space-y-6 relative overflow-hidden">
             
-            <div className="absolute top-0 left-0 right-0 h-1 bg-red-600" />
+            {/* Soft top accent line */}
+            <div className="absolute top-0 left-0 right-0 h-1.5 bg-[#3182F6]" />
             
-            {/* Spinning decorative radar circles */}
-            <div className="mx-auto w-16 h-16 rounded-full border border-red-500/20 flex items-center justify-center relative">
-              <div className="absolute inset-1 rounded-full border border-dashed border-red-400/40 animate-spin" style={{ animationDuration: "15s" }} />
-              <div className="absolute inset-2 rounded-full border border-red-400/10" />
-              <div className="w-10 h-10 rounded-xl bg-red-600 flex items-center justify-center shadow-lg shadow-red-400/20">
-                <Sparkles className="w-5 h-5 text-white" />
+            {/* Spinning decorative circles */}
+            <div className="mx-auto w-20 h-20 rounded-full border border-zinc-800 flex items-center justify-center relative">
+              <div className="absolute inset-1 rounded-full border border-dashed border-[#3182F6]/30 animate-spin" style={{ animationDuration: "12s" }} />
+              <div className="absolute inset-2 rounded-full border border-zinc-800/40" />
+              <div className="w-12 h-12 rounded-2xl bg-[#3182F6] flex items-center justify-center shadow-xl shadow-[#3182F6]/30">
+                <Sparkles className="w-6 h-6 text-white" />
               </div>
             </div>
 
             {/* Glowing Brand Title */}
-            <div className="space-y-1.5">
-              <h1 className="text-3xl font-black font-sans tracking-widest text-[#ef4444]" style={{ textShadow: "0 0 30px rgba(239,68,68,0.6)" }}>
-                HERO STOCK
+            <div className="space-y-2">
+              <h1 className="text-4xl font-extrabold font-sans tracking-wide text-white">
+                영웅스탁 <span className="text-[#3182F6]">프리마켓</span>
               </h1>
-              <p className="inline-block px-2.5 py-0.5 bg-red-600 text-white font-extrabold text-[10px] rounded">
-                영웅스탁 장전 안내판
-              </p>
+              <div className="inline-block px-3 py-1 bg-[#3182F6]/10 border border-[#3182F6]/30 text-[#3182F6] font-bold text-xs rounded-full">
+                안전 장전 아침 해설판
+              </div>
             </div>
 
-            <p className="text-xs opacity-90 leading-relaxed font-light text-slate-300 max-w-sm mx-auto">
-              초보 투자자분들을 위해 해외 증시 소식을 이해하기 쉬운 날씨 카드로 변환하고, 개장 전 충동적인 매매 실수를 원천 방지하는 아침 수칙과 유망한 주식을 콕 찝어 보여주는 똑똑한 인공지능 요약판을 가동합니다.
+            <p className="text-sm opacity-90 leading-relaxed font-normal text-zinc-300 max-w-sm mx-auto">
+              초보 투자자분들을 위해 해외 증시 소식을 이해하기 쉬운 날씨 카드로 변환하고, 개장 전 충동적인 매매 실수를 사전에 정화하는 아침 약속과 똑똑한 인공지능 요약판을 가동합니다.
             </p>
 
             {/* Main Entrance Button - Sets expert mode to load full dashboard page */}
-            <div className="pt-2">
+            <div className="pt-3">
               <button
                 onClick={() => {
                   setMode("expert");
                   showToast("초보자용 영웅스탁 안심 길잡이를 실행합니다.", "success");
                 }}
-                className="w-full py-3 px-5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-extrabold tracking-widest text-xs transition-all duration-300 shadow-xl shadow-red-600/30 active:scale-95 cursor-pointer flex items-center justify-center space-x-2.5 border-2 border-yellow-400"
+                className="w-full py-4 px-6 rounded-2xl bg-[#3182F6] hover:bg-[#1B64DA] text-white font-black tracking-wide text-sm transition-all duration-200 shadow-xl shadow-[#3182F6]/25 active:scale-98 cursor-pointer flex items-center justify-center space-x-2.5"
                 id="btn-enter-terminal"
               >
-                <span>영웅스탁 시작하기</span>
-                <ArrowRight className="w-3.5 h-3.5 text-white animate-bounce" />
+                <span>영웅스탁 프리마켓 입장하기</span>
+                <ArrowRight className="w-4 h-4 text-white animate-bounce" />
               </button>
             </div>
 
@@ -897,8 +898,8 @@ export default function App() {
         </main>
 
         {/* Footer */}
-        <footer className="w-full text-center py-4 border-t border-red-500/10 z-10">
-          <p className="text-[10px] text-slate-500 max-w-md mx-auto leading-relaxed font-medium">
+        <footer className="w-full text-center py-4 border-t border-zinc-800/40 z-10">
+          <p className="text-xs text-zinc-500 max-w-md mx-auto leading-relaxed font-semibold">
             HERO STOCK TERMINAL © 2026. 모든 핵심 주식 시장 분석 자료는 쉽고 안전하게 풀이된 모의 분석 자료입니다.
           </p>
         </footer>
@@ -943,62 +944,62 @@ export default function App() {
       </AnimatePresence>
 
       {/* Sticky Global Top Header */}
-      <header className={`sticky top-0 z-30 ${isDark ? "bg-[#020914]/90" : "bg-[#F1F5F9]/90"} backdrop-blur-xl border-b ${themeBorder} px-3 py-2 transition-colors relative`}>
+      <header className={`sticky top-0 z-30 ${isDark ? "bg-[#101012]/92" : "bg-[#FFFFFF]/92"} backdrop-blur-xl border-b ${themeBorder} px-4 py-3 transition-colors relative`}>
         {/* Sleek, Non-Blocking Top Progress Bar during background syncs */}
         {(loading || isUpdating) && (
-          <div className="absolute top-0 left-0 right-0 h-[2px] bg-cyan-500 animate-pulse" />
+          <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#3182F6] animate-pulse" />
         )}
         
-        <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+        <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
           
           {/* Logo brand & Back-to-gate trigger */}
-          <div className="flex items-center space-x-3.5 w-full sm:w-auto justify-between sm:justify-start">
+          <div className="flex items-center space-x-4 w-full sm:w-auto justify-between sm:justify-start">
             <button
               onClick={() => {
                 setMode(null);
                 setActiveTab(0);
               }}
-              className="flex items-center space-x-2 group focus:outline-none text-left"
+              className="flex items-center space-x-2.5 group focus:outline-none text-left"
               title="웰컴 게이트로 복귀"
             >
-              <div className="w-7.5 h-7.5 rounded-lg bg-red-600 flex items-center justify-center text-white font-black shadow-md group-hover:rotate-12 transition-transform">
-                <Sun className="w-4 h-4 font-black" />
+              <div className="w-8.5 h-8.5 rounded-xl bg-[#3182F6] flex items-center justify-center text-white font-black shadow-md shadow-[#3182F6]/15 group-hover:rotate-6 transition-transform">
+                <Sun className="w-4.5 h-4.5 font-black" />
               </div>
               <div>
-                <span className="text-sm font-black tracking-widest text-[#ef4444] block leading-none">HERO STOCK</span>
-                <span className="text-[8px] text-red-500 tracking-widest uppercase font-mono block leading-none mt-1 font-bold">TERMINAL</span>
+                <span className="text-sm font-black tracking-widest text-[#3182F6] block leading-none">HERO STOCK</span>
+                <span className="text-[10px] text-blue-500 tracking-wider uppercase font-mono block leading-none mt-1 font-bold">PREMARKET</span>
               </div>
             </button>
 
             <div className="flex items-center space-x-2">
-              <span className="h-4 w-px bg-slate-800" />
+              <span className="h-5 w-px bg-zinc-700/30" />
               <button
                 onClick={() => {
                   const target = mode === "beginner" ? "expert" : "beginner";
                   setMode(target);
                 }}
-                className={`text-[11px] font-bold px-2.5 py-1 rounded-full border transition-all ${themeBadge}`}
+                className={`text-xs font-bold px-3 py-1.5 transition-all ${themeBadge}`}
               >
-                {mode === "beginner" ? "🔰 초보 모드" : "📊 고수 모드"}
+                {mode === "beginner" ? "🔰 초보 가이드" : "📊 고수 리포트"}
               </button>
             </div>
           </div>
 
           {/* Clock, AI Re-evaluate, Theme Switcher row */}
-          <div className="flex items-center justify-between sm:justify-end gap-3 w-full sm:w-auto">
+          <div className="flex items-center justify-between sm:justify-end gap-3.5 w-full sm:w-auto">
             
             {/* Background syncing text indicator */}
             {(loading || isUpdating) && (
-              <span className="text-[10px] text-[#34D6E8] font-mono animate-pulse hidden md:inline-block">
-                ● 실시간 기상 연동 갱신 중...
+              <span className="text-xs text-[#3182F6] font-mono animate-pulse hidden md:inline-block font-semibold">
+                ● 실시간 날씨 데이터 갱신 중...
               </span>
             )}
 
             {/* Clock */}
-            <div className={`px-2.5 py-1 rounded-lg ${themeSubBg} border ${themeBorder} flex items-center space-x-2 text-xs font-mono`}>
+            <div className={`px-3 py-1.5 rounded-xl ${themeSubBg} border ${themeBorder} flex items-center space-x-2 text-xs font-mono font-bold`}>
               <div className="w-2 h-2 rounded-full bg-amber-500 animate-ping" />
-              <span className="text-amber-500 font-semibold">{kstTime}</span>
-              <span className="opacity-60 hidden md:inline">| {marketStatusText.slice(0, 18)}</span>
+              <span className="text-amber-500 font-extrabold">{kstTime}</span>
+              <span className="opacity-70 hidden md:inline">| {marketStatusText.slice(0, 18)}</span>
             </div>
 
             <div className="flex items-center space-x-2">
@@ -1006,7 +1007,7 @@ export default function App() {
               <button
                 onClick={handleFullAIBriefingRefresh}
                 disabled={isUpdating || loading}
-                className="bg-[#06B6D4] text-white hover:bg-[#0891b2] disabled:bg-slate-800 disabled:text-slate-500 p-2 rounded-lg text-xs font-semibold flex items-center justify-center transition-all cursor-pointer"
+                className="bg-[#3182F6] hover:bg-[#1B64DA] text-white disabled:bg-zinc-800 disabled:text-zinc-600 p-2.5 rounded-xl text-xs font-extrabold flex items-center justify-center transition-all cursor-pointer shadow-sm"
                 id="btn-re-evaluate"
                 title="Gemini 3.5 구글 실시간 검색 연동하여 장전 기상도를 긴급 분석 및 갱신합니다."
               >
@@ -1020,10 +1021,10 @@ export default function App() {
               {/* Theme Toggle Button */}
               <button
                 onClick={toggleTheme}
-                className={`p-2 rounded-lg border ${themeBorder} ${themeSubBg} hover:opacity-85 cursor-pointer text-xs`}
-                title={isDark ? "라이트(여름) 테마로 전환" : "다크(여름밤) 테마로 전환"}
+                className={`p-2.5 rounded-xl border ${themeBorder} ${themeSubBg} hover:opacity-85 cursor-pointer text-xs`}
+                title={isDark ? "라이트 테마로 전환" : "다크 테마로 전환"}
               >
-                {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-sky-600" />}
+                {isDark ? <Sun className="w-4 h-4 text-amber-400 font-bold" /> : <Moon className="w-4 h-4 text-sky-600 font-bold" />}
               </button>
             </div>
 
@@ -1037,93 +1038,93 @@ export default function App() {
         
         {/* --- TAB 0: 🌊 오늘 (PRE-MARKET MAIN SUN ATMO REPORT) --- */}
         {activeTab === 0 && (
-          <div className="space-y-4">
+          <div className="space-y-5">
             
             {/* 1. Solar Weather needle score widget */}
-            <section className={`rounded-xl border ${themeCard} p-4 relative overflow-hidden flex flex-col justify-between`} id="beginner-today-dawn">
-              <div className="absolute top-2.5 left-2.5 bg-[#021117] px-2 py-0.5 rounded text-[8px] font-mono tracking-widest text-[#83a2ae] border border-[#153440]">
+            <section className={`${themeCard} p-6 relative overflow-hidden flex flex-col justify-between`} id="beginner-today-dawn">
+              <div className={`absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-mono tracking-wider font-extrabold border ${isDark ? "bg-[#252528] text-slate-400 border-zinc-800" : "bg-slate-100 text-slate-600 border-slate-200"}`}>
                 ATMOSPHERE COUPLING
               </div>
 
-              <div className="w-32 h-16 mx-auto relative overflow-hidden mt-2">
-                <div className="w-32 h-32 rounded-full border border-dashed border-[#06B6D4]/20 flex items-center justify-center">
-                  <div className="w-22 h-22 rounded-full bg-[#06B6D4]/10 opacity-30 filter blur-sm" />
+              <div className="w-40 h-20 mx-auto relative overflow-hidden mt-4">
+                <div className="w-40 h-40 rounded-full border border-dashed border-[#3182F6]/30 flex items-center justify-center">
+                  <div className="w-28 h-28 rounded-full bg-[#3182F6]/10 opacity-45 filter blur-sm" />
                 </div>
                 {/* Needle */}
                 <div 
-                  className="absolute bottom-0 left-1/2 w-1 h-11 bg-red-500 origin-bottom transform transition-transform duration-1000"
+                  className="absolute bottom-0 left-1/2 w-1.2 h-14 bg-[#F04452] origin-bottom transform transition-transform duration-1000"
                   style={{ transform: `translateX(-50%) rotate(${(briefing.score / 100) * 180 - 90}deg)` }}
                 />
-                <div className="absolute bottom-0 left-1/2 w-2.5 h-2.5 rounded-full bg-[#34D6E8] -ml-1.25 -mb-1.25 border-2 border-slate-900"></div>
+                <div className={`absolute bottom-0 left-1/2 w-3.5 h-3.5 rounded-full bg-[#3182F6] -ml-1.75 -mb-1.75 border-2 ${isDark ? "border-[#101012]" : "border-white"}`}></div>
               </div>
 
-              <div className="text-center mt-1">
-                <span className="text-[9px] uppercase font-mono tracking-wider opacity-60 block">오늘 아침 영웅스탁 안심 날씨 점수</span>
-                <span className="text-4xl md:text-5xl font-black font-sans text-amber-500 block leading-tight">
+              <div className="text-center mt-2">
+                <span className="text-xs uppercase font-semibold tracking-wider opacity-60 block">오늘 아침 영웅스탁 안심 날씨 점수</span>
+                <span className="text-5xl md:text-6xl font-black font-sans text-[#F04452] block leading-tight">
                   {briefing.score} 점
                 </span>
-                <div className="inline-flex items-center space-x-1 bg-[#11313d] text-[#34D6E8] text-[10px] px-2.5 py-0.5 rounded-full border border-[#1a4454] font-semibold mt-0.5">
+                <div className={`inline-flex items-center space-x-1 px-4 py-2 font-bold mt-2.5 rounded-full text-xs shadow-sm ${themeBadge}`}>
                   <span>아침 분위기 강도 :</span>
-                  <span className="font-bold">
+                  <span className="font-extrabold">
                     {briefing.score >= 80 ? "☀️ 우상향 맑음, 강한 지지력" : briefing.score >= 60 ? "⛅ 구름 걷힘, 테크 중심 순환" : "🌫️ 안개 및 조정 수렴"}
                   </span>
                 </div>
               </div>
 
-              <div className="mt-3 border-t border-[#153440]/30 pt-2.5 space-y-1">
-                <h3 className="text-xs font-bold flex items-center space-x-1.5">
-                  <Lightbulb className="w-4 h-4 text-amber-400 shrink-0" />
+              <div className={`mt-4 border-t ${themeBorder} pt-3.5 space-y-2`}>
+                <h3 className="text-sm font-black flex items-center space-x-2">
+                  <Lightbulb className="w-5 h-5 text-amber-500 shrink-0" />
                   <span>오늘의 한 줄 핵심 기상도</span>
                 </h3>
-                <p className="text-xs leading-relaxed font-sans font-light">
+                <p className="text-sm md:text-base leading-relaxed font-sans font-bold">
                   &ldquo;{briefing.summary}&rdquo;
                 </p>
-                <div className="text-[10px] opacity-65 border-l border-amber-500/40 pl-2">
+                <div className="text-xs opacity-70 border-l-2 border-[#3182F6]/50 pl-2.5 font-semibold">
                   * 미국 나스닥 100 마감 가중 수렴과 KOSPI 200 야간 해외 선물의 지지 가중을 합성 처리한 결과입니다.
                 </div>
               </div>
             </section>
 
             {/* 2. AI Real-time alert issue banner */}
-            <div className={`p-3 rounded-xl border-2 text-xs flex items-center space-x-3 ${
-              isDark ? "bg-red-950/30 border-red-800 text-red-200" : "bg-red-50 border-red-500 text-red-950"
+            <div className={`p-4 rounded-2xl border text-sm flex items-start space-x-3.5 ${
+              isDark ? "bg-[#3182F6]/5 border-[#3182F6]/30 text-slate-100" : "bg-[#F2F8FF]/80 border-[#3182F6]/20 text-slate-900"
             }`}>
-              <span className="w-2.5 h-2.5 rounded-full bg-[#FF5B72] animate-ping" />
+              <span className="w-3 h-3 rounded-full bg-[#F04452] animate-ping shrink-0 mt-1" />
               <div>
-                <span className="font-bold text-[#FF5B72]">🚨 AI 실시간 이슈 점검 배너 : </span>
-                <span className="opacity-90 font-medium">미 연준 금리 스왑 선물 하향 조정에 따라 신흥국 외국인 환차익 방어 수급이 강화 중입니다. 시초가 가집계 집중세를 확인하십시오.</span>
+                <span className="font-bold text-[#F04452]">🚨 AI 실시간 이슈 점검 : </span>
+                <span className="opacity-95 font-bold">미 연준 금리 스왑 선물 하향 조정에 따라 신흥국 외국인 환차익 방어 수급이 강화 중입니다. 시초가 가집계 집중세를 확인하십시오.</span>
               </div>
             </div>
 
             {/* 3. 오늘의 긴급 코어 시그널 */}
-            <section className="space-y-2" id="beginner-signal">
-              <h3 className="text-sm font-bold flex items-center">
-                <span className="text-[#06B6D4] mr-1.5">✦</span> 오늘의 긴급 코어 시그널
+            <section className="space-y-3.5" id="beginner-signal">
+              <h3 className="text-base font-black flex items-center">
+                <span className="text-[#3182F6] mr-2 text-lg">✦</span> 오늘의 긴급 코어 시그널
               </h3>
               
-              <div className={`border-2 ${themeBorder} ${themeSubBg} p-4 rounded-xl space-y-3.5 relative overflow-hidden`}>
-                <div className="absolute top-0 right-0 py-1 px-2.5 bg-[#06b6d4]/15 text-[#34D6E8] text-[8px] font-mono tracking-widest rounded-bl-lg border-l border-b border-[#06b6d4]/20">
+              <div className={`border ${themeBorder} ${themeSubBg} p-5 rounded-[24px] space-y-4 relative overflow-hidden shadow-sm`}>
+                <div className={`absolute top-0 right-0 py-1 px-3 text-[10px] font-mono tracking-widest rounded-bl-xl border-l border-b ${isDark ? "bg-[#3182F6]/15 text-[#3182F6] border-[#2C2C2E]" : "bg-[#E8F3FF] text-[#3182F6] border-[#E5E8EB]"}`}>
                   CORE TRIGGER
                 </div>
 
-                <div className="flex items-start space-x-3">
-                  <div className="w-8 h-8 rounded-lg bg-[#06b6d4]/10 text-[#06B6D4] flex items-center justify-center shrink-0 mt-0.5">
-                    <Star className="w-4 h-4 fill-[#06B6D4]/20" />
+                <div className="flex items-start space-x-3.5">
+                  <div className="w-10 h-10 rounded-xl bg-[#3182F6]/10 text-[#3182F6] flex items-center justify-center shrink-0">
+                    <Star className="w-5 h-5 fill-[#3182F6]/20" />
                   </div>
-                  <div className="space-y-3.5 w-full">
+                  <div className="space-y-4 w-full">
                     <div>
-                      <span className="text-[9px] text-[#06B6D4] font-bold uppercase tracking-wider">글로벌 거시 리서치</span>
-                      <h4 className="text-sm font-black leading-snug mt-0.5">{briefing.coreSignal.title}</h4>
+                      <span className="text-xs text-[#3182F6] font-extrabold uppercase tracking-widest">글로벌 거시 리서치</span>
+                      <h4 className="text-base md:text-lg font-black leading-snug mt-1">{briefing.coreSignal.title}</h4>
                     </div>
 
-                    <div className="grid md:grid-cols-2 gap-3">
-                      <div className={`${themeSubBg}/50 p-3 rounded-lg border ${themeBorder}`}>
-                        <span className="text-[10px] opacity-60 font-bold">원인 진단</span>
-                        <p className="text-[11px] mt-1 leading-relaxed font-light">{briefing.coreSignal.reason}</p>
+                    <div className="grid md:grid-cols-2 gap-3.5">
+                      <div className={`p-4 rounded-xl border ${isDark ? "bg-[#101012] border-zinc-800" : "bg-white border-slate-200"}`}>
+                        <span className="text-xs opacity-60 font-bold block">원인 진단</span>
+                        <p className="text-xs md:text-sm font-bold mt-1.5 leading-relaxed">{briefing.coreSignal.reason}</p>
                       </div>
-                      <div className="bg-[#06B6D4]/5 p-3 rounded-lg border border-[#06B6D4]/20">
-                        <span className="text-[10px] text-[#06B6D4] font-bold">과거 대응 가이드라인</span>
-                        <p className="text-[11px] text-amber-400 mt-1 leading-relaxed font-semibold">{briefing.coreSignal.result}</p>
+                      <div className={`p-4 rounded-xl border ${isDark ? "bg-[#3182F6]/10 border-[#3182F6]/20 text-white" : "bg-[#E8F3FF]/60 border-[#3182F6]/10 text-[#191F28]"}`}>
+                        <span className="text-xs text-[#3182F6] font-bold block">과거 대응 가이드라인</span>
+                        <p className={`text-xs md:text-sm mt-1.5 leading-relaxed font-extrabold ${isDark ? "text-amber-300" : "text-[#1B64DA]"}`}>{briefing.coreSignal.result}</p>
                       </div>
                     </div>
                   </div>
@@ -1132,89 +1133,89 @@ export default function App() {
             </section>
 
             {/* 4. 오늘의 전망 리포트 / 글로벌 야간 브리핑 통합 */}
-            <section className="space-y-2">
-              <h3 className="text-sm font-bold flex items-center">
-                <span className="text-[#06B6D4] mr-1.5">✦</span> 글로벌 야간 종합 동시 보고서
+            <section className="space-y-3.5">
+              <h3 className="text-base font-black flex items-center">
+                <span className="text-[#3182F6] mr-2 text-lg">✦</span> 글로벌 야간 종합 동시 보고서
               </h3>
-              <div className={`${themeCard} p-4 rounded-xl space-y-3`}>
-                <div className="flex items-center space-x-1.5">
-                  <Globe className="w-4 h-4 text-[#06B6D4]" />
-                  <span className="text-[10px] font-mono font-extrabold tracking-widest">OVERNIGHT GLOBAL MARKET INSIGHT</span>
+              <div className={`${themeCard} p-5 rounded-[24px] space-y-4`}>
+                <div className="flex items-center space-x-2">
+                  <Globe className="w-5 h-5 text-[#3182F6]" />
+                  <span className="text-xs font-mono font-extrabold tracking-widest text-[#3182F6]">OVERNIGHT GLOBAL MARKET INSIGHT</span>
                 </div>
-                <blockquote className={`border-l border-[#06B6D4] pl-3 italic text-xs ${themeText} font-medium`}>
+                <blockquote className={`border-l-4 border-[#3182F6] pl-4 italic text-sm ${themeText} font-bold`}>
                   &ldquo; {briefing.overnightRecap.summary} &rdquo;
                 </blockquote>
-                <p className="text-xs opacity-85 leading-relaxed font-light">
+                <p className="text-sm opacity-90 leading-relaxed font-semibold">
                   {briefing.overnightRecap.details}
                 </p>
               </div>
             </section>
 
             {/* 5. Tactical Checklist (위험 대응 시나리오) - Tab 0 Bottom */}
-            <section className="space-y-3" id="mental-defense-protocol">
-              <div className="border-b border-red-500/20 pb-2">
-                <div className="space-y-1">
-                  <h3 className="text-sm font-extrabold flex items-center tracking-tight text-red-500">
-                    <Shield className="w-5 h-5 text-red-500 mr-1.5 shrink-0 animate-pulse" />
+            <section className="space-y-4" id="mental-defense-protocol">
+              <div className={`border-b ${themeBorder} pb-3.5`}>
+                <div className="space-y-1.5">
+                  <h3 className="text-base font-black flex items-center tracking-tight text-[#F04452]">
+                    <Shield className="w-5.5 h-5.5 text-[#F04452] mr-1.5 shrink-0 animate-pulse" />
                     🚨 아침 개장시간 충동구매 방지 안심 약속
                   </h3>
-                  <p className="text-[11px] opacity-75 font-light leading-normal">
+                  <p className="text-xs md:text-sm opacity-80 font-bold leading-normal">
                     오전 9시 시장이 막 열리는 30분 동안은 가격 변동이 심합니다. 분위기에 휩쓸려 충동적으로 사는 실수를 피하도록 도와주는 초보 지침서입니다.
                   </p>
                 </div>
               </div>
 
-              {/* Bold red banner indicating system threat level */}
-              <div className="bg-red-950/40 border border-red-500/35 p-3.5 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-3 shadow-xl scanline-effect relative overflow-hidden">
+              {/* Safe Warning bar */}
+              <div className={`border p-4 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-3 shadow-sm relative overflow-hidden ${isDark ? "bg-[#F04452]/10 border-[#F04452]/35 text-white" : "bg-red-50/70 border-red-100 text-[#191F28]"}`}>
                 <div className="absolute inset-0 bg-red-500/[0.02] pointer-events-none animate-pulse" />
-                <div className="flex items-center space-x-3 z-10">
-                  <div className="w-8 h-8 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center border border-red-500/40 shrink-0">
+                <div className="flex items-center space-x-3.5 z-10">
+                  <div className="w-10 h-10 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center border border-red-500/30 shrink-0">
                     <AlertCircle className="w-5 h-5 animate-bounce" />
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold text-red-400">아침 시간대 평정심 보존 방막 활성화 권고</h4>
-                    <p className="text-[11px] opacity-80 font-light mt-0.5">상승 호가에 현혹되어 순간적인 추격 진입을 감행 시 높은 확률로 꼭짓점에 도태될 수 있습니다.</p>
+                    <h4 className="text-sm font-extrabold text-[#F04452]">아침 시간대 평정심 보존 방막 활성화 권고</h4>
+                    <p className="text-xs font-semibold opacity-90 mt-0.5">상승 호가에 현혹되어 순간적인 추격 진입을 감행 시 높은 확률로 꼭짓점에 도태될 수 있습니다.</p>
                   </div>
                 </div>
-                <div className="text-[9px] font-mono text-red-400 font-black bg-red-500/15 border border-red-500/30 px-2.5 py-1 rounded shrink-0">
+                <div className={`text-xs font-mono font-black border px-3 py-1.5 rounded-lg shrink-0 ${isDark ? "bg-red-500/15 border-red-500/30 text-red-400" : "bg-red-100 border-[#F04452]/20 text-[#F04452]"}`}>
                   CRITICAL DEFENSE LIVE
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
                 {checklist.map((item) => {
                   return (
                     <div
                       key={item.id}
-                      className="relative p-3.5 rounded-xl border bg-slate-950/90 border-red-500/30 shadow-lg shadow-red-950/10 flex flex-col justify-between min-h-[160px] overflow-hidden"
+                      className={`relative p-5 rounded-[20px] border flex flex-col justify-between min-h-[180px] shadow-sm overflow-hidden transition-all ${isDark ? "bg-[#1C1C1E] border-[#2C2C2E]" : "bg-white border-[#E5E8EB]"}`}
                     >
                       {/* Warning Pulse Backing */}
                       <div className="absolute inset-0 bg-red-500/[0.015] pointer-events-none" />
 
-                      <div className="space-y-2 z-10">
+                      <div className="space-y-3 z-10">
                         <div className="flex items-center justify-between">
-                          <span className="text-[9px] tracking-wide font-mono px-1.5 py-0.5 rounded border font-extrabold bg-red-500/10 text-red-500 border-red-500/20">
+                          <span className="text-xs tracking-wide font-mono px-2 py-0.5 rounded border font-extrabold bg-red-500/10 text-red-500 border-red-500/20">
                             📢 경고 조항 {item.id.toUpperCase()}
                           </span>
-                          <div className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
+                          <div className="w-2.5 h-2.5 rounded-full bg-[#F04452] animate-ping animate-duration-1000" />
                         </div>
 
-                        <div className="space-y-1">
-                          <span className="text-[9px] text-red-400 font-mono font-black block uppercase tracking-wider">
+                        <div className="space-y-1.5">
+                          <span className={`font-bold text-xs ${isDark ? "text-red-400" : "text-[#F04452]"}`}>
                             [상황 발생 시]
                           </span>
-                          <h4 className="text-xs font-bold leading-snug opacity-95 text-slate-100">
+                          <h4 className={`text-sm font-black leading-snug ${isDark ? "text-white" : "text-[#191F28]"}`}>
                             {item.scenario}
                           </h4>
                         </div>
                       </div>
 
                       {/* Body Action details */}
-                      <div className="space-y-1 z-10 pt-2 border-t border-red-500/10 mt-2.5">
-                        <span className="text-[9px] text-emerald-400 font-mono font-black block uppercase tracking-wider">
+                      <div className="space-y-1.5 z-10 pt-2.5 border-t border-zinc-800/10 dark:border-zinc-800/60 mt-3">
+                        <span className={`font-bold text-xs ${isDark ? "text-emerald-400" : "text-[#3182F6]"}`}>
                           [장전 안심 대응법]
                         </span>
-                        <p className="text-[11px] leading-relaxed font-light text-slate-300">
+                        <p className={`text-xs md:text-sm leading-relaxed font-bold ${isDark ? "text-slate-300" : "text-[#4E5968]"}`}>
                           {item.action}
                         </p>
                       </div>
@@ -1223,212 +1224,81 @@ export default function App() {
                 })}
               </div>
             </section>
-
           </div>
         )}
 
-        {/* --- TAB 1: 📈 차트 (DAWN FIN-CHART PLATFORM) --- */}
+        {/* --- TAB 1: 📈 차트 --- */}
         {activeTab === 1 && (
           <div className="space-y-5">
-            
             {/* 1. Indices with Sparklines */}
-            <section className="space-y-2.5">
-              <h3 className="text-sm font-bold flex items-center">
-                <span className="text-[#06B6D4] mr-1.5">✦</span> 국내외 주요 등락 지수
+            <section className="space-y-3.5">
+              <h3 className="text-sm md:text-base font-black flex items-center">
+                <span className="text-[#3182F6] mr-2 text-lg">✦</span> 국내외 주요 등락 지수
               </h3>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                 {briefing.globalMarkets.list.map((mk) => {
                   const isUp = mk.change.trim().startsWith("+");
                   return (
-                    <div key={mk.name} className={`p-3 rounded-xl border ${themeCard} space-y-2`}>
+                    <div key={mk.name} className={`${themeCard} p-4.5 space-y-3`}>
                       <div className="flex justify-between items-center">
-                        <span className="text-xs font-bold">{mk.name}</span>
-                        <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full ${
-                          isUp ? "bg-emerald-500/10 text-emerald-400" : "bg-red-500/10 text-red-400"
+                        <span className="text-sm font-bold">{mk.name}</span>
+                        <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${
+                          isUp ? "bg-[#F04452]/10 text-[#FF4552]" : "bg-[#3182F6]/10 text-[#3182F6]"
                         }`}>
                           {mk.rate}
                         </span>
                       </div>
 
                       <div className="flex justify-between items-end">
-                        <div className="space-y-px">
-                          <span className="text-base font-extrabold font-mono tracking-tight">{mk.value}</span>
-                          <span className={`text-[10px] block font-mono ${isUp ? "text-emerald-400" : "text-red-400"}`}>
+                        <div className="space-y-0.5">
+                          <span className="text-lg font-extrabold font-mono tracking-tight block">{mk.value}</span>
+                          <span className={`text-xs block font-mono font-bold ${isUp ? "text-[#F04452]" : "text-[#3182F6]"}`}>
                             {mk.change}
                           </span>
                         </div>
 
                         {/* Recharts Mini Area representing historic changes */}
-                        <div className="h-8 w-24 shrink-0">
-                          <ResponsiveContainer width="100%" height="100%">
-                            <AreaChart data={mk.chart.map((val, idx) => ({ idx, val }))}>
-                              <defs>
-                                <linearGradient id={`spark-${mk.name}`} x1="0" y1="0" x2="0" y2="1">
-                                  <stop offset="5%" stopColor={isUp ? "#10b981" : "#ef4444"} stopOpacity={0.25}/>
-                                  <stop offset="95%" stopColor={isUp ? "#10b981" : "#ef4444"} stopOpacity={0}/>
-                                </linearGradient>
-                              </defs>
-                              <XAxis dataKey="idx" hide />
-                              <YAxis hide domain={['dataMin', 'dataMax']} />
-                              <Area type="monotone" dataKey="val" stroke={isUp ? "#10b981" : "#ef4444"} fillOpacity={1} fill={`url(#spark-${mk.name})`} strokeWidth={1.5} />
-                            </AreaChart>
-                          </ResponsiveContainer>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </section>
-
-            {/* 2. Macro Indicators */}
-            <section className="space-y-2">
-              <h3 className="text-sm font-bold flex items-center">
-                <span className="text-[#06B6D4] mr-1.5">✦</span> 환율·원자재 및 매크로 지표
+                        <div className="h-9 w-28 shrink-0">
+                          <ResponsiveContaine            {/* 2. Institutional Comparative Buyer Flows */}
+            <section className="space-y-3.5">
+              <h3 className="text-sm md:text-base font-black flex items-center">
+                <span className="text-[#3182F6] mr-2 text-lg">✦</span> 외국인·기관 전거래일 수급 (억원)
               </h3>
-              
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-2.5">
-                {briefing.macro.rates.map((indicator, idx) => {
-                  const isNegativeFlow = indicator.variant === "negative";
-                  return (
-                    <div key={idx} className={`p-2.5 rounded-xl border ${themeCard} space-y-0.5`}>
-                      <span className="text-[10px] opacity-70 block">{indicator.name}</span>
-                      <div className="flex justify-between items-baseline">
-                        <span className="text-sm font-bold font-mono tracking-tight">{indicator.value}</span>
-                        <span className={`text-[9px] font-mono font-bold ${
-                          isNegativeFlow ? "text-red-400" : "text-emerald-400"
-                        }`}>
-                          {indicator.change}
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* KOSPI */}
+                <div className={`${themeCard} p-5 space-y-4`}>
+                  <div className={`px-3 py-1.5 rounded-xl border text-xs font-bold ${
+                    isDark ? "bg-[#252528] border-zinc-800 text-[#3182F6]" : "bg-[#F2F8FF] border-transparent text-[#3182F6]"
+                  }`}>
+                    KOSPI 순매수 추이
+                  </div>
+                  <div className="space-y-3.5 pt-1">
+                    {/* Foreign */}
+                    <div>
+                      <div className="flex justify-between text-xs md:text-sm font-mono font-bold mb-1">
+                        <span>외국인</span>
+                        <span className={`${briefing.flows.kospi.foreign.toString().includes("+") ? "text-[#F04452]" : "text-[#3182F6]"} font-black`}>
+                          {briefing.flows.kospi.foreign} 억
                         </span>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </section>
-
-            {/* 3. rankings Section (돈이 몰리는 곳) - isPro shows 10, beginner shows 5 */}
-            <section className="space-y-4">
-              <div className="flex justify-between items-baseline">
-                <h3 className="text-lg font-bold flex items-center">
-                  <span className="text-[#06B6D4] mr-2">✦</span> 돈이 몰리는 대장주 리스트
-                </h3>
-                <span className="text-[10px] font-mono opacity-60">모드 : {mode === "expert" ? "전종목 10위 (고수)" : "우량주 5위 (초보)"}</span>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                
-                {/* 거래대금 상위 */}
-                <div className={`p-5 rounded-2xl border ${themeCard} space-y-3`}>
-                  <div className="flex items-center space-x-2 border-b border-[#06B6D4]/10 pb-2">
-                    <Activity className="w-4 h-4 text-[#06b6d4]" />
-                    <span className="text-xs font-bold leading-none">거래대금 폭발 상위</span>
-                  </div>
-                  <div className="space-y-2">
-                    {briefing.moneyFlow.tradingValue.slice(0, mode === "expert" ? 10 : 5).map((st, i) => (
-                      <div key={st.code} className="flex justify-between items-center text-xs p-1.5 hover:bg-[#06b6d4]/5 rounded transition-all">
-                        <div className="flex items-center space-x-2">
-                          <span className="font-mono opacity-50 w-4">{i+1}</span>
-                          <div>
-                            <span className="font-bold block">{st.name}</span>
-                            <span className="text-[9px] opacity-50 font-mono">{st.code}</span>
-                          </div>
-                        </div>
-                        <div className="text-right">
-                          <span className="font-bold text-amber-500 font-mono">{st.value.toLocaleString()}억</span>
-                          <span className="text-[9px] text-emerald-400 font-mono block">+{st.rate}%</span>
+                      </divstrong className="text-[#F04452]">{st.roe}%</strong></span>
+                          <span>배당: <strong>{st.divYield}%</strong></span>
                         </div>
                       </div>
-                    ))}
-                  </div>
+
+                      <div className="space-y-1">
+                        <span className="text-xs text-[#3182F6] font-extrabold uppercase font-mono block">가치 연계해설</span>
+                        <p className="text-sm opacity-90 leading-relaxed font-bold">{st.reason}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-
-                {/* 급상승 및 급하락 (Two in one column layout) */}
-                <div className="space-y-6">
-                  
-                  {/* 급상승 모멘텀 */}
-                  <div className={`p-5 rounded-2xl border ${themeCard} space-y-3`}>
-                    <div className="flex items-center space-x-2 border-b border-[#10b981]/10 pb-2">
-                      <TrendingUp className="w-4 h-4 text-emerald-400" />
-                      <span className="text-xs font-bold leading-none text-emerald-400 font-sans">급상승 모멘텀 대장</span>
-                    </div>
-                    <div className="space-y-2">
-                      {briefing.moneyFlow.topGainers.slice(0, mode === "expert" ? 5 : 4).map((st) => (
-                        <div key={st.code} className="flex justify-between items-center text-xs p-1.5 hover:bg-emerald-500/5 rounded transition-all">
-                          <div>
-                            <span className="font-bold block">{st.name}</span>
-                            <span className="text-[9px] opacity-40 font-mono">{st.code}</span>
-                          </div>
-                          <div className="text-right">
-                            <span className="font-mono">{st.price.toLocaleString()}원</span>
-                            <span className="text-[10px] text-emerald-400 font-mono block font-bold">+{st.rate}%</span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* 급하락 조정 */}
-                  <div className={`p-5 rounded-2xl border ${themeCard} space-y-3`}>
-                    <div className="flex items-center space-x-2 border-b border-[#ef4444]/10 pb-2">
-                      <TrendingDown className="w-4 h-4 text-red-400" />
-                      <span className="text-xs font-bold leading-none text-red-400">일시적 수급 이탈·조정</span>
-                    </div>
-                    <div className="space-y-2">
-                      {briefing.moneyFlow.topLosers.slice(0, mode === "expert" ? 5 : 4).map((st) => (
-                        <div key={st.code} className="flex justify-between items-center text-xs p-1.5 hover:bg-red-500/5 rounded transition-all">
-                          <div>
-                            <span className="font-bold block">{st.name}</span>
-                            <span className="text-[9px] opacity-40 font-mono">{st.code}</span>
-                          </div>
-                          <div className="text-right">
-                            <span className="font-mono">{st.price.toLocaleString()}원</span>
-                            <span className="text-[10px] text-red-400 font-mono block font-bold">{st.rate}%</span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                </div>
-
               </div>
             </section>
 
           </div>
         )}
-
-        {/* --- TAB 2: 🧭 섹터 (SECTORS, FLOWS, & SCREENERS) --- */}
-        {activeTab === 2 && (
-          <div className="space-y-4">
-            
-            {/* 1. Sector Theme Outlook */}
-            <section className="space-y-2">
-              <h3 className="text-sm font-bold flex items-center">
-                <span className="text-[#06B6D4] mr-1.5">✦</span> 금일 주도 섹터·업종 예보
-              </h3>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                {briefing.sectorOutlook.list.map((sec, idx) => (
-                  <div key={idx} className={`p-3 rounded-xl border ${themeCard} space-y-1.5`}>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold">{sec.name}</span>
-                      <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full ${
-                        sec.status === "positive" 
-                          ? "bg-emerald-500/10 text-emerald-400"
-                          : sec.status === "neutral"
-                            ? "bg-slate-500/10 text-slate-400"
-                            : "bg-red-500/10 text-red-400"
-                      }`}>
-                        {sec.status === "positive" ? "🔥 강세 예보" : sec.status === "neutral" ? "⛅ 업종 지장" : "❄️ 매도 대기"}
-                      </span>
-                    </div>
-                    <p className="text-[11px] opacity-75 font-light leading-relaxed">{sec.comment}</p>
-                  </div>
-                ))}
-              </div>
-            </section>
 
             {/* 2. Institutional Comparative Buyer Flows */}
             <section className="space-y-2">
