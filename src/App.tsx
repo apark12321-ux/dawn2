@@ -832,18 +832,15 @@ export default function App() {
   // --- RENDER 2: BRAND STARTUP WELCOME GATE (CENTERED DEEP BLUE HOVER LAUNCHER) ---
   if (mode === null) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#020b18] via-[#091a3a] to-[#010610] text-[#F8FAFC] flex flex-col justify-between p-4 relative overflow-hidden font-sans">
+      <div className="min-h-screen bg-[#020914] text-[#F8FAFC] flex flex-col justify-between p-4 relative overflow-hidden font-sans">
         {/* Deep tech grid pattern backing */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#00e5ff06_1px,transparent_1px),linear-gradient(to_bottom,#00e5ff06_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none" />
-        
-        {/* Soft centered electric blue glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-600/10 blur-[120px] rounded-full pointer-events-none" />
 
         {/* Top discrete status */}
         <header className="max-w-7xl mx-auto w-full flex items-center justify-between z-10 pt-1 pb-2 border-b border-red-500/10">
           <div className="flex items-center space-x-2">
-            <div className="w-6 h-6 rounded-md bg-gradient-to-br from-red-500 to-blue-600 flex items-center justify-center shadow-md">
-              <Sun className="w-3.5 h-3.5 text-slate-950 font-extrabold animate-pulse" />
+            <div className="w-6 h-6 rounded-md bg-red-600 flex items-center justify-center shadow-md">
+              <Sun className="w-3.5 h-3.5 text-white font-extrabold animate-pulse" />
             </div>
             <span className="text-sm font-black tracking-widest font-mono text-red-500">HERO STOCK GATE</span>
           </div>
@@ -854,15 +851,15 @@ export default function App() {
 
         {/* Centralized High-End Terminal Desk Card */}
         <main className="max-w-md mx-auto w-full py-6 flex flex-col items-center justify-center text-center z-10 my-auto">
-          <div className="bg-[#0b1424]/90 border-2 border-red-500/40 p-6 md:p-8 rounded-[24px] w-full shadow-[0_0_40px_rgba(239,68,68,0.12)] space-y-4 relative overflow-hidden backdrop-blur-md">
+          <div className="bg-[#0b1424] border-2 border-red-600 p-6 md:p-8 rounded-[24px] w-full shadow-2xl space-y-4 relative overflow-hidden">
             
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-red-500 via-blue-600 to-red-500" />
+            <div className="absolute top-0 left-0 right-0 h-1 bg-red-600" />
             
             {/* Spinning decorative radar circles */}
             <div className="mx-auto w-16 h-16 rounded-full border border-red-500/20 flex items-center justify-center relative">
               <div className="absolute inset-1 rounded-full border border-dashed border-red-400/40 animate-spin" style={{ animationDuration: "15s" }} />
               <div className="absolute inset-2 rounded-full border border-red-400/10" />
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-red-500 to-blue-600 flex items-center justify-center shadow-lg shadow-red-400/20">
+              <div className="w-10 h-10 rounded-xl bg-red-600 flex items-center justify-center shadow-lg shadow-red-400/20">
                 <Sparkles className="w-5 h-5 text-white" />
               </div>
             </div>
@@ -912,10 +909,6 @@ export default function App() {
   // --- RENDER 3: PRIMARY UNIFIED APP LAYER (5 BOTTOM TABS SCROLLABLE LAYOUT) ---
   return (
     <div className={`min-h-screen ${themeBg} pb-28 transition-colors duration-300 relative`}>
-      {/* Dynamic Background Atmospheric soft glow depending on score and isDark */}
-      <div className={`absolute top-0 left-0 right-0 h-[300px] bg-gradient-to-b ${
-        isDark ? "from-[#06B6D4]/5 via-[#34D6E8]/2" : "from-[#06B6D4]/10 via-[#06B6D4]/2"
-      } to-transparent pointer-events-none -z-10`} />
 
       {/* Dynamic Slide In Toast alerts */}
       <AnimatePresence>
@@ -953,7 +946,7 @@ export default function App() {
       <header className={`sticky top-0 z-30 ${isDark ? "bg-[#020914]/90" : "bg-[#F1F5F9]/90"} backdrop-blur-xl border-b ${themeBorder} px-3 py-2 transition-colors relative`}>
         {/* Sleek, Non-Blocking Top Progress Bar during background syncs */}
         {(loading || isUpdating) && (
-          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-cyan-400 via-sky-400 to-indigo-500 animate-pulse" />
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-cyan-500 animate-pulse" />
         )}
         
         <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
@@ -968,11 +961,11 @@ export default function App() {
               className="flex items-center space-x-2 group focus:outline-none text-left"
               title="웰컴 게이트로 복귀"
             >
-              <div className="w-7.5 h-7.5 rounded-lg bg-gradient-to-tr from-red-500 to-amber-500 flex items-center justify-center text-slate-950 font-black shadow-md group-hover:rotate-12 transition-transform">
+              <div className="w-7.5 h-7.5 rounded-lg bg-red-600 flex items-center justify-center text-white font-black shadow-md group-hover:rotate-12 transition-transform">
                 <Sun className="w-4 h-4 font-black" />
               </div>
               <div>
-                <span className="text-sm font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-blue-500 block leading-none">HERO STOCK</span>
+                <span className="text-sm font-black tracking-widest text-[#ef4444] block leading-none">HERO STOCK</span>
                 <span className="text-[8px] text-red-500 tracking-widest uppercase font-mono block leading-none mt-1 font-bold">TERMINAL</span>
               </div>
             </button>
@@ -1054,11 +1047,11 @@ export default function App() {
 
               <div className="w-32 h-16 mx-auto relative overflow-hidden mt-2">
                 <div className="w-32 h-32 rounded-full border border-dashed border-[#06B6D4]/20 flex items-center justify-center">
-                  <div className="w-22 h-22 rounded-full bg-gradient-to-tr from-[#06B6D4]/25 to-[#34D6E8]/10 opacity-35 filter blur-sm" />
+                  <div className="w-22 h-22 rounded-full bg-[#06B6D4]/10 opacity-30 filter blur-sm" />
                 </div>
                 {/* Needle */}
                 <div 
-                  className="absolute bottom-0 left-1/2 w-1 h-11 bg-gradient-to-t from-[#FF5B72] to-[#34D6E8] origin-bottom transform transition-transform duration-1000"
+                  className="absolute bottom-0 left-1/2 w-1 h-11 bg-red-500 origin-bottom transform transition-transform duration-1000"
                   style={{ transform: `translateX(-50%) rotate(${(briefing.score / 100) * 180 - 90}deg)` }}
                 />
                 <div className="absolute bottom-0 left-1/2 w-2.5 h-2.5 rounded-full bg-[#34D6E8] -ml-1.25 -mb-1.25 border-2 border-slate-900"></div>
@@ -1066,7 +1059,7 @@ export default function App() {
 
               <div className="text-center mt-1">
                 <span className="text-[9px] uppercase font-mono tracking-wider opacity-60 block">오늘 아침 영웅스탁 안심 날씨 점수</span>
-                <span className="text-4xl md:text-5xl font-black font-sans text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-amber-400 to-yellow-400 block leading-tight">
+                <span className="text-4xl md:text-5xl font-black font-sans text-amber-500 block leading-tight">
                   {briefing.score} 점
                 </span>
                 <div className="inline-flex items-center space-x-1 bg-[#11313d] text-[#34D6E8] text-[10px] px-2.5 py-0.5 rounded-full border border-[#1a4454] font-semibold mt-0.5">
@@ -1092,11 +1085,13 @@ export default function App() {
             </section>
 
             {/* 2. AI Real-time alert issue banner */}
-            <div className="bg-gradient-to-r from-red-500/10 via-amber-500/5 to-transparent p-3 rounded-xl border border-red-500/20 text-xs flex items-center space-x-3">
+            <div className={`p-3 rounded-xl border-2 text-xs flex items-center space-x-3 ${
+              isDark ? "bg-red-950/30 border-red-800 text-red-200" : "bg-red-50 border-red-500 text-red-950"
+            }`}>
               <span className="w-2.5 h-2.5 rounded-full bg-[#FF5B72] animate-ping" />
               <div>
                 <span className="font-bold text-[#FF5B72]">🚨 AI 실시간 이슈 점검 배너 : </span>
-                <span className="opacity-80">미 연준 금리 스왑 선물 하향 조정에 따라 신흥국 외국인 환차익 방어 수급이 강화 중입니다. 시초가 가집계 집중세를 확인하십시오.</span>
+                <span className="opacity-90 font-medium">미 연준 금리 스왑 선물 하향 조정에 따라 신흥국 외국인 환차익 방어 수급이 강화 중입니다. 시초가 가집계 집중세를 확인하십시오.</span>
               </div>
             </div>
 
@@ -1106,7 +1101,7 @@ export default function App() {
                 <span className="text-[#06B6D4] mr-1.5">✦</span> 오늘의 긴급 코어 시그널
               </h3>
               
-              <div className={`border ${themeCard} p-4 rounded-xl space-y-3.5 relative overflow-hidden`} style={{ background: "linear-gradient(135deg, rgba(6,182,212,0.03) 0%, rgba(12,38,48,0.4) 100%)" }}>
+              <div className={`border-2 ${themeBorder} ${themeSubBg} p-4 rounded-xl space-y-3.5 relative overflow-hidden`}>
                 <div className="absolute top-0 right-0 py-1 px-2.5 bg-[#06b6d4]/15 text-[#34D6E8] text-[8px] font-mono tracking-widest rounded-bl-lg border-l border-b border-[#06b6d4]/20">
                   CORE TRIGGER
                 </div>
@@ -1444,7 +1439,9 @@ export default function App() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {/* KOSPI */}
                 <div className={`p-3.5 rounded-xl border ${themeCard} space-y-2.5`}>
-                  <div className="bg-[#021117] px-2 py-1 rounded border border-[#153440] text-[10px] font-bold text-[#34D6E8]">
+                  <div className={`px-2 py-1 rounded border text-[10px] font-bold ${
+                    isDark ? "bg-[#021117] border-[#153440] text-[#34D6E8]" : "bg-blue-50 border-blue-200 text-blue-700"
+                  }`}>
                     KOSPI 순매수 추이
                   </div>
                   <div className="space-y-2 pt-1">
@@ -1483,7 +1480,9 @@ export default function App() {
 
                 {/* KOSDAQ */}
                 <div className={`p-3.5 rounded-xl border ${themeCard} space-y-2.5`}>
-                  <div className="bg-[#021117] px-2 py-1 rounded border border-[#153440] text-[10px] font-bold text-[#34D6E8]">
+                  <div className={`px-2 py-1 rounded border text-[10px] font-bold ${
+                    isDark ? "bg-[#021117] border-[#153440] text-[#34D6E8]" : "bg-blue-50 border-blue-200 text-blue-700"
+                  }`}>
                     KOSDAQ 순매수 추이
                   </div>
                   <div className="space-y-2 pt-1">
@@ -1534,7 +1533,9 @@ export default function App() {
 
               <div className="space-y-3">
                 {/* Presets switchers */}
-                <div className="grid grid-cols-2 sm:grid-cols-5 gap-1.5 bg-[#021117] p-1 rounded-lg border border-[#153440]">
+                <div className={`grid grid-cols-2 sm:grid-cols-5 gap-1.5 p-1 rounded-lg border ${
+                  isDark ? "bg-[#021117] border-[#153440]" : "bg-slate-100 border-slate-300"
+                }`}>
                   {[
                     { id: "growth", emoji: "🚀", label: "고성장 우량" },
                     { id: "value", emoji: "💎", label: "저평가 밸류" },
@@ -1655,8 +1656,8 @@ export default function App() {
 
                       <span className={`text-[8px] font-extrabold px-1.5 py-0.5 rounded ${
                         ev.importance === "최상" 
-                          ? "bg-red-500/10 text-red-400 border border-red-500/10"
-                          : "bg-amber-500/10 text-amber-500 border border-amber-500/10"
+                          ? "bg-red-500/10 text-red-400 border border-red-500/15"
+                          : "bg-amber-500/10 text-amber-500 border border-amber-500/15"
                       }`}>
                         중요 {ev.importance}
                       </span>
@@ -1763,14 +1764,18 @@ export default function App() {
                           placeholder="종목명 및 코드 검색 (예: 삼성전자, 에코프로)"
                           value={stockSearchTerm}
                           onChange={(e) => setStockSearchTerm(e.target.value)}
-                          className={`w-full bg-[#021117] border ${themeBorder} rounded-lg py-1.5 pl-8 pr-3 text-[11px] text-slate-100 focus:outline-none focus:border-[#06b6d4]`}
+                          className={`w-full border ${themeBorder} rounded-lg py-1.5 pl-8 pr-3 text-[11px] focus:outline-none focus:border-[#06b6d4] ${
+                            isDark ? "bg-[#0b1424] text-white" : "bg-white text-slate-900 shadow-sm"
+                          }`}
                         />
                       </div>
 
                       <select
                         value={selectedStockCode}
                         onChange={(e) => setSelectedStockCode(e.target.value)}
-                        className={`bg-[#021117] border ${themeBorder} rounded-lg px-2 py-1.5 text-[11px] focus:outline-none`}
+                        className={`border ${themeBorder} rounded-lg px-2 py-1.5 text-[11px] focus:outline-none ${
+                          isDark ? "bg-[#0b1424] text-white" : "bg-white text-slate-900 shadow-sm"
+                        }`}
                         id="select-stock-analyser"
                       >
                         {stocksList.map(s => (
@@ -1783,7 +1788,9 @@ export default function App() {
 
                     {/* Search results list */}
                     {stockSearchTerm && (
-                      <div className={`bg-[#021117] border ${themeBorder} p-1.5 rounded-lg max-h-20 overflow-y-auto grid grid-cols-2 md:grid-cols-4 gap-1`}>
+                      <div className={`border ${themeBorder} p-1.5 rounded-lg max-h-20 overflow-y-auto grid grid-cols-2 md:grid-cols-4 gap-1 ${
+                        isDark ? "bg-[#0b1424]" : "bg-white"
+                      }`}>
                         {filteredStocks.map(s => (
                           <button
                             key={s.code}
@@ -1791,7 +1798,7 @@ export default function App() {
                               setSelectedStockCode(s.code);
                               setStockSearchTerm("");
                             }}
-                            className="text-left p-1 rounded hover:bg-[#06B6D4]/10 text-[10px] block text-slate-200 truncate"
+                            className={`text-left p-1 rounded hover:bg-[#06B6D4]/15 text-[10px] block truncate ${themeText}`}
                           >
                             {s.name}
                           </button>
@@ -1808,25 +1815,25 @@ export default function App() {
                     ) : analysisResult ? (
                       <div className="space-y-2.5 pt-1">
                         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
-                          <div className="bg-[#021117]/60 p-1.5 rounded-lg border border-[#153440]">
+                          <div className={`p-1.5 rounded-lg border ${themeBorder} ${themeSubBg}`}>
                             <span className="text-[9px] opacity-60 block">현재 가격</span>
-                            <span className="text-xs font-bold font-mono">{(analysisResult.price || 50000).toLocaleString()}원</span>
+                            <span className={`text-xs font-bold font-mono ${themeText}`}>{(analysisResult.price || 50000).toLocaleString()}원</span>
                           </div>
-                          <div className="bg-[#021117]/60 p-1.5 rounded-lg border border-[#153440]">
+                          <div className={`p-1.5 rounded-lg border ${themeBorder} ${themeSubBg}`}>
                             <span className="text-[9px] opacity-60 block">PER</span>
                             <span className="text-xs font-bold font-mono text-[#34D6E8]">{analysisResult.metrics?.pe || "N/A"} 배</span>
                           </div>
-                          <div className="bg-[#021117]/60 p-1.5 rounded-lg border border-[#153440]">
+                          <div className={`p-1.5 rounded-lg border ${themeBorder} ${themeSubBg}`}>
                             <span className="text-[9px] opacity-60 block">PBR</span>
-                            <span className="text-xs font-bold font-mono">{analysisResult.metrics?.pbr || "N/A"} 배</span>
+                            <span className={`text-xs font-bold font-mono ${themeText}`}>{analysisResult.metrics?.pbr || "N/A"} 배</span>
                           </div>
-                          <div className="bg-[#021117]/60 p-1.5 rounded-lg border border-[#153440]">
+                          <div className={`p-1.5 rounded-lg border ${themeBorder} ${themeSubBg}`}>
                             <span className="text-[9px] opacity-60 block">ROE</span>
                             <span className="text-xs font-bold font-mono text-emerald-400">{analysisResult.metrics?.roe || "N/A"}%</span>
                           </div>
                         </div>
 
-                        <div className="bg-[#021117]/40 p-2.5 rounded-lg border border-[#153440]/40">
+                        <div className={`p-2.5 rounded-lg border-2 ${themeBorder} ${themeSubBg}`}>
                           <p className="text-[11px] opacity-90 leading-relaxed font-light">{analysisResult.summary}</p>
                         </div>
 
@@ -1866,7 +1873,9 @@ export default function App() {
                         type="text"
                         value={screenerQuery}
                         onChange={(e) => setScreenerQuery(e.target.value)}
-                        className={`flex-1 bg-[#021117] border ${themeBorder} rounded-lg px-2.5 py-1.5 text-[11px] focus:outline-none`}
+                        className={`flex-1 border ${themeBorder} rounded-lg px-2.5 py-1.5 text-[11px] focus:outline-none ${
+                          isDark ? "bg-[#0b1424] text-white" : "bg-white text-slate-900"
+                        }`}
                         placeholder="공급망 수혜 추천 핵심 테마..."
                       />
                       <button
@@ -1888,9 +1897,11 @@ export default function App() {
                         )}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                           {screenerResults.map((st, i) => (
-                            <div key={i} className="bg-[#021117]/60 p-2.5 rounded-lg border border-[#153440] space-y-0.5">
+                            <div key={i} className={`p-2.5 rounded-lg border space-y-0.5 ${
+                              isDark ? "bg-[#021117]/60 border-[#153440] text-slate-100" : "bg-white border-slate-200 text-slate-950"
+                            }`}>
                               <div className="flex justify-between items-center">
-                                <span className="text-[11px] font-bold text-[#34D6E8]">{st.name} ({st.code})</span>
+                                <span className={`text-[11px] font-bold ${isDark ? "text-[#34D6E8]" : "text-cyan-700"}`}>{st.name} ({st.code})</span>
                                 <span className="text-[9px] opacity-60 font-mono">{st.sector}</span>
                               </div>
                               <p className="text-[11px] opacity-85 leading-relaxed font-light">{st.reason}</p>
@@ -1911,13 +1922,17 @@ export default function App() {
                       우량 기업 대상 기술적 통계(RSI 및 전고 돌파)에 기반해 전략 수익률을 대조 검증합니다.
                     </p>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 bg-[#021117]/85 p-2.5 rounded-lg border border-[#153440] text-[11px]">
+                    <div className={`grid grid-cols-1 sm:grid-cols-3 gap-2 p-2.5 rounded-lg border text-[11px] ${
+                      isDark ? "bg-[#021117]/85 border-[#153440]" : "bg-slate-50 border-slate-200 text-slate-900"
+                    }`}>
                       <div>
                         <span className="opacity-60 text-[9px] uppercase font-bold block mb-0.5">매매 전략 기법</span>
                         <select
                           value={backtestStrategy}
                           onChange={(e) => setBacktestStrategy(e.target.value)}
-                          className="w-full bg-[#0C2630] border border-[#153440] rounded px-1.5 py-1 focus:outline-none text-[11px]"
+                          className={`w-full border rounded px-1.5 py-1 focus:outline-none text-[11px] ${
+                            isDark ? "bg-[#0C2630] border-[#153440] text-slate-100" : "bg-white border-slate-300 text-slate-900"
+                          }`}
                           id="select-bt-strategy"
                         >
                           <option value="golden-cross">양봉 골든크로스 (5일-20일)</option>
@@ -1930,7 +1945,9 @@ export default function App() {
                         <select
                           value={backtestStockCode}
                           onChange={(e) => setBacktestStockCode(e.target.value)}
-                          className="w-full bg-[#0C2630] border border-[#153440] rounded px-1.5 py-1 focus:outline-none text-[11px]"
+                          className={`w-full border rounded px-1.5 py-1 focus:outline-none text-[11px] ${
+                            isDark ? "bg-[#0C2630] border-[#153440] text-slate-100" : "bg-white border-slate-300 text-slate-900"
+                          }`}
                           id="select-bt-stock"
                         >
                           {stocksList.map(s => (
@@ -1945,7 +1962,9 @@ export default function App() {
                             type="number"
                             value={btTakeProfit}
                             onChange={(e) => setBtTakeProfit(Number(e.target.value))}
-                            className="w-full bg-[#0C2630] border border-[#153440] rounded px-1.5 py-0.5 text-[11px] text-center"
+                            className={`w-full border rounded px-1.5 py-0.5 text-[11px] text-center ${
+                              isDark ? "bg-[#0C2630] border-[#153440] text-slate-100" : "bg-white border-slate-300 text-slate-900"
+                            }`}
                           />
                         </div>
                         <div>
@@ -1954,7 +1973,9 @@ export default function App() {
                             type="number"
                             value={btStopLoss}
                             onChange={(e) => setBtStopLoss(Number(e.target.value))}
-                            className="w-full bg-[#0C2630] border border-[#153440] rounded px-1.5 py-0.5 text-[11px] text-center"
+                            className={`w-full border rounded px-1.5 py-0.5 text-[11px] text-center ${
+                              isDark ? "bg-[#0C2630] border-[#153440] text-slate-100" : "bg-white border-slate-300 text-slate-900"
+                            }`}
                           />
                         </div>
                       </div>
@@ -1984,25 +2005,25 @@ export default function App() {
                     {backtestResult && (
                       <div className="space-y-3 pt-3 border-t border-[#153440]/30 mr-1">
                         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
-                          <div className="bg-[#021117] p-1.5 rounded-lg border border-[#153440]/60">
+                          <div className={`p-1.5 rounded-lg border ${themeBorder} ${themeSubBg}`}>
                             <span className="text-[9px] opacity-60 block">전략 승률</span>
                             <span className="text-xs font-bold font-mono text-emerald-400">{backtestResult.metrics.winRate}%</span>
                           </div>
-                          <div className="bg-[#021117] p-1.5 rounded-lg border border-[#153440]/60">
+                          <div className={`p-1.5 rounded-lg border ${themeBorder} ${themeSubBg}`}>
                             <span className="text-[9px] opacity-60 block">최종 수익률</span>
-                            <span className={`text-xs font-bold font-mono ${backtestResult.metrics.strategyYield >= 0 ? "text-emerald-400" : "text-red-400"}`}>
+                            <span className={`text-xs font-bold font-mono ${backtestResult.metrics.strategyYield >= 0 ? "text-emerald-400" : "text-red-500"}`}>
                               {backtestResult.metrics.strategyYield}%
                             </span>
                           </div>
-                          <div className="bg-[#021117] p-1.5 rounded-lg border border-[#153440]/60">
+                          <div className={`p-1.5 rounded-lg border ${themeBorder} ${themeSubBg}`}>
                             <span className="text-[9px] opacity-60 block">단순보유 수익</span>
-                            <span className={`text-xs font-bold font-mono ${backtestResult.metrics.bhYield >= 0 ? "text-emerald-400" : "text-red-[#FF5B72]"}`}>
+                            <span className={`text-xs font-bold font-mono ${backtestResult.metrics.bhYield >= 0 ? "text-emerald-400" : "text-red-500"}`}>
                               {backtestResult.metrics.bhYield}%
                             </span>
                           </div>
-                          <div className="bg-[#021117] p-1.5 rounded-lg border border-[#153440]/60">
+                          <div className={`p-1.5 rounded-lg border ${themeBorder} ${themeSubBg}`}>
                             <span className="text-[9px] opacity-60 block">MDD</span>
-                            <span className="text-xs font-bold font-mono text-red-400">{backtestResult.metrics.mdd}%</span>
+                            <span className="text-xs font-bold font-mono text-red-500">{backtestResult.metrics.mdd}%</span>
                           </div>
                         </div>
 
@@ -2012,8 +2033,8 @@ export default function App() {
                             <LineChart data={backtestResult.history.filter((_: any, i: number) => i % 5 === 0)}>
                               <XAxis dataKey="date" stroke="#83a2ae" fontSize={7} />
                               <YAxis hide domain={['dataMin', 'dataMax']} />
-                              <Tooltip contentStyle={{ backgroundColor: "#0C2630", border: "1px solid #153440" }} />
-                              <Line type="monotone" dataKey="strategyWorth" name="AI 전략 가칙" stroke="#06B6D4" strokeWidth={1.5} dot={false} />
+                              <Tooltip contentStyle={isDark ? { backgroundColor: "#0C2630", border: "1px solid #153440", color: "#FFFFFF" } : { backgroundColor: "#FFFFFF", border: "1px solid #CBD5E1", color: "#0F172A" }} />
+                              <Line type="monotone" dataKey="strategyWorth" name="AI 전략 가치" stroke="#06B6D4" strokeWidth={1.5} dot={false} />
                               <Line type="monotone" dataKey="bhWorth" name="보유 가치" stroke="#83a2ae" strokeWidth={1} strokeDasharray="2 2" dot={false} />
                             </LineChart>
                           </ResponsiveContainer>
@@ -2044,12 +2065,12 @@ export default function App() {
             {/* 3. 요금제 안내 매트릭스 (5-Tier Plan Matrix) */}
             <section className="space-y-2">
               <h3 className="text-sm font-bold flex items-center">
-                <span className="text-red-400 mr-1.5">✦</span> 영웅스탁 프리마켓 구독 안내
+                <span className="text-red-400 mr-1.5">✦</span> 프리마켓 구독 안내
               </h3>
 
               <div className={`rounded-xl border ${themeCard} overflow-hidden shadow-sm`}>
-                <div className="p-2.5 bg-[#021117]/85 border-b border-[#153440] text-center">
-                  <span className="text-[10px] font-extrabold text-[#34D6E8] tracking-wider font-mono">HERO STOCK PREMIUM PLANS</span>
+                <div className={`p-2.5 border-b text-center ${isDark ? "bg-[#021117]/85 border-[#153440]" : "bg-slate-100 border-slate-200"}`}>
+                  <span className={`text-[10px] font-extrabold tracking-wider font-mono ${isDark ? "text-[#34D6E8]" : "text-[#06B6D4]"}`}>HERO PREMIUM PLANS</span>
                   <p className="text-[9px] opacity-70">티어별 최적 아웃룩 권한 비교</p>
                 </div>
 
