@@ -334,16 +334,16 @@ const FALLBACK_BRIEFING: BriefingData = {
 };
 
 export default function App() {
-  // Splash & Transition state (4.2 seconds)
-  const [splashActive, setSplashActive] = useState<boolean>(true);
-  const [splashProgress, setSplashProgress] = useState<number>(0);
+  // Splash & Transition state (instantly bypass)
+  const [splashActive, setSplashActive] = useState<boolean>(false);
+  const [splashProgress, setSplashProgress] = useState<number>(100);
 
   // App Core States
-  const [mode, setMode] = useState<"beginner" | "expert" | null>(null);
+  const [mode, setMode] = useState<"beginner" | "expert" | null>("expert");
   const [activeTab, setActiveTab] = useState<number>(0);
-  const [briefing, setBriefing] = useState<BriefingData | null>(null);
-  const [stocksList, setStocksList] = useState<CommonStock[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [briefing, setBriefing] = useState<BriefingData | null>(FALLBACK_BRIEFING);
+  const [stocksList, setStocksList] = useState<CommonStock[]>(FALLBACK_STOCKS);
+  const [loading, setLoading] = useState<boolean>(false);
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
 
   // Theme control: dark (여름밤) vs light (여름)
@@ -829,8 +829,8 @@ export default function App() {
   const themeSubBg = isDark ? "bg-[#021117]" : "bg-[#e2f3f6]";
   const themeBadge = isDark ? "bg-[#11313d] text-[#34D6E8] border-[#1a4454]" : "bg-[#e5f8fb] text-[#06B6D4] border-[#bcecf3]";
 
-  // Handle baseline loading indicator
-  if (loading || !briefing) {
+  // Handle baseline loading indicator (only block if data is absolutely missing)
+  if (!briefing) {
     return (
       <div className="min-h-screen bg-[#071A22] flex flex-col items-center justify-center p-8">
         <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#06B6D4] via-[#34D6E8] to-[#FF5B72] animate-pulse"></div>
@@ -1078,7 +1078,12 @@ export default function App() {
       </AnimatePresence>
 
       {/* Sticky Global Top Header */}
-      <header className={`sticky top-0 z-30 ${isDark ? "bg-[#071A22]/90" : "bg-[#F0FAFC]/90"} backdrop-blur-xl border-b ${themeBorder} px-4 py-3.5 transition-colors`}>
+      <header className={`sticky top-0 z-30 ${isDark ? "bg-[#071A22]/90" : "bg-[#F0FAFC]/90"} backdrop-blur-xl border-b ${themeBorder} px-4 py-3.5 transition-colors relative`}>
+        {/* Sleek, Non-Blocking Top Progress Bar during background syncs */}
+        {(loading || isUpdating) && (
+          <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#06B6D4] via-[#34D6E8] to-amber-400 animate-pulse" />
+        )}
+        
         <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           
           {/* Logo brand & Back-to-gate trigger */}
@@ -1087,7 +1092,6 @@ export default function App() {
               onClick={() => {
                 setMode(null);
                 setActiveTab(0);
-                showToast("웰컴 게이트로 돌아왔습니다.", "info");
               }}
               className="flex items-center space-x-2 group focus:outline-none text-left"
               title="웰컴 게이트로 복귀"
@@ -1107,7 +1111,6 @@ export default function App() {
                 onClick={() => {
                   const target = mode === "beginner" ? "expert" : "beginner";
                   setMode(target);
-                  showToast(`${target === "beginner" ? "🔰 초보 간편요약" : "📊 고수 풀데이터"} 모드로 전환했습니다.`, "info");
                 }}
                 className={`text-[11px] font-bold px-2.5 py-1 rounded-full border transition-all ${themeBadge}`}
               >
@@ -1119,6 +1122,13 @@ export default function App() {
           {/* Clock, AI Re-evaluate, Theme Switcher row */}
           <div className="flex items-center justify-between sm:justify-end gap-3 w-full sm:w-auto">
             
+            {/* Background syncing text indicator */}
+            {(loading || isUpdating) && (
+              <span className="text-[10px] text-[#34D6E8] font-mono animate-pulse hidden md:inline-block">
+                ● 실시간 기상 연동 갱신 중...
+              </span>
+            )}
+
             {/* Clock */}
             <div className={`px-2.5 py-1 rounded-lg ${themeSubBg} border ${themeBorder} flex items-center space-x-2 text-xs font-mono`}>
               <div className="w-2 h-2 rounded-full bg-amber-500 animate-ping" />
@@ -1130,12 +1140,12 @@ export default function App() {
               {/* Force AI Calculation refresh */}
               <button
                 onClick={handleFullAIBriefingRefresh}
-                disabled={isUpdating}
+                disabled={isUpdating || loading}
                 className="bg-[#06B6D4] text-white hover:bg-[#0891b2] disabled:bg-slate-800 disabled:text-slate-500 p-2 rounded-lg text-xs font-semibold flex items-center justify-center transition-all cursor-pointer"
                 id="btn-re-evaluate"
                 title="Gemini 3.5 구글 실시간 검색 연동하여 장전 기상도를 긴급 분석 및 갱신합니다."
               >
-                {isUpdating ? (
+                {isUpdating || loading ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
                 ) : (
                   <RefreshCw className="w-4 h-4" />
@@ -1274,149 +1284,72 @@ export default function App() {
             </section>
 
             {/* 5. Tactical Checklist (위험 대응 시나리오) - Tab 0 Bottom */}
-            <section className="space-y-5" id="mental-defense-protocol">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#06B6D4]/10 pb-3">
+            <section className="space-y-6" id="mental-defense-protocol">
+              <div className="border-b border-red-500/20 pb-3">
                 <div className="space-y-1">
-                  <h3 className="text-xl font-extrabold flex items-center tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[#FF5B72] via-[#34D6E8] to-[#92feff]">
-                    <Shield className="w-5.5 h-5.5 text-[#FF5B72] mr-2 animate-pulse" />
-                     아침 뇌동매매 방어 대응 프로토콜
+                  <h3 className="text-xl font-extrabold flex items-center tracking-tight text-red-500">
+                    <Shield className="w-6 h-6 text-red-500 mr-2 shrink-0 animate-pulse" />
+                    🚨 아침 시초가 뇌동매매 방지 핵심 경고판
                   </h3>
-                  <p className="text-xs opacity-70 font-light">
-                    장이 개시되기 전, 극단적 시초가 뇌동 추격을 완전 차단하기 위한 필수 행동 강령
+                  <p className="text-xs opacity-75 font-light">
+                    오전 9시 장 개시 전후 30분, 자산 유실률이 가장 높은 '부화뇌동 추격 진입'을 전면 방어하기 위한 긴급 경시 강령
                   </p>
-                </div>
-                
-                {/* Protocol charging state */}
-                <div className="shrink-0 flex items-center space-x-2.5">
-                  <span className="text-[10px] font-mono opacity-80 uppercase tracking-widest">방막 충전율 :</span>
-                  <div className="w-28 bg-slate-950/80 rounded-full h-3 p-0.5 border border-slate-800 flex items-center">
-                    <div 
-                      className="bg-gradient-to-r from-red-500 via-[#06B6D4] to-emerald-400 h-2 rounded-full transition-all duration-500" 
-                      style={{ 
-                        width: `${(checklist.filter(c => c.checked).length / checklist.length) * 100}%` 
-                      }}
-                    />
-                  </div>
-                  <span className="text-xs font-bold font-mono text-[#34D6E8]">
-                    {Math.round((checklist.filter(c => c.checked).length / checklist.length) * 100)}%
-                  </span>
                 </div>
               </div>
 
-              {/* Complete Overlay Badge */}
-              {checklist.every(c => c.checked) ? (
-                <motion.div 
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="bg-gradient-to-r from-emerald-950/40 via-cyan-950/30 to-slate-950 border border-emerald-500/35 p-4.5 rounded-2xl flex items-center justify-between space-x-3.5 shadow-lg shadow-emerald-500/5 scanline-effect relative overflow-hidden"
-                >
-                  <div className="absolute inset-0 bg-[#06B6D4]/3 opacity-[0.02] mind-alert-pulse-bg" />
-                  <div className="flex items-center space-x-3.5 z-10">
-                    <div className="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/40 shrink-0">
-                      <Sparkles className="w-5 h-5 animate-spin" style={{ animationDuration: "5s" }} />
-                    </div>
-                    <div>
-                      <h4 className="text-sm font-bold text-emerald-300">정신 방어 통제관인 장막 완전 영구 가동</h4>
-                      <p className="text-xs opacity-80 font-light mt-0.5">뇌동매매 방어 수칙을 전원 각인 완료하였습니다. 평정심을 바탕으로 시장을 이기십시오.</p>
-                    </div>
+              {/* Bold red banner indicating system threat level */}
+              <div className="bg-red-950/40 border border-red-500/35 p-5 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl scanline-effect relative overflow-hidden">
+                <div className="absolute inset-0 bg-red-500/[0.02] pointer-events-none animate-pulse" />
+                <div className="flex items-center space-x-3.5 z-10">
+                  <div className="w-10 h-10 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center border border-red-500/40 shrink-0">
+                    <AlertCircle className="w-6.5 h-6.5 animate-bounce" />
                   </div>
-                  <div className="text-[10px] font-mono text-emerald-400 font-bold bg-emerald-500/10 border border-emerald-500/25 px-3 py-1.5 rounded-lg shrink-0 hidden md:block">
-                    PRO PROTOCOL ACTIVE
+                  <div>
+                    <h4 className="text-sm font-extrabold text-red-400">아침 시간대 평정심 보존 방막 활성화 권고</h4>
+                    <p className="text-xs opacity-80 font-light mt-0.5">상승 호가에 현혹되어 순간적인 추격 진입을 감행 시 높은 확률로 꼭짓점에 도태될 수 있습니다.</p>
                   </div>
-                </motion.div>
-              ) : (
-                <div className="bg-red-500/5 border border-red-500/15 p-3 rounded-xl flex items-center space-x-2.5 text-xs text-red-200">
-                  <AlertCircle className="w-4 h-4 text-red-400 shrink-0 animate-bounce" />
-                  <span>경보 파동 감지: 눈으로 숙지하고 마음을 꺾지 않을 경우, 아침 동시호가에 뇌동 진입을 허용해 자산이 흔들릴 수 있습니다.</span>
                 </div>
-              )}
+                <div className="text-[10px] font-mono text-red-400 font-black bg-red-500/15 border border-red-500/30 px-3.5 py-1.5 rounded-lg shrink-0">
+                  CRITICAL DEFENSE LIVE
+                </div>
+              </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {checklist.map((item) => {
-                  const isChecked = item.checked;
                   return (
                     <div
                       key={item.id}
-                      onClick={() => {
-                        const updated = checklist.map(cell => {
-                          if (cell.id === item.id) {
-                            return { ...cell, checked: !cell.checked };
-                          }
-                          return cell;
-                        });
-                        setChecklist(updated);
-                        showToast(
-                          isChecked 
-                            ? `[${item.scenario.slice(0, 7)}...] 수칙 다짐을 유예했습니다.` 
-                            : `[${item.scenario.slice(0, 10)}...] 뇌동 자제 및 정밀 전술을 마음 속에 완벽히 명심했습니다.`,
-                          isChecked ? "info" : "success"
-                        );
-                      }}
-                      className={`relative p-5 rounded-2xl border transition-all duration-500 cursor-pointer flex flex-col justify-between overflow-hidden select-none select-none min-h-[220px] group ${
-                        isChecked
-                          ? "bg-emerald-950/30 border-emerald-500/50 shadow-md shadow-emerald-950/10 text-[#EAFBFF]"
-                          : "bg-slate-950/90 hover:bg-slate-900 border-dashed mind-alert-glow-card"
-                      }`}
+                      className="relative p-5 rounded-2xl border bg-slate-950/90 border-red-500/30 shadow-lg shadow-red-950/10 flex flex-col justify-between min-h-[190px] overflow-hidden"
                     >
-                      {/* Abstract pulse background for non-clicked states */}
-                      {!isChecked && (
-                        <div className="absolute inset-0 bg-red-500/[0.02] pointer-events-none animate-pulse" />
-                      )}
+                      {/* Warning Pulse Backing */}
+                      <div className="absolute inset-0 bg-red-500/[0.015] pointer-events-none" />
 
-                      {/* Header block with status indication */}
                       <div className="space-y-3 z-10">
                         <div className="flex items-center justify-between">
-                          <span className={`text-[10px] tracking-wide font-mono px-2 py-0.5 rounded-md border font-semibold ${
-                            isChecked 
-                              ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" 
-                              : "bg-[#FF5B72]/10 text-[#FF5B72] border-[#FF5B72]/20"
-                          }`}>
-                            {isChecked ? "🛡️ 뇌동 보호 해제" : "🚨 통제 프로토콜"}
+                          <span className="text-[10px] tracking-wide font-mono px-2 py-0.5 rounded-md border font-extrabold bg-red-500/10 text-red-500 border-red-500/20">
+                            📢 경고 조항 {item.id.toUpperCase()}
                           </span>
-                          
-                          <div className={`w-3 h-3 rounded-full ${
-                            isChecked ? "bg-emerald-500 animate-pulse" : "bg-red-500 animate-ping"
-                          }`} />
+                          <div className="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping" />
                         </div>
 
                         <div className="space-y-1.5">
-                          <span className="text-[10px] opacity-60 font-mono font-bold block uppercase">
-                            [상황 조건]
+                          <span className="text-[9px] text-red-400 font-mono font-black block uppercase tracking-wider">
+                            [상황 발생 시]
                           </span>
-                          <h4 className="text-sm font-bold leading-relaxed">
+                          <h4 className="text-xs font-bold leading-relaxed opacity-95">
                             {item.scenario}
                           </h4>
                         </div>
                       </div>
 
-                      {/* Body Action details with glow underline */}
-                      <div className="space-y-4 z-10 pt-4 border-t border-[#153440]/40">
-                        <p className={`text-xs leading-relaxed font-light ${
-                          isChecked ? "text-slate-300" : "text-[#EAFBFF]"
-                        }`}>
+                      {/* Body Action details */}
+                      <div className="space-y-2 z-10 pt-3.5 border-t border-red-500/10 mt-3">
+                        <span className="text-[9px] text-emerald-400 font-mono font-black block uppercase tracking-wider">
+                          [기계적 정석 전술]
+                        </span>
+                        <p className="text-xs leading-relaxed font-light text-slate-300">
                           {item.action}
                         </p>
-
-                        {/* Interactive Seal Button */}
-                        <div className="pt-2">
-                          <div className={`w-full py-2 px-3 rounded-xl border text-[11px] font-bold tracking-wider flex items-center justify-center space-x-2 transition-all ${
-                            isChecked
-                              ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30 font-extrabold"
-                              : "bg-[#FF5B72]/10 hover:bg-[#FF5B72]/20 text-[#FF5B72] border-[#FF5B72]/30 animate-pulse"
-                          }`}>
-                            {isChecked ? (
-                              <>
-                                <Check className="w-3.5 h-3.5 stroke-[3]" />
-                                <span>정치·심리 숙지 완료</span>
-                              </>
-                            ) : (
-                              <>
-                                <AlertCircle className="w-3.5 h-3.5 animate-bounce" />
-                                <span>서약 후 발광 해제하기</span>
-                              </>
-                            )}
-                          </div>
-                        </div>
                       </div>
                     </div>
                   );
@@ -1722,7 +1655,7 @@ export default function App() {
             </section>
 
             {/* 3. Market Multi Screener (고수 전용 기능) */}
-            <section className="space-y-4">
+            <section className="space-y-4" id="screener-section">
               <h3 className="text-lg font-bold flex items-center">
                 <span className="text-[#06B6D4] mr-2">✦</span> 마켓 멀티 스크리너 5대 필터
               </h3>
@@ -1741,7 +1674,13 @@ export default function App() {
                       key={p.id}
                       onClick={() => {
                         setActiveValuePreset(p.id as any);
-                        showToast(`${p.label} 스크리너 필터가 기동되었습니다.`, "info");
+                        // Assigning viewport focus and scroll position on category click
+                        setTimeout(() => {
+                          const anchor = document.getElementById("screener-results-anchor");
+                          if (anchor) {
+                            anchor.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                          }
+                        }, 40);
                       }}
                       className={`py-2 px-1 rounded-lg text-[11px] font-bold transition-all focus:outline-none cursor-pointer ${
                         activeValuePreset === p.id 
@@ -1753,6 +1692,9 @@ export default function App() {
                     </button>
                   ))}
                 </div>
+
+                {/* Screener Output Rows Anchor */}
+                <div id="screener-results-anchor" className="scroll-mt-24" />
 
                 {/* Screener Output Rows */}
                 <div className="space-y-4">
@@ -2296,7 +2238,8 @@ export default function App() {
                 key={tab.id}
                 onClick={() => {
                   setActiveTab(tab.id);
-                  showToast(`[${tab.label}] 탭 페이지를 로드했습니다.`, "info");
+                  // Instantly align window to top so the selected view starts at the correct position
+                  window.scrollTo({ top: 0, behavior: "instant" });
                 }}
                 className="flex flex-col items-center justify-center space-y-1 py-1.5 px-3.5 rounded-2xl transition-all cursor-pointer focus:outline-none"
               >
