@@ -176,11 +176,11 @@ const FALLBACK_BRIEFING: BriefingData = {
     accent: "#ff9100",
     gradientText: "from-amber-200 to-orange-400"
   },
-  summary: "미국 연준의 추가 금리 인하 신호와 국채 금리 안정화 속에 국내 반도체(삼성전자·SK하이닉스) 수혜와 환율 안정화가 상반기 훈풍을 일으키는 아침입니다.",
+  summary: "미국의 금리 인하 소식과 전 세계 돈 흐름 안정화 덕분에, 한국 대표 반도체 회사들(삼성전자, SK하이닉스)에 유익한 활력이 보태지고 아침 주식 시장 분위기도 한결 활기차게 시작할 준비를 하고 있습니다.",
   coreSignal: {
-    title: "미국 10년물 국채 금리 연 4.1% 이하 붕괴",
-    reason: "인플레이션 둔화 추세가 완전 착륙 국면에 접어들면서 채권 금리가 급격히 하향 흐름을 보이고 있습니다.",
-    result: "외국인의 신흥국 자금 유입이 강화되어 코스피 반도체 및 고위험 성장섹터(바이오/인터넷)로의 대대적 매수 유입이 기대되는 신호입니다."
+    title: "세계 대출 금리 기준선(미국 국채 이자율) 연 4.1% 이하로 하락",
+    reason: "물가가 확실하게 제자리를 찾아가고 있다는 유익한 성적표들이 나오면서, 전 세계 은행 이자율이 차츰 낮아지고 있습니다.",
+    result: "해외 큰손 투자자들이 한국 주식 시장을 긍정적으로 바라보게 되어, 반도체나 바이오, 인터넷처럼 미래가 유망한 성장 회사 주식들을 많이 살 수 있습니다."
   },
   moneyFlow: {
     tradingValue: [
@@ -233,12 +233,12 @@ const FALLBACK_BRIEFING: BriefingData = {
   },
   sectorOutlook: {
     list: [
-      { name: "반도체 (Semiconductor)", status: "positive", comment: "글로벌 HBM 수혜 및 금리 안정에 힘입어 선두 종목 중심 거래대금 가중 폭발." },
-      { name: "바이오 (Biotech)", status: "positive", comment: "플랫폼 기술수출 보유주(알테오젠 등) 개별 모멘텀 지속 및 고금리 해제 수혜 지속 가중." },
-      { name: "이차전지 (Battery)", status: "negative", comment: "유럽 차 수요 둔화 우려 및 글로벌 원자재 가격 소폭 안정 장벽에 양극재 기업 단기 조정을 겪는 구간." },
-      { name: "방산 · 에너지 (Defense & Utilities)", status: "positive", comment: "유럽 및 중동 수주 가속화 및 동해 가스전 테마에 따른 공공 인프라 기업 자금 흐름 연장." },
-      { name: "자동차 (Automotive)", status: "neutral", comment: "탄탄한 실적 지탱력과 밸류업 적극 참여 및 분기 고배당 매력은 높으나 미국 빅테크 집중세로 소폭 소외 동향." },
-      { name: "인터넷 플랫폼 (IT Portal)", status: "neutral", comment: "금리 하락 효과 대비 네이버/카카오 AI 모멘텀이 상대적으로 약해 단기 변동성 혼조 국면 지속." }
+      { name: "반도체 (Semiconductor)", status: "positive", comment: "미국의 고성능 부품 구매 수혜와 안정적인 대출 금리 분위기 덕분에 대표 대장주 위주로 활발한 매매가 펼쳐지고 있습니다." },
+      { name: "바이오 (Biotech)", status: "positive", comment: "국산 우수 신약 개발 기술을 수출한 유망 바이오 대기업들이 지속적으로 높은 관심과 응원을 가득 모으고 있습니다." },
+      { name: "이차전지 (Battery)", status: "negative", comment: "해외에서 전기차 수요 속도가 조금 느려졌다는 소식과 재료 공급 가격 변동으로 관련 배터리 부품 회사들이 잠시 차분하게 대기 중입니다." },
+      { name: "방산 · 에너지 (Defense & Utilities)", status: "positive", comment: "해외 정식 수출 소식이 힘을 보태고 있거나, 가스 개발 같은 굵직한 국내 프로젝트 기대감으로 관련 회사들에 거래가 활기를 띠고 있습니다." },
+      { name: "자동차 (Automotive)", status: "neutral", comment: "꾸준한 이윤과 정기적인 보너스(배당금)가 주어지는 탄탄함이 돋보이지만, 해외 기술주 집중세로 인해 국내 자동차 회사는 잠시 대기 중입니다." },
+      { name: "인터넷 플랫폼 (IT Portal)", status: "neutral", comment: "기준 이자율 하락의 긍정적 효과에도 불구하고, 새로운 인공지능 서비스 경쟁 소식이 아직 차분하게 조율되는 국면입니다." }
     ]
   },
   economicCalendar: [
@@ -250,53 +250,53 @@ const FALLBACK_BRIEFING: BriefingData = {
   ],
   issuesReport: {
     list: [
-      { title: "미국 인플레이션 안정 국면 완연, '9월 인하' 확률 70% 돌파", context: "미 노동부 발표 물가지수가 3회 연속 예상치를 하회함에 따라 연준의 매파적 목소리가 무뎌졌습니다. 가상 자산 시장 및 이머징 마켓 전반에 대규모 환차익 유인자금이 늘어나고 있습니다.", impact: "외국계 장기 채권 펀드의 아시아계 주식 비중 확대로 이끄는 촉진 요인입니다." },
-      { title: "반도체 HBM을 둘러싼 엔비디아 공급 다변화, 공급망 전쟁 심화", context: "삼성전자의 5세대 HBM3E 검증 완료 루머 속에 하이닉스의 지배적 공급권과의 상생 조율이 논의되고 있습니다. 주가 격차 축소 베팅 거래가 어젯밤 미국 야간 지수와 유통 매도물량에서 감지되었습니다.", impact: "두 반도체 대장주의 교차 수급과 코스닥 장비 소부장(소재·부품·장비)의 일별 등락 주기를 활성화시킵니다." },
-      { title: "동해 가스전 '대왕고래' 첫 시추 후보 안 확정 및 탐사 예산 집중", context: "정부가 공식으로 대변하는 동해 심해 가스 유전 시추 작전이 주말 전후 구체 가이드라인을 송출할 것입니다. 가스공사와 관련 철강·가스 배관 테마주들의 대량 장전 수급 매치업이 재점화되고 있는 시점입니다.", impact: "단기 모멘텀에 의한 초고변동성 구간에 있으므로 철저한 분할 진입 시나리오가 권고된다는 점을 상기하십시오." }
+      { title: "미국 물가가 차츰 안정되는 중, 올해 가을 대출 금리 인하 가능성 솔솔", context: "미국의 공식 물가 지표가 연달아 안정감을 보이며, 머지않아 은행 이자율이 내려갈 것이라는 기대가 커졌습니다. 이에 따라 세계 각지의 투자자들이 한국 주식 시장으로 돈을 활기차게 유입시킬 배경이 마련되고 있습니다.", impact: "외국계 대형 투자자들이 한국의 주요 주식들을 차분히 늘려갈 수 있는 든든한 신호입니다." },
+      { title: "스마트 기기용 차세대 반도체의 전 세계적 필요성 상승 및 경쟁 활성화", context: "삼성전자가 새로운 까다로운 기술 테스트 통과에 가까워졌다는 긍정적인 기대와, SK하이닉스가 독자적으로 구축한 부품 판매 역량이 조화롭게 경쟁하고 있습니다.", impact: "한국을 대표하는 반도체 대기업 두 곳과 그에 관련된 핵심 장비, 부품 회사들도 함께 생기를 얻게 만드는 불꽃이 됩니다." },
+      { title: "삼면이 넓은 동해 유전 개발 시추 이야기로 시장의 에너지 테마 관심 가중", context: "정부의 동해 해양 탐사 계획이 보다 구체적인 실행 방안으로 다가오기 시작했습니다. 이에 따라 에너지나 철강 분야의 공기업 및 관련 자재 주식들이 오늘 아침에도 화제의 중심에 올랐습니다.", impact: "이러한 뉴스는 하루 만에도 오르락 내리락 폭이 무척 심합니다. 초보자분들은 성급하게 뛰어들지 말고 안전하게 눈으로 보며 흐름을 익히는 것이 아주 중요합니다." }
     ]
   },
   overnightRecap: {
-    summary: "어젯밤 뉴욕 증시는 완만한 금리 안정 국면에 다우(+0.36%)는 보합세, 나스닥(+1.19%)은 테슬라 및 브로드컴 등 독점 반도체 패키징 기업 폭등으로 전고점을 경신하였습니다. 야간 KOSPI200 지수 선물이 0.85% 급반등 마감하며 금일 국내 개막 지수 역시 시초 갭상승 출발 예정입니다.",
-    details: "유럽 증시는 정치적 교착 완화 속에 독일 DAX(+0.7%) 및 영국 FTSE(+0.4%) 반등에 동반 성공했으며 엔화는 BOJ 발표를 조율하며 달러당 156.4엔대에 정체되었습니다."
+    summary: "어제 미국 증시는 안정적인 대출 금리 하락 분위기 속에 훌륭하게 하루를 보냈습니다. 특히 유명한 해외 미래차 기업과 정보통신 기업들이 크게 오르며 최고점을 경신했고, 그 기운 덕분에 한국 증시도 오늘 아침 힘차게 동반 상승하며 시작할 것으로 보입니다.",
+    details: "독일(+0.7%)이나 영국(+0.4%) 등 유럽의 주요 나라도 함께 화창한 오름세를 보였고, 까다로운 세계 돈 환율 가격도 크게 요동치지 않고 조용히 원래 위치를 지켰습니다."
   },
   strategyChecklist: {
     list: [
-      { id: "s1", scenario: "코스피 시초 갭상승 0.8% 이상 발생 시", action: "추격 매수보다는 10시 외국인 수동 순매수 방향을 확인하고 2차 분할로 대응하십시오.", checked: false },
-      { id: "s2", scenario: "이차전지 양극재 종목의 동시호가 하락세 지속 시", action: "급하게 매도하기보다 기관 거래대금 분산이 끝나는 점심시간 저점 지지라인에서 단기 지지반등을 포착하십시오.", checked: false },
-      { id: "s3", scenario: "엔비디아 협력 라인 핵심 부품주의 공급 확장 단독 뉴스 출현 시", action: "시초가에 쏠렸다가 빠지는 흔들기에 넘지 말고 거래량 상위에 랭크 고착 시 분할 차익실현에 돌입해 수익을 챙기십시오.", checked: false }
+      { id: "s1", scenario: "아침에 주식 시장이 시작하자마자 코스피 지수가 0.8% 넘게 크게 오를 때", action: "마음 급하게 따라 사지 말고, 오전 10시쯤 외국인 투자자들이 진짜 많이 사는지 보고 천천히 나누어서 구매하세요.", checked: false },
+      { id: "s2", scenario: "이차전지 같은 인기 부품 주식의 가격이 개장 전에 내려가고 있을 때", action: "무서워서 급하게 다 팔지 말고, 거래가 차분해지는 점심시간에 다시 가격이 오르는지 먼저 눈여겨보세요.", checked: false },
+      { id: "s3", scenario: "유명한 외국 회사(엔비디아 등)와 거래하게 되었다는 좋은 뉴스가 아침에 떴을 때", action: "반짝 올랐다가 갑자기 뚝 떨어져 손해를 볼 수 있으니 무조건 사지 말고, 사람들이 진짜 많이 사는지 거래량을 확인하며 안전하게 수익을 챙기세요.", checked: false }
     ]
   },
   mindmap: {
     nodes: {
       id: "score78",
-      label: "금일 투자매력 (78점)",
+      label: "오늘 아침 안심 날씨 (78점)",
       color: "#ff9100",
-      description: "금리 하안화 및 반도체 수급 강화 촉진기",
+      description: "대출 금리 부담 완화 및 대기업 위주 수급 유입 세력 활성화",
       children: [
         {
           id: "sec1",
-          label: "반도체 수급 대규모 유입",
+          label: "반도체 관련 호재 전반 유입",
           color: "#4cc9f0",
-          relation: "시초 갭상승 견인",
+          relation: "기분 좋은 아침 출발",
           children: [
-            { id: "st1-1", label: "SK하이닉스 (고부가가치 HBM 최선두)", color: "#1e3a8a", metric: "수급 대장" },
-            { id: "st1-2", label: "삼성전자 (HBM3E 납품 가속 로드)", color: "#1e3a8a", metric: "바닥 반등세" },
-            { id: "st1-3", label: "소부장 한미반도체/이오테크닉스", color: "#1e3a8a", metric: "낙폭 과대 매수" }
+            { id: "st1-1", label: "SK하이닉스 (고부가가치 부품 최선두)", color: "#1e3a8a", metric: "많은 사람들이 거래 중" },
+            { id: "st1-2", label: "삼성전자 (차세대 대량 납품 소식 다가옴)", color: "#1e3a8a", metric: "바닥 다지고 출발" },
+            { id: "st1-3", label: "주변 정밀 조립 및 부속 장비 회사들", color: "#1e3a8a", metric: "골고루 훈풍" }
           ]
         },
         {
           id: "sec2",
-          label: "바이오 라이선스아웃",
+          label: "대장 바이오 기술 수출 성과",
           color: "#4cc9f0",
-          relation: "글로벌 학회 시즌 수혜",
+          relation: "해외 학회 소식 공유 수혜",
           children: [
-            { id: "st2-1", label: "알테오젠 (인간 히알루로니다제 이정표)", color: "#1e3a8a", metric: "독보적 성장" },
-            { id: "st2-2", label: "셀트리온 (합병 시너지 및 램시마 매출)", color: "#1e3a8a", metric: "실적 턴어라운드" }
+            { id: "st2-1", label: "알테오젠 (세계적인 파트너십 구축 완료)", color: "#1e3a8a", metric: "독보적인 계약 성과" },
+            { id: "st2-2", label: "셀트리온 (안정적인 글로벌 실적 증대)", color: "#1e3a8a", metric: "꾸준한 이윤 창출" }
           ]
         },
         {
           id: "sec3",
-          label: "대규모 시추 테마",
+          label: "대규모 해양 테마 탐사",
           color: "#4cc9f0",
           relation: "기획재정 정책 가이드 국면",
           children: [
@@ -308,27 +308,27 @@ const FALLBACK_BRIEFING: BriefingData = {
   },
   valueScreenerPresets: {
     growth: [
-      { name: "알테오젠", code: "196170", price: 298500, pe: 120.4, roe: 18.2, divYield: 0.0, highlight: "매출성장률 120%", reason: "정맥주사 대체 플랫폼 기술 계약금 유속 증대" },
-      { name: "한화에어로스페이스", code: "012450", price: 218500, pe: 22.4, roe: 14.8, divYield: 1.1, highlight: "수주잔고 28조원", reason: "K9자주포 글로벌 대만 및 유럽 국가 수출 연쇄" },
-      { name: "SK하이닉스", code: "000660", price: 184500, pe: 18.5, roe: 11.2, divYield: 0.8, highlight: "영업익 전분기 대비 82%↑", reason: "HBM3E 전 분야 단독 급공급에 따른 역사적 영업이익률" }
+      { name: "알테오젠", code: "196170", price: 298500, pe: 120.4, roe: 18.2, divYield: 0.0, highlight: "작년보다 매출 2배 넘게 급증", reason: "독보적인 신약 주사 기술로 세계 무대에서 기분 좋은 큰 이익을 벌고 있음" },
+      { name: "한화에어로스페이스", code: "012450", price: 218500, pe: 22.4, roe: 14.8, divYield: 1.1, highlight: "밀린 일거리만 무려 28조원어치", reason: "우리나라 고퀄리티 정밀 국방 제품이 해외 여러 국가로 연달아 대박 수출 중" },
+      { name: "SK하이닉스", code: "000660", price: 184500, pe: 18.5, roe: 11.2, divYield: 0.8, highlight: "최근 회사 이윤이 무려 82% 상승", reason: "최신 컴퓨터 인공지능에 들어가는 1위 필수 부품을 전 세계에 거의 도맡아 공급 중" }
     ],
     value: [
-      { name: "현대차", code: "005380", price: 242500, pe: 5.4, roe: 14.5, divYield: 4.8, highlight: "PBR 0.62배", reason: "인도법인 상장 추진 및 분기 배당, 주주환원 확대 정책 대장" },
-      { name: "KB금융", code: "105560", price: 78500, pe: 6.2, roe: 8.9, divYield: 4.5, highlight: "PBR 0.48배", reason: "자사주 3,200억 소각 및 보통주자본비율 최적화 공시" },
-      { name: "기아", code: "000270", price: 116800, pe: 4.8, pbr: 0.81, roe: 18.9, divYield: 5.6, highlight: "PBR 0.81배", reason: "글로벌 완성차 최상위 마진 및 강력한 기보유 자사주 소각 추진" }
+      { name: "현대차", code: "005380", price: 242500, pe: 5.4, roe: 14.5, divYield: 4.8, highlight: "실제 가치보다 무척 저렴함", reason: "외국 대표 도시에 지사 상장 준비 및 주주들에게 돌려주는 보너스(배당금) 확대 대장" },
+      { name: "KB금융", code: "105560", price: 78500, pe: 6.2, roe: 8.9, divYield: 4.5, highlight: "회사가 지닌 알짜 돈 대비 초저평가", reason: "회사 스스로 주식을 사들여 시중에 없애버림으로써(소각) 기존 주주 가치를 쑥쑥 상승시킴" },
+      { name: "기아", code: "000270", price: 116800, pe: 4.8, pbr: 0.81, roe: 18.9, divYield: 5.6, highlight: "차 파는 이윤율이 업계 최고 수준", reason: "전 세계를 무대로 탄탄하게 돈을 잘 벌면서, 주주 환원과 친절한 금융 우대 서비스 실시" }
     ],
     dividend: [
-      { name: "한국전력", code: "015760", price: 20200, pe: 4.5, roe: 6.2, divYield: 2.1, highlight: "흑전 기조 유지", reason: "누적 미수금 보완 및 연료 단가 하락 수혜, 고연간 배당 기조 복귀 추진" },
-      { name: "신한지주", code: "055550", price: 54100, pe: 5.9, roe: 8.2, divYield: 4.4, highlight: "분기 균등배당", reason: "금리 고정기 순이자마진 지탱과 선진국 스탠다드 주주보호 자사주 매입" }
+      { name: "한국전력", code: "015760", price: 20200, pe: 4.5, roe: 6.2, divYield: 2.1, highlight: "안정적인 흑자로 돌아선 상황", reason: "전기 요금 합리화와 해외 연료 구매비 하향 흐름 덕분에 다시 착한 정상 이익 구조로 진입" },
+      { name: "신한지주", code: "055550", price: 54100, pe: 5.9, roe: 8.2, divYield: 4.4, highlight: "3개월마다 꼬박꼬박 배당금 지급", reason: "이자가 잘 들어오고 연체 위험이 거의 없는 초안전 금융지주로서, 투자자를 든든하게 대우" }
     ],
     surging: [
-      { name: "한국가스공사", code: "036460", price: 42100, pe: 12.5, roe: 4.5, divYield: 1.5, highlight: "거래대금 폭발 (전주比 +412%)", reason: "동해 가스전 국책 추진 위상 속 정성적, 정량적 자금 주체들의 매입세 및 숏 스퀴즈 유발" },
-      { name: "삼양식품", code: "003230", price: 562000, pe: 24.5, roe: 28.2, divYield: 1.1, highlight: "사상 최고가 랠리 (영업익 110%↑)", reason: "국내 라면 제조사 중 수출 이익 모멘텀 1위, 미국/유럽 까르보불닭 열풍 기조 고공행진" },
-      { name: "한미반도체", code: "042700", price: 154200, pe: 45.2, roe: 13.8, divYield: 0.9, highlight: "신고가 경신 (5일 누적 +18%)", reason: "엔비디아 연관 체인향 핵심 TC본더 장비 추가 수주 발표로 기관/외인 동시 호가 집중세 유도" }
+      { name: "한국가스공사", code: "036460", price: 42100, pe: 12.5, roe: 4.5, divYield: 1.5, highlight: "사람들이 평소보다 4배 넘게 몰려 거래 중", reason: "동해 앞바다 천연가스 시추 개발 소식이 연달아 발표되어 관심 대폭 집중" },
+      { name: "삼양식품", code: "562000", price: 562000, pe: 24.5, roe: 28.2, divYield: 1.1, highlight: "역대 최고가 기록 중 (이윤 110% 폭발)", reason: "매콤한 불닭 스타일 컵라면이 미국과 유럽 마트에서 대성공을 거두며 수출 물량이 부족한 지경" },
+      { name: "한미반도체", code: "042700", price: 154200, pe: 45.2, roe: 13.8, divYield: 0.9, highlight: "연일 역대급 가격 경신 (전주比 +18%)", reason: "글로벌 최고 인공지능 그래픽카드 회사에 필수 특허 장비를 추가로 판매했다는 기분 좋은 보도" }
     ],
     supply: [
-      { name: "삼성전자", code: "005930", price: 73200, pe: 14.5, roe: 8.5, divYield: 2.8, highlight: "외인 11일 연속 순매수", reason: "대규모 수급 가중에 정기 메모리/SSD 반등 시너지 가속화, 패시브 펀드 최우선 주자 유입" },
-      { name: "메리츠금융지주", code: "138040", price: 84200, pe: 5.8, roe: 24.2, divYield: 3.5, highlight: "기관 주간 누적 1위", reason: "자사주 소각 이행률 100% 모범과 ROE의 압도적 시전으로 국내 연기금/공제회 쌍끌이 순매수" }
+      { name: "삼성전자", code: "005930", price: 73200, pe: 14.5, roe: 8.5, divYield: 2.8, highlight: "해외 큰손들이 11일 연속 쉬지 않고 계속 구매", reason: "세계적인 컴퓨터 반도체 가격 회복 신호와 대형 펀드들의 아침 집중 유입세" },
+      { name: "메리츠금융지주", code: "138040", price: 84200, pe: 5.8, roe: 24.2, divYield: 3.5, highlight: "전문 국내 금융기관들이 이번 주 가장 선호한 종목", reason: "번 돈의 상당량을 주주들의 보너스로 아낌없이 환원하겠다는 약속을 투명하게 100% 이행 완료" }
     ]
   }
 };
@@ -339,7 +339,7 @@ export default function App() {
   const [splashProgress, setSplashProgress] = useState<number>(100);
 
   // App Core States
-  const [mode, setMode] = useState<"beginner" | "expert" | null>("expert");
+  const [mode, setMode] = useState<"beginner" | "expert" | null>(null);
   const [activeTab, setActiveTab] = useState<number>(0);
   const [briefing, setBriefing] = useState<BriefingData | null>(FALLBACK_BRIEFING);
   const [stocksList, setStocksList] = useState<CommonStock[]>(FALLBACK_STOCKS);
@@ -498,7 +498,7 @@ export default function App() {
 
       // Determine South Korean Market Segment Text
       if (hour < 8) {
-        setMarketStatusText(`해외 증시 종가 확인 및 여명 분석 구간`);
+        setMarketStatusText(`해외 증시 종가 확인 및 영웅 관문 분석구간`);
       } else if (hour === 8 && min < 30) {
         setMarketStatusText(`장전 대기 (오전 8시 30분 동시호가 시작)`);
       } else if (hour === 8 && min >= 30) {
@@ -556,13 +556,13 @@ export default function App() {
           sector: stock.sector || "금융/제조",
           price: stock.price || 50000,
           metrics: { pe: stock.pe || 10, pbr: stock.pbr || 1, roe: stock.roe || 10, divYield: stock.divYield || 0 },
-          summary: `[여명 시뮬레이션 AI] ${stock.name}은(는) 금리와 소부장 수급 주기상 양호한 가도 지대에 포지셔닝 중입니다.`,
+          summary: `[영웅스탁 AI 분석] 현재 ${stock.name}은(는) 이자율 분위기와 최근 부품 수요 등 여러 조건상 아주 긍정적인 평가 구간에 있습니다.`,
           analysis: [
-            "수급 경향: 연기금 및 기관 우호 금원이 시초 하방 지지 매수세를 견인할 가능성이 높습니다.",
-            "기술적 조율: 지지 반등 라인인 점심 시간 대 수렴 조율에 알맞은 파동 궤적을 띱니다.",
-            "종합 투자 견해: 추격 도태보다는 세밀한 분할 대응으로 차익 분기를 도출해 보십시오."
+            "어떤 사람들이 살까요? 국내 전문 투자 단체나 기관들이 아침 장 시작 즈음에 가격을 든든하게 받쳐줄 가능성이 보입니다.",
+            "언제 보면 좋을까요? 가격 변동성이 차분해지는 점심 무렵에 지지선 부근에서 점차 안정된 모습을 띨 수 있습니다.",
+            "추천하는 공부 팁: 주가가 급하게 올라갈 때 무작정 따라 사지 마시고, 며칠 동안 천천히 나누어 들여다보는 연습이 좋습니다."
           ],
-          comment: "공지: 이 내용은 실시간 AI 호출 제한에 대비한 로컬 백업 가이드로, 원 종목 분석에 유효합니다."
+          comment: "안내: 본 정보는 실제 추천이 아닌 초보자를 위한 공부용 분석 시뮬레이션입니다."
         };
         setAnalysisResult(mockAnalysis);
         showToast(`[${stock.name}] 예비 로컬 종합 분석 결과를 활성화했습니다.`, "info");
@@ -760,7 +760,7 @@ export default function App() {
         if (resData.simulation) {
           showToast("실시간 요인 산식을 바탕으로 점수를 재출력했습니다.", "info");
         } else {
-          showToast("오늘 아침 시장 여명이 전면 실시간 갱신되었습니다.", "success");
+          showToast("오늘 아침 영웅스탁의 시장 전망이 실시간으로 갱신되었습니다.", "success");
         }
       } else {
         // Fallback update on simulation click
@@ -769,7 +769,7 @@ export default function App() {
           const newScore = Math.min(100, Math.max(0, briefing.score + scoreDiff));
           const updated = JSON.parse(JSON.stringify(briefing));
           updated.score = newScore;
-          updated.summary = `[예비 실시간 시뮬레이션] 글로벌 시장 매크로 정합성에 다라 여명 평점이 ${newScore}점으로 조완되었습니다.`;
+          updated.summary = `[아침 시뮬레이션] 해외 큰손들의 거래 동향에 따라 영웅스탁의 오늘 아침 점수가 ${newScore}점으로 조정되었습니다.`;
           
           if (newScore >= 80) {
             updated.skyColor = {
@@ -805,7 +805,7 @@ export default function App() {
     setIsDark(prev => {
       const next = !prev;
       localStorage.setItem("dawn-theme", next ? "dark" : "light");
-      showToast(next ? "여름밤 다크 테마가 활성화되었습니다." : "시원한 여름 라이트 테마가 활성화되었습니다.", "success");
+      showToast(next ? "우주 심해 다크 테마가 활성화되었습니다." : "시원한 클라우드 라이트 테마가 활성화되었습니다.", "success");
       return next;
     });
   };
@@ -816,226 +816,100 @@ export default function App() {
     return s.name.toLowerCase().includes(stockSearchTerm.toLowerCase()) || s.code.includes(stockSearchTerm);
   });
 
-  // Theme Constants Mapper
-  const themeBg = isDark ? "bg-[#071A22] text-[#EAFBFF]" : "bg-[#F0FAFC] text-[#0E2A33]";
-  const themeCard = isDark ? "bg-[#0C2630]/90 border-[#153440] shadow-[#03090b]/40 shadow-xl" : "bg-white border-[#E0ECEF] shadow-md shadow-[#94afb6]/20";
-  const themeText = isDark ? "text-[#EAFBFF]" : "text-[#0E2A33]";
-  const themeTextMuted = isDark ? "text-[#83a2ae] font-light" : "text-slate-500 font-medium";
-  const themeHeading = isDark ? "text-[#EAFBFF] font-serif" : "text-[#0E2A33] font-serif";
-  const themeAccentText = isDark ? "text-[#34D6E8]" : "text-[#06B6D4]";
-  const themeAccentBg = isDark ? "bg-[#34D6E8]/10 text-[#34D6E8] border-[#34D6E8]/20" : "bg-[#06B6D4]/10 text-[#06B6D4] border-[#06B6D4]/20";
-  const themeAccentBtn = isDark ? "bg-[#34D6E8] text-[#071A22] hover:bg-[#5ce0ef]" : "bg-[#06B6D4] text-white hover:bg-[#0891b2]";
-  const themeBorder = isDark ? "border-[#153440]" : "border-[#E0ECEF]";
-  const themeSubBg = isDark ? "bg-[#021117]" : "bg-[#e2f3f6]";
-  const themeBadge = isDark ? "bg-[#11313d] text-[#34D6E8] border-[#1a4454]" : "bg-[#e5f8fb] text-[#06B6D4] border-[#bcecf3]";
+  // Theme Constants Mapper - High contrast primary red and blue (원색 계열) with unified typography
+  const themeBg = isDark ? "bg-[#020914] text-[#F8FAFC]" : "bg-[#F1F5F9] text-[#0F172A]";
+  const themeCard = isDark ? "bg-[#070f1e] border-2 border-red-600 shadow-2xl shadow-red-950/20" : "bg-white border-2 border-blue-600 shadow-xl shadow-blue-500/5";
+  const themeText = isDark ? "text-white" : "text-black";
+  const themeTextMuted = isDark ? "text-slate-300 font-semibold" : "text-slate-700 font-semibold";
+  const themeHeading = isDark ? "text-white font-sans font-extrabold" : "text-black font-sans font-extrabold";
+  const themeAccentText = isDark ? "text-[#ef4444]" : "text-[#2563eb]";
+  const themeAccentBg = isDark ? "bg-red-950/40 text-[#ef4444] border-2 border-[#ef4444]" : "bg-blue-50 text-[#2563eb] border-2 border-[#2563eb]";
+  const themeAccentBtn = isDark ? "bg-[#ef4444] text-white hover:bg-[#dc2626]" : "bg-[#2563eb] text-white hover:bg-[#1d4ed8]";
+  const themeBorder = isDark ? "border-[#ef4444]" : "border-[#2563eb]";
+  const themeSubBg = isDark ? "bg-[#0b1424]" : "bg-[#e5ecf6]";
+  const themeBadge = isDark ? "bg-red-950/20 text-[#ef4444] border-2 border-[#ef4444]" : "bg-blue-50 text-[#2563eb] border-2 border-[#2563eb]";
 
-  // Handle baseline loading indicator (only block if data is absolutely missing)
-  if (!briefing) {
-    return (
-      <div className="min-h-screen bg-[#071A22] flex flex-col items-center justify-center p-8">
-        <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#06B6D4] via-[#34D6E8] to-[#FF5B72] animate-pulse"></div>
-        <div className="max-w-md w-full text-center space-y-6">
-          <div className="flex justify-center">
-            <div className="relative">
-              <div className="absolute -inset-1.5 bg-[#34D6E8] rounded-full blur-md opacity-30 animate-pulse"></div>
-              <div className="w-20 h-20 bg-[#0C2630] rounded-full border border-[#34D6E8]/20 flex items-center justify-center">
-                <Sun className="w-10 h-10 text-[#34D6E8] animate-spin" style={{ animationDuration: "12s" }} />
-              </div>
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <h1 className="text-3xl font-bold font-serif tracking-widest text-[#EAFBFF]">DAWN <span className="text-[#34D6E8]">·</span> 여명</h1>
-            <p className="text-xs text-[#83a2ae] tracking-wider font-light">가장 먼저, 오늘의 주식 시장 기상을 열다</p>
-          </div>
-
-          <div className="bg-[#0C2630]/90 rounded-2xl p-6 border border-[#153440] space-y-4 shadow-xl">
-            <div className="flex items-center space-x-3 text-left">
-              <Loader2 className="w-5 h-5 text-[#34D6E8] animate-spin shrink-0" />
-              <div>
-                <p className="text-sm font-medium text-[#EAFBFF]">장전 공해 지표 수렴 기약 중</p>
-                <p className="text-xs text-[#83a2ae] font-light mt-0.5">야후 파이낸스 및 네이버 실시간 API 패치 통합 중...</p>
-              </div>
-            </div>
-            <div className="w-full bg-[#021117] h-1 rounded-full overflow-hidden">
-              <div className="bg-[#34D6E8] h-full w-2/3 animate-pulse rounded-full"></div>
-            </div>
-          </div>
-
-          <p className="text-[11px] text-[#83a2ae]/60">투자 참고용 정보입니다. 최종 투자 판단과 책임은 본인에게 있습니다.</p>
-        </div>
-      </div>
-    );
-  }
-
-  // --- RENDER 1: 4.2S SPLASH SCREEN ---
-  if (splashActive) {
-    return (
-      <div className="min-h-screen bg-[#071A22] relative flex flex-col justify-between p-6 overflow-hidden">
-        {/* Glow effect */}
-        <div className="absolute top-[20%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-tr from-[#06B6D4]/10 via-[#34D6E8]/5 to-transparent blur-3xl rounded-full pointer-events-none"></div>
-
-        <div className="w-full max-w-7xl mx-auto flex justify-between items-center z-10 pt-4">
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#06b6d4] to-[#34d6e8] flex items-center justify-center shadow-lg shadow-[#06b6d4]/20">
-              <Sun className="w-4.5 h-4.5 text-[#071A22]" />
-            </div>
-            <span className="text-lg font-bold tracking-widest text-[#EAFBFF] font-serif">DAWN · 여명</span>
-          </div>
-          <span className="text-[10px] font-mono text-[#34D6E8] tracking-widest uppercase bg-[#11313d] px-2.5 py-1 rounded-md border border-[#1a4454]">PRE-MARKET BROADCAST</span>
-        </div>
-
-        <div className="max-w-2xl mx-auto text-center space-y-8 z-10 my-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9 }}
-            className="space-y-4"
-          >
-            <span className="text-xs tracking-widest font-mono text-[#34D6E8] bg-[#34D6E8]/10 px-3 py-1.5 rounded-full border border-[#34D6E8]/20 inline-block uppercase">
-              🌞 SUMMER EDITION v27
-            </span>
-            <h1 className="text-6xl md:text-7xl font-extrabold tracking-tight font-serif text-[#EAFBFF] leading-none">
-              DAWN <br className="md:hidden" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#06B6D4] via-[#34D6E8] to-[#92feff]">여명 (黎明)</span>
-            </h1>
-            <p className="text-base md:text-lg text-[#83a2ae] font-light max-w-lg mx-auto leading-relaxed">
-              &ldquo;장이 열리기 전, 가장 전술적 각도로 먼저 시장의 온도를 읽어냅니다.&rdquo;
-            </p>
-          </motion.div>
-
-          <div className="max-w-xs mx-auto space-y-2">
-            <div className="w-full bg-[#0C2630] h-1.5 rounded-full overflow-hidden border border-[#153440]">
-              <div 
-                className="bg-gradient-to-r from-[#06B6D4] to-[#34D6E8] h-full transition-all duration-75 rounded-full" 
-                style={{ width: `${splashProgress}%` }}
-              />
-            </div>
-            <div className="flex justify-between items-center text-[10px] text-[#83a2ae] font-mono">
-              <span>여명 분위기 산출 중...</span>
-              <span>{Math.floor(splashProgress)}%</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="w-full max-w-4xl mx-auto text-center z-10 pb-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-[11px] text-[#83a2ae]/40 border-t border-[#153440]/60 pt-6">
-          <p>© 2026 SEOUL PRE-MARKET TERMINAL. ALL RIGHTS RESERVED.</p>
-          <button 
-            onClick={() => setSplashActive(false)}
-            className="text-xs font-mono text-[#34D6E8] hover:text-[#EAFBFF] transition-colors border border-[#34D6E8]/20 px-3.5 py-1.5 rounded-full bg-[#11313d]/40 group"
-          >
-            시작하기 (SKIP INTRO) <span className="group-hover:translate-x-1 inline-block transition-transform">→</span>
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  // --- RENDER 2: BRAND STARTUP WELCOME GATE (MODE PICKER WITH SUMMER THEME) ---
+  // --- RENDER 2: BRAND STARTUP WELCOME GATE (CENTERED DEEP BLUE HOVER LAUNCHER) ---
   if (mode === null) {
     return (
-      <div className={`min-h-screen ${themeBg} flex flex-col justify-between p-6 transition-colors duration-500 relative overflow-hidden`}>
-        {/* Glow behind everything */}
-        <div className="absolute top-[-10%] left-[50%] -translate-x-1/2 w-[600px] h-[500px] bg-gradient-to-b from-[#06B6D4]/8 via-[#34D6E8]/3 to-transparent blur-3xl pointer-events-none rounded-full"></div>
+      <div className="min-h-screen bg-gradient-to-br from-[#020b18] via-[#091a3a] to-[#010610] text-[#F8FAFC] flex flex-col justify-between p-6 relative overflow-hidden font-sans">
+        {/* Deep tech grid pattern backing */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#00e5ff06_1px,transparent_1px),linear-gradient(to_bottom,#00e5ff06_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none" />
+        
+        {/* Soft centered electric blue glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-600/10 blur-[120px] rounded-full pointer-events-none" />
 
-        {/* Header bar */}
-        <header className="max-w-7xl mx-auto w-full flex items-center justify-between z-10 pt-2 pb-6 border-b border-[#06B6D4]/10">
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#06b6d4] to-[#34d6e8] flex items-center justify-center shadow-md">
-              <Sun className="w-4.5 h-4.5 text-slate-950 font-bold animate-pulse" />
+        {/* Top discrete status */}
+        <header className="max-w-7xl mx-auto w-full flex items-center justify-between z-10 pt-2 pb-4 border-b border-red-500/10">
+          <div className="flex items-center space-x-2">
+            <div className="w-6 h-6 rounded-md bg-gradient-to-br from-red-500 to-blue-600 flex items-center justify-center shadow-md">
+              <Sun className="w-3.5 h-3.5 text-slate-950 font-extrabold animate-pulse" />
             </div>
-            <span className="text-xl font-bold tracking-widest font-serif">DAWN <span className="text-[#06B6D4] font-normal font-sans text-sm">여명</span></span>
+            <span className="text-sm font-black tracking-widest font-mono text-red-500">HERO STOCK GATE</span>
           </div>
           <div className="text-right">
-            <p className="text-xs font-mono text-[#06B6D4] uppercase tracking-wide">Pre-Market Terminal</p>
-            <p className="text-[10px] opacity-70 font-mono mt-0.5">KST {kstTime}</p>
+            <p className="text-[10px] font-mono text-slate-400">HERO STOCK SYSTEM • v2.8</p>
           </div>
         </header>
 
-        {/* Pitch content */}
-        <main className="max-w-4xl mx-auto w-full py-12 flex flex-col items-center text-center space-y-12 z-10 my-auto">
-          <div className="space-y-4">
-            <div className={`inline-flex items-center space-x-2 ${themeAccentBg} px-3 py-1.5 rounded-full text-xs font-medium`}>
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>대한민국 개인투자자를 위한 아침 장전 필수 정밀 브리핑</span>
-            </div>
-            <h1 className="text-5xl md:text-6xl font-black tracking-tight leading-tight">
-              장이 열리기 전,<br className="md:hidden" /> 가장 먼저 시장을 읽다.
-            </h1>
-            <p className="max-w-xl mx-auto text-sm md:text-base opacity-80 leading-relaxed font-light">
-              복잡한 헤드라인 뉴스와 해외 거시 지표, 미국 야간 선물 등락을 하나로 요약하여 오늘 코스피/코스닥 대응 전술을 파악합니다. 시그널 정보 밀도를 선택하여 진입하십시오.
-            </p>
-          </div>
-
-          {/* Cards for Mode Gates */}
-          <div className="grid md:grid-cols-2 gap-6 w-full max-w-3xl pt-4">
+        {/* Centralized High-End Terminal Desk Card */}
+        <main className="max-w-xl mx-auto w-full py-12 flex flex-col items-center justify-center text-center z-10 my-auto">
+          <div className="bg-[#0b1424]/90 border-2 border-red-500/40 p-10 md:p-14 rounded-[32px] w-full shadow-[0_0_60px_rgba(239,68,68,0.15)] space-y-8 relative overflow-hidden backdrop-blur-md">
             
-            {/* Beginner mode card */}
-            <button
-              onClick={() => {
-                setMode("beginner");
-                showToast("초보 모드로 진입했습니다. 하단 탭으로 편안하게 둘러보세요.", "success");
-              }}
-              className={`text-left p-8 rounded-3xl border ${themeCard} hover:border-[#06B6D4]/40 transition-all duration-300 group shadow-lg flex flex-col justify-between min-h-[290px] relative overflow-hidden`}
-              id="btn-mode-beginner"
-            >
-              <div>
-                <div className="w-14 h-14 rounded-2xl bg-[#06B6D4]/10 text-[#06B6D4] flex items-center justify-center text-2xl mb-6 border border-[#06B6D4]/20 group-hover:scale-110 transition-transform">
-                  🔰
-                </div>
-                <h2 className="text-2xl font-bold font-serif mb-2 flex items-center justify-between">
-                  <span>초보 모드</span>
-                  <span className="text-xs font-sans font-medium text-[#06B6D4] bg-[#06B6D4]/15 px-2.5 py-0.5 rounded-full border border-[#06B6D4]/20">쉬운 요약</span>
-                </h2>
-                <p className="text-xs opacity-70 leading-relaxed font-light mb-6">
-                  오늘 시장 기상도를 점수와 하늘 색깔로 직관적 관람. 세로로 부담 없이 스크롤하며 핵심 시그널, 당일 장전 필수 일정과 핵심 관련 종목을 쉽게 익힙니다.
-                </p>
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-red-500 via-blue-600 to-red-500" />
+            
+            {/* Spinning decorative radar circles */}
+            <div className="mx-auto w-24 h-24 rounded-full border border-red-500/20 flex items-center justify-center relative">
+              <div className="absolute inset-2 rounded-full border border-dashed border-red-400/40 animate-spin" style={{ animationDuration: "15s" }} />
+              <div className="absolute inset-4 rounded-full border border-red-400/10" />
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-red-500 to-blue-600 flex items-center justify-center shadow-lg shadow-red-400/20">
+                <Sparkles className="w-6 h-6 text-white" />
               </div>
-              <div className="flex items-center text-xs font-bold text-[#06B6D4] group-hover:translate-x-1.5 transition-transform">
-                <span>간편 아침 브리핑 펼치기</span>
-                <ArrowRight className="w-4 h-4 ml-1.5" />
-              </div>
-            </button>
+            </div>
 
-            {/* Expert mode card */}
-            <button
-              onClick={() => {
-                setMode("expert");
-                showToast("고수 모드 트레이딩 터미널이 로드되었습니다. 5개 레이어 정보를 활용해보세요.", "success");
-              }}
-              className={`text-left p-8 rounded-3xl border ${themeCard} hover:border-[#34D6E8]/40 transition-all duration-300 group shadow-lg flex flex-col justify-between min-h-[290px] relative overflow-hidden`}
-              id="btn-mode-expert"
-            >
-              <div>
-                <div className="w-14 h-14 rounded-2xl bg-[#34D6E8]/10 text-[#34D6E8] flex items-center justify-center text-2xl mb-6 border border-[#34D6E8]/20 group-hover:scale-110 transition-transform">
-                  📊
-                </div>
-                <h2 className="text-2xl font-bold font-serif mb-2 flex items-center justify-between">
-                  <span>고수 모드</span>
-                  <span className="text-xs font-sans font-medium text-[#34D6E8] bg-[#34D6E8]/15 px-2.5 py-0.5 rounded-full border border-[#34D6E8]/20">풀데이터 터미널</span>
-                </h2>
-                <p className="text-xs opacity-70 leading-relaxed font-light mb-6">
-                  정보 밀도 극대화된 통합 디지털 뷰. 지표 수렴도, 글로벌 다축 지수 차트, 기관/외인 정량적 흐름과 마켓 멀티 스크리너, 퀀트 백테스터 및 AI 종목 스크리닝 연구실 완벽 탑재.
-                </p>
-              </div>
-              <div className="flex items-center text-xs font-bold text-[#34D6E8] group-hover:translate-x-1.5 transition-transform">
-                <span>프로 터미널 엔진 시동</span>
-                <ArrowRight className="w-4 h-4 ml-1.5" />
-              </div>
-            </button>
+            {/* Glowing Brand Title */}
+            <div className="space-y-3">
+              <h1 className="text-4xl md:text-5xl font-black font-sans tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-yellow-400 to-blue-500">
+                HERO STOCK
+              </h1>
+              <p className="inline-block px-3 py-1 bg-red-600 text-white font-extrabold text-xs rounded-md">
+                영웅스탁 장전 안내판
+              </p>
+            </div>
+
+            <p className="text-sm opacity-90 leading-relaxed font-light text-slate-300 max-w-sm mx-auto">
+              초보 투자자분들을 위해 해외 증시 소식을 이해하기 쉬운 날씨 카드로 변환하고, 개장 전 충동적인 매매 실수를 원천 방지하는 아침 수칙과 유망한 주식을 콕 찝어 보여주는 똑똑한 인공지능 요약판을 가동합니다.
+            </p>
+
+            {/* Main Entrance Button - Sets expert mode to load full dashboard page */}
+            <div className="pt-4">
+              <button
+                onClick={() => {
+                  setMode("expert");
+                  showToast("초보자용 영웅스탁 안심 길잡이를 실행합니다.", "success");
+                }}
+                className="w-full py-4 px-6 rounded-2xl bg-red-600 hover:bg-red-500 text-white font-extrabold tracking-widest text-sm transition-all duration-300 shadow-xl shadow-red-600/30 active:scale-95 cursor-pointer flex items-center justify-center space-x-2.5 border-2 border-yellow-400"
+                id="btn-enter-terminal"
+              >
+                <span>영웅스탁 시작하기</span>
+                <ArrowRight className="w-4 h-4 text-white animate-bounce" />
+              </button>
+            </div>
 
           </div>
         </main>
 
         {/* Footer */}
-        <footer className="w-full text-center py-6 border-t border-[#06B6D4]/10 z-10">
-          <p className="text-[11px] opacity-60 max-w-xl mx-auto leading-relaxed">
-            ⚠️ 투자 참고용 정보입니다. 모든 투자 판단의 최종 주체 및 책임 귀속은 거래를 집행하시는 본인에게 있으며, 여명 서비스는 단순 장전 데이터 산출 및 시뮬레이션을 제공합니다.
+        <footer className="w-full text-center py-4 border-t border-red-500/10 z-10">
+          <p className="text-[10px] text-slate-500 max-w-md mx-auto leading-relaxed font-medium">
+            HERO STOCK TERMINAL © 2026. 모든 핵심 주식 시장 분석 자료는 쉽고 안전하게 풀이된 모의 분석 자료입니다.
           </p>
         </footer>
       </div>
     );
   }
+
+
 
   // --- RENDER 3: PRIMARY UNIFIED APP LAYER (5 BOTTOM TABS SCROLLABLE LAYOUT) ---
   return (
@@ -1069,7 +943,7 @@ export default function App() {
                 <Sparkles className="w-5 h-5 text-[#34D6E8] shrink-0 animate-spin" style={{ animationDuration: "3s" }} />
               )}
               <div className="flex-1">
-                <p className="text-[10px] opacity-60 font-mono mb-0.5">여명 경보 시스템 • {kstTime}</p>
+                <p className="text-[10px] opacity-60 font-mono mb-0.5">영웅스탁 알림 시스템 • {kstTime}</p>
                 <p className="text-xs font-semibold leading-relaxed">{toast.message}</p>
               </div>
             </div>
@@ -1078,10 +952,10 @@ export default function App() {
       </AnimatePresence>
 
       {/* Sticky Global Top Header */}
-      <header className={`sticky top-0 z-30 ${isDark ? "bg-[#071A22]/90" : "bg-[#F0FAFC]/90"} backdrop-blur-xl border-b ${themeBorder} px-4 py-3.5 transition-colors relative`}>
+      <header className={`sticky top-0 z-30 ${isDark ? "bg-[#020914]/90" : "bg-[#F1F5F9]/90"} backdrop-blur-xl border-b ${themeBorder} px-4 py-3.5 transition-colors relative`}>
         {/* Sleek, Non-Blocking Top Progress Bar during background syncs */}
         {(loading || isUpdating) && (
-          <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#06B6D4] via-[#34D6E8] to-amber-400 animate-pulse" />
+          <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-cyan-400 via-sky-400 to-indigo-500 animate-pulse" />
         )}
         
         <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -1096,12 +970,12 @@ export default function App() {
               className="flex items-center space-x-2 group focus:outline-none text-left"
               title="웰컴 게이트로 복귀"
             >
-              <div className="w-7.5 h-7.5 rounded-lg bg-gradient-to-tr from-[#06b6d4] to-[#34d6e8] flex items-center justify-center text-[#071A22] font-black shadow-md group-hover:rotate-12 transition-transform">
+              <div className="w-7.5 h-7.5 rounded-lg bg-gradient-to-tr from-red-500 to-amber-500 flex items-center justify-center text-slate-950 font-black shadow-md group-hover:rotate-12 transition-transform">
                 <Sun className="w-4 h-4 font-black" />
               </div>
               <div>
-                <span className="text-lg font-bold font-serif tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-[#34D6E8]">DAWN</span>
-                <span className="text-[10px] opacity-60 font-sans block tracking-wide">여명 (黎明) · 에이브로</span>
+                <span className="text-sm font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-blue-500 block leading-none">HERO STOCK</span>
+                <span className="text-[8px] text-red-500 tracking-widest uppercase font-mono block leading-none mt-1 font-bold">TERMINAL</span>
               </div>
             </button>
 
@@ -1193,8 +1067,8 @@ export default function App() {
               </div>
 
               <div className="text-center mt-4">
-                <span className="text-[10px] uppercase font-mono tracking-wider opacity-60 block">장전 산출 여명 매력 지각도</span>
-                <span className="text-6 text-6xl md:text-7xl font-light font-serif text-transparent bg-clip-text bg-gradient-to-r from-[#06b6d4] via-[#34d6e8] to-[#92feff] block">
+                <span className="text-[10px] uppercase font-mono tracking-wider opacity-60 block">오늘 아침 영웅스탁 안심 날씨 점수</span>
+                <span className="text-6 text-6xl md:text-7xl font-light font-serif text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-amber-400 to-yellow-400 block">
                   {briefing.score} 점
                 </span>
                 <div className="inline-flex items-center space-x-1.5 bg-[#11313d] text-[#34D6E8] text-[11px] px-3.5 py-1 rounded-full border border-[#1a4454] font-medium mt-1">
@@ -1289,10 +1163,10 @@ export default function App() {
                 <div className="space-y-1">
                   <h3 className="text-xl font-extrabold flex items-center tracking-tight text-red-500">
                     <Shield className="w-6 h-6 text-red-500 mr-2 shrink-0 animate-pulse" />
-                    🚨 아침 시초가 뇌동매매 방지 핵심 경고판
+                    🚨 아침 개장시간 충동구매 방지 안심 약속
                   </h3>
                   <p className="text-xs opacity-75 font-light">
-                    오전 9시 장 개시 전후 30분, 자산 유실률이 가장 높은 '부화뇌동 추격 진입'을 전면 방어하기 위한 긴급 경시 강령
+                    오전 9시 시장이 막 열리는 30분 동안은 가격 변동이 심합니다. 분위기에 휩쓸려 충동적으로 사는 실수를 피하도록 도와주는 초보 지침서입니다.
                   </p>
                 </div>
               </div>
@@ -1860,7 +1734,7 @@ export default function App() {
                     <p className="text-xs opacity-75 mt-2 leading-relaxed font-light">{item.context}</p>
                     
                     <div className="mt-4 bg-[#0a2029] p-3.5 rounded-xl border border-[#153440] flex items-start space-x-2 text-xs">
-                      <span className="text-[#34D6E8] font-bold shrink-0 bg-[#34D6E8]/10 px-1.5 py-0.5 rounded">여명 전망</span>
+                      <span className="text-amber-400 font-bold shrink-0 bg-amber-400/10 px-1.5 py-0.5 rounded">초보자 팁</span>
                       <p className="opacity-90 leading-relaxed font-light text-[11px]">{item.impact}</p>
                     </div>
                   </div>
@@ -2164,7 +2038,7 @@ export default function App() {
                     }}
                     className={`text-xs font-bold px-4 py-2 rounded-xl transition-all font-mono ${themeAccentBtn}`}
                   >
-                    📊 고수모드 즉시 입각
+                    📊 고수 모드 바로 분석하기
                   </button>
                 </div>
               )}
@@ -2173,12 +2047,12 @@ export default function App() {
             {/* 3. 요금제 안내 매트릭스 (5-Tier Plan Matrix) */}
             <section className="space-y-4">
               <h3 className="text-lg font-bold flex items-center">
-                <span className="text-[#06B6D4] mr-2">✦</span> 에이브로 월구독 플랜 안내
+                <span className="text-red-400 mr-2">✦</span> 영웅스탁 프리마켓 구독 안내
               </h3>
 
               <div className={`rounded-2xl border ${themeCard} overflow-hidden shadow-lg`}>
                 <div className="p-4 bg-[#021117]/85 border-b border-[#153440] text-center">
-                  <span className="text-xs font-extrabold text-[#34D6E8] tracking-widest font-mono">DAWN PREMIUM TIER PLANS</span>
+                  <span className="text-xs font-extrabold text-amber-400 tracking-widest font-mono">HERO STOCK PREMIUM PLANS</span>
                   <p className="text-[10px] opacity-70 mt-1">티어별 단계 누적형 아웃룩 권한 비교</p>
                 </div>
 
@@ -2264,7 +2138,7 @@ export default function App() {
         <div className="max-w-2xl mx-auto space-y-4">
           <div className={`text-[11px] opacity-80 px-4 py-3.5 rounded-xl border ${themeBorder} ${isDark ? "bg-[#071a22]/80" : "bg-white/80"} max-w-xl mx-auto leading-relaxed`}>
             📢 <span className="font-extrabold uppercase block mb-1">핵심 안내 및 유의사항</span>
-            여명(DAWN)은 개별 종목을 추천하거나 투자를 유도하지 않으며, 불법 리딩방 등과 무관한 장전 공개 데이터 요약 서비스입니다. 분석 결과 및 백테스트 데이터는 과거 기준 추산 모델일 뿐 실제 투자 수익을 보장하지 않습니다.
+            영웅스탁 장전 터미널(HERO STOCK TERMINAL)은 개별 주식을 절대 함부로 추천하거나 투자를 유도하지 않으며, 투자자분들이 스스로 공부할 수 있도록 도와주는 안전한 데이터 요약 도우미입니다. 모든 보도자료나 모의 통계치는 어디까지나 과거 정보일 뿐 실제 주식 수익을 약속하지 않습니다.
           </div>
           <p className="text-xs font-bold text-amber-500 font-sans select-none leading-relaxed">
             &ldquo; 투자 참고용 정보입니다. 최종 투자 판단과 책임은 본인에게 있습니다. &rdquo;
