@@ -335,11 +335,11 @@ export default function App() {
         setAiScreenerStocks(parsed.data);
         // beautifully formatting results matching screenshots
         const stocksResultText = parsed.data.map((st: any) => (
-          `📍 **${st.name}** (${st.code}) - ${st.sector}\n` +
+          `📍 ${st.name} (${st.code}) - ${st.sector}\n` +
           `• 현재가: ${st.price.toLocaleString()}원 | ROE: ${st.roe}% | 배당금: ${st.divYield}%\n` +
-          `• **추천 분석 근거**: ${st.reason}\n`
+          `• 추천 분석 근거: ${st.reason}\n`
         )).join("\n");
-        setAiTextResult(`💡 **영웅스탁 AI가 엄선해 낸 조건 부합 관찰 종목 포착 결과입니다:**\n\n${stocksResultText}\n* 투자 면책 경고: 본 통계 분석은 참고 자료일 뿐 특정 주식의 1:1 리딩이나 매매 권유가 아니며, 최종 손실 판단은 직접 수행해야 함을 권고드립니다.`);
+        setAiTextResult(`💡 영웅스탁 AI가 엄선해 낸 조건 부합 관찰 종목 포착 결과입니다:\n\n${stocksResultText}\n[투자 면책 경고] 본 통계 분석은 참고 자료일 뿐 특정 주식의 1:1 리딩이나 매매 권유가 아니며, 최종 손실 판단은 직접 수행해야 함을 권고드립니다.`);
         triggerToast("AI 스크리너 분석 조사를 성공했습니다!");
         setAiLoading(false);
       } else {
@@ -354,11 +354,11 @@ export default function App() {
 
         setTimeout(() => {
           const results = fallbackStocks.map(st => (
-            `📍 **${st.name}** (${st.code}) - ${st.market === "KOSPID" ? "KOSPI" : "KOSDAQ"}\n` +
+            `📍 ${st.name} (${st.code}) - ${st.market === "KOSPID" ? "KOSPI" : "KOSDAQ"}\n` +
             `• 현재가: ${st.price.toLocaleString()}원 | 상승률: ${st.changeRate}%\n` +
-            `• **매수 관찰 사유**: 정성적 거시 지표 완화 흐름과 외국인 연속 패시브 순매도 강도 한계로 단기 차트 지지 흐름이 발동될 유력 구간 진입.`
+            `• 매수 관찰 사유: 정성적 거시 지표 완화 흐름과 외국인 연속 패시브 순매도 강도 한계로 단기 차트 지지 흐름이 발동될 유력 구간 진입.`
           )).join("\n\n");
-          setAiTextResult(`💡 **[로컬 백업 엔진 수급분정 수치 도출 결과]**\n\n${results}`);
+          setAiTextResult(`💡 [로컬 백업 엔진 수급분정 수치 도출 결과]\n\n${results}`);
           
           // Hydrate structured object for visual rendering
           const loadedStocks = fallbackStocks.map(st => {
@@ -1198,16 +1198,20 @@ export default function App() {
                                           <span className={`${headingColor} font-black text-xxs`}>[{headingText}]</span>
                                         </div>
                                       );
-                                    } else if (line.startsWith("*") || line.startsWith("🛡️")) {
+                                    } else if (line.startsWith("*") || line.startsWith("🛡️") || line.includes("기계 분석 데이터는") || line.includes("본 통계 분석은")) {
+                                      const cleanLine = line
+                                        .replace(/^\s*[📍📊⚡🛡️*]\s*/g, "")
+                                        .replace(/\*/g, "")
+                                        .trim();
                                       return (
-                                        <p key={lIdx} className="text-xxs text-gray-400 bg-gray-50 p-2 rounded-md leading-normal italic">
-                                          {line}
+                                        <p key={lIdx} className="text-xxs text-gray-400 bg-gray-50 p-2.5 rounded-xl leading-normal italic">
+                                          🛡️ {cleanLine}
                                         </p>
                                       );
                                     } else {
                                       return (
                                         <p key={lIdx} className="text-xs text-gray-700 font-medium pl-1 leading-relaxed">
-                                          {line}
+                                          {cleanLineContent}
                                         </p>
                                       );
                                     }
@@ -1221,7 +1225,7 @@ export default function App() {
                         /* Simple Text Render Backup */
                         <div className="p-4 bg-[#F2F8FF] border border-[#3182F6]/10 rounded-2xl">
                           <pre className="text-xs font-semibold whitespace-pre-wrap leading-relaxed text-[#3182F6] font-sans">
-                            {aiTextResult}
+                            {aiTextResult.replace(/\*\*/g, "")}
                           </pre>
                         </div>
                       )}
