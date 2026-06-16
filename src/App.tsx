@@ -63,20 +63,25 @@ interface Stock {
   market: "KOSPID" | "KOSDAQ";
   change: number;
   changeRate: number;
+  pe?: number;
+  pbr?: number;
+  roe?: number;
+  divYield?: number;
+  sector?: string;
 }
 
 const STOCK_DATABASE: Stock[] = [
-  { name: "화신정공", code: "126640", price: 2120, market: "KOSDAQ", change: 143, changeRate: 7.24 },
-  { name: "에이팩트", code: "238490", price: 3410, market: "KOSDAQ", change: 355, changeRate: 11.62 },
-  { name: "KB금융", code: "105560", price: 78500, market: "KOSPID", change: 1300, changeRate: 1.68 },
-  { name: "TYM", code: "002900", price: 4105, market: "KOSPID", change: -85, changeRate: -2.03 },
-  { name: "삼성전자", code: "005930", price: 73200, market: "KOSPID", change: 400, changeRate: 0.55 },
-  { name: "SK하이닉스", code: "000660", price: 184500, market: "KOSPID", change: 4300, changeRate: 2.39 },
-  { name: "알테오젠", code: "196170", price: 298500, market: "KOSDAQ", change: 7500, changeRate: 2.58 },
-  { name: "현대차", code: "005380", price: 242500, market: "KOSPID", change: -2500, changeRate: -1.02 },
-  { name: "LG에너지솔루션", code: "373220", price: 345000, market: "KOSPID", change: 2000, changeRate: 0.58 },
-  { name: "에코프로비엠", code: "247540", price: 168000, market: "KOSDAQ", change: -4000, changeRate: -2.33 },
-  { name: "카카오", code: "035720", price: 38200, market: "KOSPID", change: -800, changeRate: -2.05 }
+  { name: "화신정공", code: "126640", price: 2120, market: "KOSDAQ", change: 143, changeRate: 7.24, pe: 9.8, pbr: 0.65, roe: 11.4, divYield: 3.2, sector: "기계/부품" },
+  { name: "에이팩트", code: "238490", price: 3410, market: "KOSDAQ", change: 355, changeRate: 11.62, pe: 12.4, pbr: 1.10, roe: 9.5, divYield: 0.0, sector: "반도체" },
+  { name: "KB금융", code: "105560", price: 78500, market: "KOSPID", change: 1300, changeRate: 1.68, pe: 6.2, pbr: 0.48, roe: 8.9, divYield: 4.5, sector: "금융" },
+  { name: "TYM", code: "002900", price: 4105, market: "KOSPID", change: -85, changeRate: -2.03, pe: 8.2, pbr: 0.55, roe: 6.8, divYield: 1.5, sector: "기계/부품" },
+  { name: "삼성전자", code: "005930", price: 73200, market: "KOSPID", change: 400, changeRate: 0.55, pe: 14.2, pbr: 1.15, roe: 8.5, divYield: 2.1, sector: "반도체" },
+  { name: "SK하이닉스", code: "000660", price: 184500, market: "KOSPID", change: 4300, changeRate: 2.39, pe: 18.5, pbr: 1.85, roe: 11.2, divYield: 0.8, sector: "반도체" },
+  { name: "알테오젠", code: "196170", price: 298500, market: "KOSDAQ", change: 7500, changeRate: 2.58, pe: 120.4, pbr: 24.5, roe: 18.2, divYield: 0.0, sector: "바이오" },
+  { name: "현대차", code: "005380", price: 242500, market: "KOSPID", change: -2500, changeRate: -1.02, pe: 5.4, pbr: 0.62, roe: 14.5, divYield: 4.8, sector: "자동차" },
+  { name: "LG에너지솔루션", code: "373220", price: 345000, market: "KOSPID", change: 2000, changeRate: 0.58, pe: 65.2, pbr: 2.45, roe: 4.2, divYield: 0.0, sector: "이차전지" },
+  { name: "에코프로비엠", code: "247540", price: 168000, market: "KOSDAQ", change: -4000, changeRate: -2.33, pe: 88.0, pbr: 7.12, roe: 9.8, divYield: 0.3, sector: "이차전지" },
+  { name: "카카오", code: "035720", price: 38200, market: "KOSPID", change: -800, changeRate: -2.05, pe: 28.5, pbr: 1.10, roe: 3.5, divYield: 0.8, sector: "IT/소프트웨어" }
 ];
 
 interface AlgorithmItem {
@@ -236,9 +241,24 @@ export default function App() {
 
   // User Interest Stock state
   const [interestStocks, setInterestStocks] = useState<Stock[]>([
-    { name: "화신정공", code: "126640", price: 2120, market: "KOSDAQ", change: 143, changeRate: 7.24 },
-    { name: "KB금융", code: "105560", price: 78500, market: "KOSPID", change: 1300, changeRate: 1.68 }
+    { name: "화신정공", code: "126640", price: 2120, market: "KOSDAQ", change: 143, changeRate: 7.24, pe: 9.8, pbr: 0.65, roe: 11.4, divYield: 3.2, sector: "기계/부품" },
+    { name: "KB금융", code: "105560", price: 78500, market: "KOSPID", change: 1300, changeRate: 1.68, pe: 6.2, pbr: 0.48, roe: 8.9, divYield: 4.5, sector: "금융" }
   ]);
+
+  // Real-time reactive data models
+  const [allStocks, setAllStocks] = useState<Stock[]>(STOCK_DATABASE);
+  const [liveHeatmapStocks, setLiveHeatmapStocks] = useState<any[]>(HEATMAP_STOCKS);
+  const [liveAlgorithms, setLiveAlgorithms] = useState<AlgorithmItem[]>(ALGORITHMS);
+  const [liveReturnsHistory, setLiveReturnsHistory] = useState<any[]>(ALGO_RETURNS_HISTORY);
+  const [liveCoDominance, setLiveCoDominance] = useState<any[]>(CO_DOMINANCE);
+
+  // Dynamic helper metrics for Representative watch stock
+  const hwashinStock = allStocks.find(s => s.code === "126640") || { name: "화신정공", code: "126640", price: 2120, change: 143, changeRate: 7.24 };
+  const hwashinIsUp = hwashinStock.change > 0;
+  const hwashinIsDown = hwashinStock.change < 0;
+  const hwashinPriceColor = hwashinIsUp ? "text-[#F04452]" : hwashinIsDown ? "text-[#3182F6]" : "text-gray-500";
+  const hwashinRateColor = hwashinIsUp ? "text-[#F04452]" : hwashinIsDown ? "text-[#3182F6]" : "text-gray-400";
+  const hwashinDirSign = hwashinIsUp ? "▲" : hwashinIsDown ? "▼" : "";
 
   // Modals Controller
   const [activeModal, setActiveModal] = useState<{
@@ -284,6 +304,151 @@ export default function App() {
     return () => clearInterval(clockInterval);
   }, []);
 
+  // Real-time market tick simulation engine
+  useEffect(() => {
+    const triggerFluctuation = () => {
+      setAllStocks((prevAll) => {
+        const nextAll = prevAll.map((st) => {
+          if (Math.random() > 0.45) return st;
+
+          const isUp = Math.random() > 0.4; // 60% up-tick probability bias
+          const pct = (Math.random() * 0.75) / 100; // up to 0.75% price wiggle
+          const changePercent = isUp ? pct : -pct;
+
+          let prevClose = st.prevClose;
+          if (!prevClose) {
+            prevClose = st.price - st.change;
+          }
+
+          let newPrice = Math.round(st.price * (1 + changePercent));
+          if (newPrice < 10) newPrice = 10;
+
+          const newChange = newPrice - prevClose;
+          const newChangeRate = Number(((newChange / prevClose) * 100).toFixed(2));
+
+          return {
+            ...st,
+            price: newPrice,
+            change: newChange,
+            changeRate: newChangeRate,
+            prevClose,
+          };
+        });
+
+        // Sync local portfolio / interest group state of user
+        setInterestStocks((prevFav) => {
+          return prevFav.map((fav) => {
+            const match = nextAll.find((x) => x.code === fav.code);
+            return match ? match : fav;
+          });
+        });
+
+        // Sync AI recommendation screen list results if rendered
+        setAiScreenerStocks((prevScreener) => {
+          if (!prevScreener || prevScreener.length === 0) return prevScreener;
+          return prevScreener.map((st) => {
+            const match = nextAll.find((x) => x.code === st.code || x.name === st.name);
+            if (match) {
+              return {
+                ...st,
+                price: match.price,
+                change: match.change,
+                changeRate: match.changeRate,
+                pe: match.pe !== undefined ? match.pe : st.pe,
+                pbr: match.pbr !== undefined ? match.pbr : st.pbr,
+                roe: match.roe !== undefined ? match.roe : st.roe,
+                divYield: match.divYield !== undefined ? match.divYield : st.divYield,
+              };
+            }
+            return st;
+          });
+        });
+
+        // Sync heatmap bento coordinates bubble scatter plots
+        setLiveHeatmapStocks((prevHeat) => {
+          return prevHeat.map((heat) => {
+            const match = nextAll.find((x) => x.name === heat.name);
+            if (match) {
+              const variance = (Math.random() * 0.4 - 0.2);
+              let newProfit = Number((heat.profit + variance).toFixed(2));
+              let color = "#E5E8EB";
+              if (newProfit > 20) color = "#F04452";
+              else if (newProfit > 5) color = "#FF5F75";
+              else if (newProfit < 0) color = "#3182F6";
+              return {
+                ...heat,
+                profit: newProfit,
+                color
+              };
+            }
+            return heat;
+          });
+        });
+
+        return nextAll;
+      });
+
+      // Fluctuate trading algorithms returns
+      setLiveAlgorithms((prevAlgos) => {
+        return prevAlgos.map((algo) => {
+          const delta = (Math.random() * 0.16 - 0.06);
+          const nextRate = Number((algo.rate + delta).toFixed(2));
+          return {
+            ...algo,
+            rate: nextRate < 0 ? 0 : nextRate
+          };
+        });
+      });
+
+      // Update Line & Area chart histories tick by tick
+      setLiveReturnsHistory((prevHist) => {
+        if (prevHist.length === 0) return prevHist;
+        return prevHist.map((hist, index) => {
+          if (index !== prevHist.length - 1) return hist;
+          const deltaStoki = (Math.random() * 0.25 - 0.1);
+          const deltaMijeong = (Math.random() * 0.2 - 0.08);
+          const deltaTime = (Math.random() * 0.18 - 0.07);
+          return {
+            ...hist,
+            스토키: Number((hist.스토키 + deltaStoki).toFixed(1)),
+            친절한미정씨: Number((hist.친절한미정씨 + deltaMijeong).toFixed(1)),
+            수익타임: Number((hist.수익타임 + deltaTime).toFixed(1)),
+          };
+        });
+      });
+
+      // Tick global index dominance and normalize properly
+      setLiveCoDominance((prevDom) => {
+        if (prevDom.length !== 3) return prevDom;
+        let val1 = prevDom[0].value + (Math.random() * 0.6 - 0.3);
+        let val2 = prevDom[1].value + (Math.random() * 0.6 - 0.3);
+        let val3 = prevDom[2].value + (Math.random() * 0.1 - 0.05);
+        if (val1 < 5) val1 = 5;
+        if (val2 < 5) val2 = 5;
+        if (val3 < 0.05) val3 = 0.05;
+
+        const total = val1 + val2 + val3;
+        const n1 = Number(((val1 / total) * 100).toFixed(1));
+        const n2 = Number(((val2 / total) * 100).toFixed(1));
+        const n3 = Number((100 - n1 - n2).toFixed(1));
+
+        const profitTotal = 445216;
+        const p1 = Math.round(profitTotal * (n1 / 100));
+        const p2 = Math.round(profitTotal * (n2 / 100));
+        const p3 = profitTotal - p1 - p2;
+
+        return [
+          { ...prevDom[0], value: n1, profit: p1 },
+          { ...prevDom[1], value: n2, profit: p2 },
+          { ...prevDom[2], value: n3, profit: p3 },
+        ];
+      });
+    };
+
+    const interval = setInterval(triggerFluctuation, 2500);
+    return () => clearInterval(interval);
+  }, []);
+
   const triggerToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => {
@@ -302,8 +467,14 @@ export default function App() {
       triggerToast("이미 관심 목록에 등록된 종목이에요.");
       return;
     }
-    setInterestStocks([...interestStocks, st]);
-    triggerToast(`[${st.name}] 종목이 관심 등록되었어요.`);
+    const dbMatch = STOCK_DATABASE.find(item => item.code === st.code || item.name === st.name);
+    const finalStock = dbMatch ? {
+      ...dbMatch,
+      ...allStocks.find(x => x.code === dbMatch.code)
+    } : st;
+
+    setInterestStocks([...interestStocks, finalStock]);
+    triggerToast(`[${finalStock.name}] 종목이 관심 등록되었어요.`);
     setActiveModal({ type: "none" });
   };
 
@@ -346,10 +517,33 @@ export default function App() {
         // elegant offline AI fallback
         const lowerPrompt = aiPrompt.toLowerCase();
         let fallbackStocks = STOCK_DATABASE.slice(0, 3);
-        if (lowerPrompt.includes("반도체")) {
+        
+        const matchedStocks = STOCK_DATABASE.filter(st => 
+          lowerPrompt.includes(st.name.toLowerCase()) || 
+          lowerPrompt.includes(st.code)
+        );
+
+        if (matchedStocks.length > 0) {
+          fallbackStocks = matchedStocks;
+          if (fallbackStocks.some(st => st.name === "삼성전자" || st.name === "SK하이닉스" || st.name === "에이팩트")) {
+            const extra = STOCK_DATABASE.filter(st => 
+              (st.name === "삼성전자" || st.name === "SK하이닉스" || st.name === "에이팩트") && 
+              !fallbackStocks.some(fs => fs.code === st.code)
+            );
+            fallbackStocks = [...fallbackStocks, ...extra].slice(0, 3);
+          } else if (fallbackStocks.some(st => st.name === "KB금융" || st.name === "화신정공")) {
+            const extra = STOCK_DATABASE.filter(st => 
+              (st.name === "KB금융" || st.name === "화신정공") && 
+              !fallbackStocks.some(fs => fs.code === st.code)
+            );
+            fallbackStocks = [...fallbackStocks, ...extra].slice(0, 3);
+          }
+        } else if (lowerPrompt.includes("반도체") || lowerPrompt.includes("삼성") || lowerPrompt.includes("samsung") || lowerPrompt.includes("전자") || lowerPrompt.includes("하이닉스")) {
           fallbackStocks = STOCK_DATABASE.filter(st => st.name === "SK하이닉스" || st.name === "삼성전자" || st.name === "에이팩트");
         } else if (lowerPrompt.includes("금") || lowerPrompt.includes("금융") || lowerPrompt.includes("가치")) {
           fallbackStocks = STOCK_DATABASE.filter(st => st.name === "KB금융" || st.name === "화신정공");
+        } else if (lowerPrompt.includes("자동차") || lowerPrompt.includes("현대차") || lowerPrompt.includes("차트")) {
+          fallbackStocks = STOCK_DATABASE.filter(st => st.name === "현대차" || st.name === "화신정공");
         }
 
         setTimeout(() => {
@@ -390,13 +584,11 @@ export default function App() {
               name: st.name,
               code: st.code,
               price: st.price,
-              sector: st.name === "삼성전자" || st.name === "SK하이닉스" ? "반도체" :
-                      st.name === "알테오젠" ? "바이오" :
-                      st.name === "KB금융" ? "금융" : "기계/부품",
-              pe: st.name === "삼성전자" ? 14.2 : st.name === "SK하이닉스" ? 18.5 : 8.5,
-              pbr: st.name === "삼성전자" ? 1.15 : st.name === "SK하이닉스" ? 1.85 : 0.8,
-              roe: st.name === "삼성전자" ? 8.5 : st.name === "SK하이닉스" ? 11.2 : 12.0,
-              divYield: st.name === "삼성전자" ? 2.1 : st.name === "SK하이닉스" ? 0.8 : 4.5,
+              sector: st.sector || "미분류 테마",
+              pe: st.pe !== undefined ? st.pe : 8.5,
+              pbr: st.pbr !== undefined ? st.pbr : 0.8,
+              roe: st.roe !== undefined ? st.roe : 12.0,
+              divYield: st.divYield !== undefined ? st.divYield : 0.0,
               reason: structReason
             };
           });
@@ -1110,7 +1302,7 @@ export default function App() {
                                           name: st.name,
                                           code: st.code,
                                           price: Number(st.price) || 50000,
-                                          market: st.sector === "금융" || st.name === "삼성전자 animate" || st.name === "KB금융" || st.sector === "반도체" ? "KOSPID" : "KOSDAQ",
+                                          market: st.sector === "금융" || st.name === "삼성전자" || st.name === "KB금융" || st.sector === "반도체" ? "KOSPID" : "KOSDAQ",
                                           change: Math.floor((Number(st.price) || 50000) * 0.012),
                                           changeRate: 1.2
                                         });
@@ -1252,7 +1444,7 @@ export default function App() {
                   {/* High quality recharts line chart for algorithms */}
                   <div className="h-[210px] w-full mb-6">
                     <ResponsiveContainer width="100%" height="100%">
-                      <LineChart data={ALGO_RETURNS_HISTORY}>
+                      <LineChart data={liveReturnsHistory}>
                         <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F2F4F7" />
                         <XAxis dataKey="date" stroke="#8B95A1" fontSize={11} tickLine={false} />
                         <YAxis stroke="#8B95A1" fontSize={11} tickFormatter={(val) => `${val}%`} tickLine={false} />
@@ -1265,7 +1457,7 @@ export default function App() {
                   </div>
 
                   <div className="space-y-3">
-                    {ALGORITHMS.map((algo, idx) => (
+                    {liveAlgorithms.map((algo, idx) => (
                       <div
                         key={algo.name}
                         onClick={() => setActiveModal({ type: "stock-detail", payload: algo })}
@@ -1315,8 +1507,8 @@ export default function App() {
                         <YAxis type="number" dataKey="profit" name="수익률" unit="%" stroke="#8B95A1" fontSize={11} tickLine={false} />
                         <ZAxis type="number" dataKey="size" range={[150, 600]} />
                         <Tooltip cursor={{ strokeDasharray: "3 3" }} contentStyle={{ borderRadius: "12px" }} />
-                        <Scatter name="추천종목" data={HEATMAP_STOCKS}>
-                          {HEATMAP_STOCKS.map((entry, index) => (
+                        <Scatter name="추천종목" data={liveHeatmapStocks}>
+                          {liveHeatmapStocks.map((entry, index) => (
                             <Cell key={`cell-${index}`} fill={entry.color} />
                           ))}
                         </Scatter>
@@ -1325,7 +1517,7 @@ export default function App() {
                   </div>
 
                   <div className="mt-4 flex flex-wrap gap-2">
-                    {HEATMAP_STOCKS.map((coin) => (
+                    {liveHeatmapStocks.map((coin) => (
                       <span
                         key={coin.name}
                         className="text-xs bg-gray-50 border border-gray-100 rounded-lg px-2.5 py-1.5 text-gray-600 font-bold flex items-center gap-1.5"
@@ -1366,8 +1558,10 @@ export default function App() {
                         </h4>
                       </div>
                       <div className="text-right">
-                        <div className="text-lg font-black text-[#F04452]">2,120원</div>
-                        <div className="text-xs text-[#F04452] font-extrabold mt-0.5">▲ 143 ( +7.24% )</div>
+                        <div className={`text-lg font-black ${hwashinPriceColor}`}>{hwashinStock.price.toLocaleString()}원</div>
+                        <div className={`text-xs ${hwashinRateColor} font-extrabold mt-0.5`}>
+                          {hwashinDirSign} {Math.abs(hwashinStock.change).toLocaleString()} ({hwashinStock.changeRate > 0 ? "+" : ""}{hwashinStock.changeRate}%)
+                        </div>
                       </div>
                     </div>
 
@@ -1784,37 +1978,46 @@ export default function App() {
 
                   <div className="space-y-2.5">
                     {interestStocks.length > 0 ? (
-                      interestStocks.map((st) => (
-                        <div
-                          key={st.code}
-                          className="bg-[#F8F9FA] hover:bg-gray-50 border border-gray-50 rounded-2xl p-4 flex items-center justify-between transition-colors"
-                        >
-                          <div>
-                            <span className="text-[10px] text-gray-400 font-mono block">
-                              {st.code} | {st.market}
-                            </span>
-                            <span className="text-sm font-extrabold text-gray-900 mt-0.5 block">
-                              {st.name}
-                            </span>
-                          </div>
-                          <div className="flex items-center gap-4">
-                            <div className="text-right">
-                              <div className="text-sm font-extrabold text-[#F04452]">
-                                {st.price.toLocaleString()}원
-                              </div>
-                              <div className="text-xs text-[#F04452] font-semibold mt-0.5">
-                                ▲ {st.changeRate}%
-                              </div>
+                      interestStocks.map((st) => {
+                        const isUp = st.change > 0;
+                        const isDown = st.change < 0;
+                        const priceColor = isUp ? "text-[#F04452]" : isDown ? "text-[#3182F6]" : "text-gray-500";
+                        const rateColor = isUp ? "text-[#F04452]" : isDown ? "text-[#3182F6]" : "text-gray-400";
+                        const dirSign = isUp ? "▲" : isDown ? "▼" : "";
+                        const changeRateStr = st.changeRate !== undefined ? Math.abs(st.changeRate).toFixed(2) : "0.00";
+
+                        return (
+                          <div
+                            key={st.code}
+                            className="bg-[#F8F9FA] hover:bg-gray-50 border border-gray-50 rounded-2xl p-4 flex items-center justify-between transition-colors"
+                          >
+                            <div>
+                              <span className="text-[10px] text-gray-400 font-mono block">
+                                {st.code} | {st.market}
+                              </span>
+                              <span className="text-sm font-extrabold text-gray-900 mt-0.5 block">
+                                {st.name}
+                              </span>
                             </div>
-                            <button
-                              onClick={() => handleRemoveStock(st.code)}
-                              className="p-1 text-gray-350 hover:text-rose-500 rounded hover:bg-gray-100 transition-colors"
-                            >
-                              <X className="h-4 w-4" />
-                            </button>
+                            <div className="flex items-center gap-4">
+                              <div className="text-right">
+                                <div className={`text-sm font-extrabold ${priceColor}`}>
+                                  {st.price.toLocaleString()}원
+                                </div>
+                                <div className={`text-xs ${rateColor} font-semibold mt-0.5`}>
+                                  {dirSign} {changeRateStr}%
+                                </div>
+                              </div>
+                              <button
+                                onClick={() => handleRemoveStock(st.code)}
+                                className="p-1 text-gray-350 hover:text-rose-500 rounded hover:bg-gray-100 transition-colors"
+                              >
+                                <X className="h-4 w-4" />
+                              </button>
+                            </div>
                           </div>
-                        </div>
-                      ))
+                        );
+                      })
                     ) : (
                       <div className="py-8 text-center text-xs text-gray-400 font-bold border border-dashed border-gray-100 rounded-2xl">
                         관심 종목이 없습니다. 우측 추가하기 버튼으로 편리하게 채워보세요.
@@ -1971,7 +2174,7 @@ export default function App() {
                   </div>
 
                   <div className="max-h-[180px] overflow-y-auto space-y-1">
-                    {STOCK_DATABASE.filter(st =>
+                    {allStocks.filter(st =>
                       st.name.includes(stockSearch) || st.code.includes(stockSearch)
                     ).map(st => (
                       <div

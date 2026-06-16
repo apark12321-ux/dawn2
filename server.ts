@@ -299,11 +299,12 @@ function getSimulatedScreener(query: string) {
   const matched = STOCK_DATABASE.filter(stock => 
     stock.sector.includes(query) || 
     stock.name.includes(query) || 
+    query.includes(stock.name) || 
     stock.description.includes(query) ||
     (query.includes("가치") && stock.pbr < 1.0) ||
     (query.includes("배당") && stock.divYield >= 4.0) ||
     (query.includes("성장") && stock.roe >= 11.0) ||
-    (query.includes("반도체") && stock.sector === "반도체") ||
+    (query.includes("반도체") && (stock.sector === "반도체" || query.includes("삼성전자") || query.includes("SK하이닉스"))) ||
     (query.includes("이차전지") && (stock.sector === "이차전지" || stock.sector === "철강/이차전지"))
   ).slice(0, 4);
 
@@ -624,7 +625,31 @@ app.post("/api/ai/screener", async (req, res) => {
       }
     });
 
-    const parsed = JSON.parse(response.text || "[]");
+    let parsed = JSON.parse(response.text || "[]");
+    if (Array.isArray(parsed)) {
+      parsed = parsed.map((st: any) => {
+        const match = STOCK_DATABASE.find(
+          item => (st.name && st.name.includes(item.name)) || 
+                  (item.name && item.name.includes(st.name)) || 
+                  st.code === item.code
+        );
+        if (match) {
+          return {
+            ...st,
+            name: match.name,
+            code: match.code,
+            price: match.price,
+            sector: match.sector,
+            pe: match.pe,
+            pbr: match.pbr,
+            roe: match.roe,
+            divYield: match.divYield
+          };
+        }
+        return st;
+      });
+    }
+
     res.json({
       success: true,
       simulation: false,
