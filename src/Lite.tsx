@@ -81,7 +81,12 @@ export default function Lite({ b, live, onPro, pro = false, openStock, openNews 
   const [markets, setMarkets] = useState<MItem[]>([]);
   const [nstocks, setNstocks] = useState<NStock[]>([]);
   const [inbox, setInbox] = useState<{ summary: string; from: string; at: string }[]>([]);
-  const [picks, setPicks] = useState<any>({ picks: [], label: "오늘의 관찰 종목", sublabel: "정보 제공 · 매수 권유 아님", mode: "observe", disclaimer: "" });
+  const [picks, setPicks] = useState<any>({ picks: [], themes: [], label: "오늘의 관찰 종목", sublabel: "정보 제공 · 매수 권유 아님", mode: "observe", disclaimer: "" });
+  const [sim, setSim] = useState<any>(null);
+  const findSimilar = (code: string, name: string) => {
+    setSim({ loading: true, baseName: name, picks: [] });
+    fetch(`/api/similar?code=${code}`).then(r => r.json()).then(d => setSim({ ...d, loading: false, baseName: name })).catch(() => setSim({ loading: false, baseName: name, picks: [], error: "불러오지 못했어요" }));
+  };
   const [tab, setTab] = useState("today");
   const [flow, setFlow] = useState("turnover");
   const [screen, setScreen] = useState<"" | "my" | "alarm" | "login">("");
@@ -150,7 +155,7 @@ export default function Lite({ b, live, onPro, pro = false, openStock, openNews 
           : <>
           <div className="dl-viewtoggle"><button onClick={() => setView("story")}><span className="ic">▶</span> 스토리로 보기</button></div>
           <div className="dl-hello">
-            <div className="dl-greet">{now.getMonth() + 1}월 {now.getDate()}일 {wd[now.getDay()]} · 좋은 아침이에요 · v49</div>
+            <div className="dl-greet">{now.getMonth() + 1}월 {now.getDate()}일 {wd[now.getDay()]} · 좋은 아침이에요 · v50</div>
             <h1 className="dl-htitle">오늘 아침,<br />시장을 5분이면 끝내요</h1>
           </div>
 
@@ -217,13 +222,23 @@ export default function Lite({ b, live, onPro, pro = false, openStock, openNews 
                 <div className="dl-rp"><b>{comma(s.price)}</b><span className={"dl-badge " + cc(s.chg)}>{sgn(s.chg)}</span></div>
               </div>))}</div>
           </Step>
+          {(picks.themes && picks.themes.length > 0) && (
+            <Sec t="오늘 강한 테마" sub="돈이 어디로">
+              <div className="dl-themes">{picks.themes.map((t: any) => (
+                <div className="dl-theme" key={t.name}>
+                  <div className="dl-themetop"><span className="dl-themen">{t.name}</span><span className="dl-themea">{t.avg}점</span></div>
+                  <div className="dl-themebar"><div style={{ width: t.avg + "%" }} /></div>
+                  <div className="dl-themem">종목 {t.count}개 · 평균 <span className={cc(t.chg)}>{sgn(t.chg)}</span></div>
+                </div>))}</div>
+            </Sec>
+          )}
           <Step no={2} t={picks.label} sub={picks.sublabel}>
             <div className="dl-rank">{(picks.picks || []).slice(0, 8).map((p: any) => (
-              <div className="dl-row" key={p.code} onClick={() => openNS({ ...p, volume: "", spark: undefined } as NStock)}>
-                <span className="dl-pickscore">{p.score}</span>
+              <div className="dl-row" key={p.code}>
+                <span className="dl-pickscore" onClick={() => openNS({ ...p, volume: "", spark: undefined } as NStock)}>{p.score}</span>
                 <span className="dl-logo" style={{ background: logoColor(p.name) }}>{p.name[0]}</span>
-                <div className="dl-rb"><div className="dl-rn">{p.name}{p.grade && <i className={"dl-grade g" + p.grade}>{p.grade}</i>}</div><div className="dl-rs">{p.reason}</div></div>
-                <div className="dl-rp"><b>{comma(p.price)}</b><span className={"dl-badge " + cc(p.chg)}>{sgn(p.chg)}</span></div>
+                <div className="dl-rb" onClick={() => openNS({ ...p, volume: "", spark: undefined } as NStock)}><div className="dl-rn">{p.name}{p.grade && <i className={"dl-grade g" + p.grade}>{p.grade}</i>}{p.theme && p.theme !== "기타" && <i className="dl-themetag">{p.theme}</i>}</div><div className="dl-rs">{p.reason}</div></div>
+                <button className="dl-simbtn" onClick={(e) => { e.stopPropagation(); findSimilar(p.code, p.name); }}>닮은꼴</button>
               </div>))}</div>
             <p className="dl-fine">{picks.disclaimer}</p>
           </Step>
@@ -291,6 +306,25 @@ export default function Lite({ b, live, onPro, pro = false, openStock, openNews 
       </main>
 
       <nav className="dl-nav">{NAV.map(([k, label, ic]) => <button key={k} className={tab === k ? "on" : ""} onClick={() => setTab(k)}><span className="ic">{ic}</span>{label}</button>)}</nav>
+
+      {sim && <div className="dl-ovl">
+        <header className="dl-ovltop"><button onClick={() => setSim(null)}>‹</button><b>{sim.baseName} 닮은꼴</b><span /></header>
+        <div className="dl-ovlbody">
+          {sim.loading && <div className="dl-watchempty">분석 중…</div>}
+          {!sim.loading && sim.base && <div className="dl-simbase">기준: <b>{sim.base.name}</b> · {sim.base.theme}{sim.base.per ? ` · PER ${sim.base.per}` : ""}</div>}
+          {!sim.loading && (sim.picks || []).length > 0 && (
+            <div className="dl-rank">{sim.picks.map((p: any) => (
+              <div className="dl-row" key={p.code} onClick={() => { setSim(null); openNS({ ...p, volume: "", spark: undefined } as NStock); }}>
+                <span className="dl-pickscore">{p.sim}</span>
+                <span className="dl-logo" style={{ background: logoColor(p.name) }}>{p.name[0]}</span>
+                <div className="dl-rb"><div className="dl-rn">{p.name}</div><div className="dl-rs">{p.reason}</div></div>
+                <div className="dl-rp"><b>{comma(p.price)}</b><span className={"dl-badge " + cc(p.chg)}>{sgn(p.chg)}</span></div>
+              </div>))}</div>
+          )}
+          {!sim.loading && (!sim.picks || sim.picks.length === 0) && <div className="dl-watchempty">{sim.error || "닮은꼴 종목을 찾지 못했어요 (거래대금 상위 풀 기준)"}</div>}
+          {!sim.loading && sim.disclaimer && <p className="dl-fine">{sim.disclaimer}</p>}
+        </div>
+      </div>}
 
       {screen && <div className="dl-ovl">
         <header className="dl-ovltop"><button onClick={() => setScreen("")}>‹</button><b>{screen === "my" ? "MY" : screen === "alarm" ? "알림 설정" : "로그인"}</b><span /></header>

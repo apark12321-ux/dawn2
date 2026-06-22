@@ -25,6 +25,23 @@ function turnoverEok(s: string): number {
 }
 function mcapJo(s: string): number { return s && s.includes("조") ? parseFloat(s) : 0; }
 
+// 종목명 기반 테마 분류 (업종 데이터 없이도 동작)
+export function themeOf(name: string): string {
+  const n = name || "";
+  const has = (...k: string[]) => k.some(x => n.includes(x));
+  if (has("기판", "PCB", "패키징", "티엘비", "대덕", "심텍", "코리아써키트", "이수페타시스", "솔더", "하이메탈")) return "기판·패키징";
+  if (has("반도체", "하이닉스", "전자", "일렉", "세미", "HPSP", "원익", "주성", "피에스케이", "테스", "한미", "네패스", "테크윙", "하나마이크론")) return "반도체";
+  if (has("에코프로", "엘앤에프", "배터리", "2차전지", "양극", "음극", "전해", "일진", "천보", "포스코퓨처", "에너지솔루션")) return "2차전지";
+  if (has("바이오", "제약", "파마", "메디", "셀트리온", "녹십자", "유한", "종근당", "헬스", "디앤디")) return "바이오·제약";
+  if (has("모비스", "현대차", "기아", "만도", "타이어", "HL", "자동차")) return "자동차";
+  if (has("카카오", "네이버", "NAVER", "크래프톤", "엔씨", "넷마블", "펄어비스", "게임", "하이브", "에스엠", "JYP")) return "인터넷·콘텐츠";
+  if (has("한화", "LIG", "로템", "방산", "항공", "KAI")) return "방산·항공";
+  if (has("금융", "은행", "증권", "보험", "카드", "지주", "KB", "신한", "하나")) return "금융";
+  if (has("화학", "케미칼", "소재", "롯데케미", "금호", "효성")) return "화학·소재";
+  if (has("냉각", "전력", "케이엔솔", "인프라", "원전", "두산에너")) return "전력·인프라";
+  return "기타";
+}
+
 // 종목 통합 API에서 PER·PBR·EPS 가져오기 (네이버, 키 불필요)
 async function fundamentals(code: string): Promise<{ per: number | null; pbr: number | null; eps: number | null }> {
   const ac = new AbortController(); const t = setTimeout(() => ac.abort(), 5000);
@@ -133,11 +150,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       name: r.name, code: r.code, market: r.market, price: r.price, chg: r.chg,
       turnover: r.turnover, marketcap: r.marketcap, up: r.up,
       score, tech: x.tech, fund: fs.score,
-      per: f.per, pbr: f.pbr,
+      per: f.per, pbr: f.pbr, theme: themeOf(r.name),
       grade: score >= 75 ? "A" : score >= 60 ? "B" : score >= 45 ? "C" : "D",
       reason: allBits,
     };
   }).sort((a, b) => b.score - a.score).slice(0, 10);
+
+  // 테마별 강도 집계 (분석한 풀 전체 기준) — "오늘 돈이 어느 테마로?"
+  const tmap: Record<string, { sum: number; n: number; up: number }> = {};
+  withFund.forEach(({ x, score }) => {
+    const th = themeOf(x.r.name);
+    if (!tmap[th]) tmap[th] = { sum: 0, n: 0, up: 0 };
+    tmap[th].sum += score; tmap[th].n += 1; tmap[th].up += x.r.chg;
+  });
+  const themes = Object.entries(tmap)
+    .filter(([k]) => k !== "기타")
+    .map(([name, v]) => ({ name, avg: Math.round(v.sum / v.n), count: v.n, chg: Math.round((v.up / v.n) * 100) / 100 }))
+    .sort((a, b) => b.avg - a.avg).slice(0, 5);
 
   res.setHeader("Cache-Control", "s-maxage=120, stale-while-revalidate=300");
   res.status(200).json({
@@ -150,6 +179,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       ? `투자자문업 등록 ${regNo || "(번호 미입력)"} · 본 정보는 투자 참고용이며 손익 책임은 투자자 본인에게 있습니다.`
       : "투자 참고용 정보입니다. 특정 종목 매수·매도 권유가 아니며, 최종 판단과 책임은 본인에게 있습니다.",
     picks: ranked,
+    themes,
     asof: new Date().toISOString(),
   });
 }
