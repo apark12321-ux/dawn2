@@ -150,7 +150,7 @@ export default function Lite({ b, live, onPro, pro = false, openStock, openNews 
           : <>
           <div className="dl-viewtoggle"><button onClick={() => setView("story")}><span className="ic">▶</span> 스토리로 보기</button></div>
           <div className="dl-hello">
-            <div className="dl-greet">{now.getMonth() + 1}월 {now.getDate()}일 {wd[now.getDay()]} · 좋은 아침이에요 · v48</div>
+            <div className="dl-greet">{now.getMonth() + 1}월 {now.getDate()}일 {wd[now.getDay()]} · 좋은 아침이에요 · v49</div>
             <h1 className="dl-htitle">오늘 아침,<br />시장을 5분이면 끝내요</h1>
           </div>
 
@@ -222,7 +222,7 @@ export default function Lite({ b, live, onPro, pro = false, openStock, openNews 
               <div className="dl-row" key={p.code} onClick={() => openNS({ ...p, volume: "", spark: undefined } as NStock)}>
                 <span className="dl-pickscore">{p.score}</span>
                 <span className="dl-logo" style={{ background: logoColor(p.name) }}>{p.name[0]}</span>
-                <div className="dl-rb"><div className="dl-rn">{p.name}</div><div className="dl-rs">{p.reason}</div></div>
+                <div className="dl-rb"><div className="dl-rn">{p.name}{p.grade && <i className={"dl-grade g" + p.grade}>{p.grade}</i>}</div><div className="dl-rs">{p.reason}</div></div>
                 <div className="dl-rp"><b>{comma(p.price)}</b><span className={"dl-badge " + cc(p.chg)}>{sgn(p.chg)}</span></div>
               </div>))}</div>
             <p className="dl-fine">{picks.disclaimer}</p>

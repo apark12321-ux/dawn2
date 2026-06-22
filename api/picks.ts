@@ -25,6 +25,50 @@ function turnoverEok(s: string): number {
 }
 function mcapJo(s: string): number { return s && s.includes("조") ? parseFloat(s) : 0; }
 
+// 종목 통합 API에서 PER·PBR·EPS 가져오기 (네이버, 키 불필요)
+async function fundamentals(code: string): Promise<{ per: number | null; pbr: number | null; eps: number | null }> {
+  const ac = new AbortController(); const t = setTimeout(() => ac.abort(), 5000);
+  try {
+    const r = await fetch(`https://m.stock.naver.com/api/stock/${code}/integration`, {
+      headers: { "User-Agent": "Mozilla/5.0", "Referer": "https://m.stock.naver.com/" }, signal: ac.signal,
+    });
+    if (!r.ok) return { per: null, pbr: null, eps: null };
+    const j: any = await r.json();
+    const infos: any[] = j?.totalInfos || [];
+    const num = (k: RegExp) => {
+      const it = infos.find((x: any) => k.test(x?.code || "") || k.test(x?.key || ""));
+      if (!it) return null;
+      const v = parseFloat(String(it.value).replace(/,/g, ""));
+      return isFinite(v) ? v : null;
+    };
+    return { per: num(/^per$/i), pbr: num(/^pbr$/i), eps: num(/^eps$/i) };
+  } catch { return { per: null, pbr: null, eps: null }; } finally { clearTimeout(t); }
+}
+
+// 기업 분석 점수 0~100 (객관적 재무 — 모든 종목 동일 기준)
+function fundScore(f: { per: number | null; pbr: number | null; eps: number | null }): { score: number; bits: string[] } {
+  const bits: string[] = [];
+  let profit = 20, val = 25, book = 15; // 데이터 없을 때 중립값
+  const profitable = (f.eps != null && f.eps > 0) || (f.per != null && f.per > 0);
+  if (f.eps != null || f.per != null) {
+    if (profitable) { profit = 40; bits.push("흑자 기업"); }
+    else { profit = 5; bits.push("적자 — 주의"); }
+  }
+  if (f.per != null && f.per > 0) {
+    if (f.per <= 10) { val = 35; bits.push("PER 낮음(저평가 가능)"); }
+    else if (f.per <= 20) val = 26;
+    else if (f.per <= 35) val = 15;
+    else { val = 6; bits.push("PER 높음(고평가 주의)"); }
+  } else if (f.per != null && f.per <= 0) { val = 6; }
+  if (f.pbr != null && f.pbr > 0) {
+    if (f.pbr <= 1) { book = 25; bits.push("PBR 1배 미만"); }
+    else if (f.pbr <= 2) book = 18;
+    else if (f.pbr <= 4) book = 10;
+    else book = 4;
+  }
+  return { score: Math.max(1, Math.min(100, Math.round(profit + val + book))), bits };
+}
+
 function scoreOf(r: Row, maxTurn: number, mktChg: number): { score: number; parts: Record<string, number> } {
   const momentum = Math.max(0, Math.min(30, (r.chg + 5) * 3));         // 등락(모멘텀) 0~30
   const flow = maxTurn ? (turnoverEok(r.turnover) / maxTurn) * 30 : 0; // 자금쏠림(유동성) 0~30
@@ -67,9 +111,32 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   } catch { stocks = []; }
 
   const maxTurn = Math.max(1, ...stocks.map(s => turnoverEok(s.turnover)));
-  const ranked = stocks.map(r => {
+  // 1차: 기술(시세) 점수로 상위 후보 추리기
+  const tech = stocks.map(r => {
     const { score, parts } = scoreOf(r, maxTurn, mktChg);
-    return { name: r.name, code: r.code, market: r.market, price: r.price, chg: r.chg, turnover: r.turnover, marketcap: r.marketcap, up: r.up, score, parts, reason: reason(r, parts) };
+    return { r, tech: score, parts };
+  }).sort((a, b) => b.tech - a.tech).slice(0, 18);
+
+  // 2차: 후보들 기업 재무 가져와 분석 점수 블렌딩
+  const withFund = await Promise.all(tech.map(async (x) => {
+    const f = await fundamentals(x.r.code);
+    const fs = fundScore(f);
+    const score = Math.round(x.tech * 0.55 + fs.score * 0.45); // 시세 55% + 기업분석 45%
+    return { x, f, fs, score };
+  }));
+
+  const ranked = withFund.map(({ x, f, fs, score }) => {
+    const r = x.r;
+    const techBits = reason(r, x.parts);
+    const allBits = [techBits, ...fs.bits].filter(Boolean).join(" · ");
+    return {
+      name: r.name, code: r.code, market: r.market, price: r.price, chg: r.chg,
+      turnover: r.turnover, marketcap: r.marketcap, up: r.up,
+      score, tech: x.tech, fund: fs.score,
+      per: f.per, pbr: f.pbr,
+      grade: score >= 75 ? "A" : score >= 60 ? "B" : score >= 45 ? "C" : "D",
+      reason: allBits,
+    };
   }).sort((a, b) => b.score - a.score).slice(0, 10);
 
   res.setHeader("Cache-Control", "s-maxage=120, stale-while-revalidate=300");
