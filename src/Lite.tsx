@@ -93,6 +93,8 @@ export default function Lite({ b, live, onPro, pro = false, openStock, openNews 
 
   const grp = (g: string) => markets.filter(m => m.group === g);
   const us = grp("미국"), kr = grp("국내"), ind = grp("지표");
+  const WHY: Record<string, string> = { "나스닥": "AI·반도체 흐름", "S&P 500": "전반적 투자심리", "다우": "경기 대형주", "필라델피아반도체": "반도체 업황" };
+  const world = (us.length ? us : WORLD.map(w => ({ name: w.n, level: w.v, chg: w.c }))).slice(0, 3).map((m: any) => ({ n: m.name, v: m.level, c: m.chg, why: WHY[m.name] || "" }));
   const avg = (a: MItem[]) => a.length ? a.reduce((x, m) => x + m.chg, 0) / a.length : 0;
   const vix = ind.find(x => x.name.includes("VIX"))?.level ?? 17.68;
   const score = Math.max(3, Math.min(99, Math.round(50 + (us.length ? avg(us) : 2.0) * 3.2 + (kr.length ? avg(kr) : 3.9) * 2.2 + (18 - vix) + (live.btcChg ?? 0) * 0.3)));
@@ -117,7 +119,7 @@ export default function Lite({ b, live, onPro, pro = false, openStock, openNews 
   );
 
   const storyCards: StoryCard[] = [
-    { bg: "#142A63", tag: "밤사이 세계", k: "미국이 어땠는지부터", h: "밤사이, 미국이 올랐어요", big: `나스닥 ${sgn(WORLD[0].c)}`, bc: "#7FB0FF", sub: "AI·반도체가 강해서 나스닥이 올랐어요. 우리 시장도 분위기를 이어받을 수 있어요." },
+    { bg: "#142A63", tag: "밤사이 세계", k: "미국이 어땠는지부터", h: world[0].c >= 0 ? "밤사이, 미국이 올랐어요" : "밤사이, 미국이 내렸어요", big: `${world[0].n} ${sgn(world[0].c)}`, bc: world[0].c >= 0 ? "#FF7B86" : "#7FB0FF", sub: world[0].c >= 0 ? "미국이 오르면 우리 시장도 분위기를 이어받는 경우가 많아요." : "미국이 내리면 우리 시장도 조심스럽게 출발할 수 있어요." },
     { bg: "#122456", tag: "오늘 시장 점수", k: "그래서 오늘은?", h: `오늘 시장은 ${mood}`, big: `${score}점`, bc: "#FFC24D", sub: moodLine },
     { bg: "#18316E", tag: "무슨 일이", k: "오늘을 움직인 한 가지", h: ISSUES[0].tt, big: "+3,260억", bc: "#FF7B86", sub: ISSUES[0].ez },
     { bg: "#142A63", tag: "돈의 흐름", k: "큰손이 사는 곳", h: "돈이 어디로 몰리나", big: `${flows[0]?.name ?? "삼성전자"} ${sgn(flows[0]?.chg ?? 8.5)}`, bc: "#FF7B86", sub: "오늘 거래대금 상위. 사람들의 관심이 가장 많이 쏠린 곳이에요." },
@@ -144,12 +146,12 @@ export default function Lite({ b, live, onPro, pro = false, openStock, openNews 
           : <>
           <div className="dl-viewtoggle"><button onClick={() => setView("story")}><span className="ic">▶</span> 스토리로 보기</button></div>
           <div className="dl-hello">
-            <div className="dl-greet">{now.getMonth() + 1}월 {now.getDate()}일 {wd[now.getDay()]} · 좋은 아침이에요 · v43</div>
+            <div className="dl-greet">{now.getMonth() + 1}월 {now.getDate()}일 {wd[now.getDay()]} · 좋은 아침이에요 · v45</div>
             <h1 className="dl-htitle">오늘 아침,<br />시장을 5분이면 끝내요</h1>
           </div>
 
           <Step no={1} t="밤사이 세계" sub="미국이 어땠는지부터">
-            <div className="dl-card2">{WORLD.map(w => <div className="dl-irow" key={w.n}><span className="dl-in">{w.n}<em>{w.why}</em></span><span className="dl-iv">{comma(w.v)}</span><span className={"dl-badge " + cc(w.c)}>{sgn(w.c)}</span></div>)}</div>
+            <div className="dl-card2">{world.map(w => <div className="dl-irow" key={w.n}><span className="dl-in">{w.n}<em>{w.why}</em></span><span className="dl-iv">{comma(w.v)}</span><span className={"dl-badge " + cc(w.c)}>{sgn(w.c)}</span></div>)}</div>
             <p className="dl-note">💡 우리는 왜 미국부터 볼까요? 미국 증시가 먼저 끝나서, 우리 시장이 그 분위기를 이어받는 경우가 많거든요.</p>
           </Step>
 

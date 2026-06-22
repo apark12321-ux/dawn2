@@ -26,11 +26,11 @@ async function fetchMarket(sosok: 0 | 1): Promise<Item[]> {
 }
 
 // 거래대금(aa, 백만원) → 보기 좋은 한글 단위
-function turnover(aaMillion: number): string {
-  const eok = aaMillion / 100; // 백만원 → 억원
+function turnover(aaThousand: number): string {
+  const eok = aaThousand / 100000; // 천원 → 억원
   if (eok >= 10000) return (eok / 10000).toFixed(2) + "조";
   if (eok >= 1) return Math.round(eok).toLocaleString("en-US") + "억";
-  return Math.round(aaMillion).toLocaleString("en-US") + "백만";
+  return Math.round(aaThousand).toLocaleString("en-US") + "백만";
 }
 function volFmt(q: number): string {
   if (q >= 1e8) return (q / 1e8).toFixed(1) + "억";
