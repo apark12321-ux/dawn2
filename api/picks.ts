@@ -25,22 +25,24 @@ function turnoverEok(s: string): number {
 }
 function mcapJo(s: string): number { return s && s.includes("조") ? parseFloat(s) : 0; }
 
-function scoreOf(r: Row, maxTurn: number): { score: number; parts: Record<string, number> } {
-  const momentum = Math.max(0, Math.min(40, (r.chg + 5) * 4));        // 등락(모멘텀) 0~40
-  const flow = maxTurn ? (turnoverEok(r.turnover) / maxTurn) * 30 : 0; // 자금쏠림 0~30
-  const trust = Math.min(20, mcapJo(r.marketcap) >= 1 ? 12 + Math.min(8, mcapJo(r.marketcap) / 5) : 4); // 시총 신뢰 0~20
-  const stable = r.chg > 29 ? 2 : r.chg > 20 ? 6 : 10;                 // 과열 페널티(변동성 안정) 0~10
-  const score = Math.round(momentum + flow + trust + stable);
-  return { score: Math.max(1, Math.min(100, score)), parts: { momentum: Math.round(momentum), flow: Math.round(flow), trust: Math.round(trust), stable } };
+function scoreOf(r: Row, maxTurn: number, mktChg: number): { score: number; parts: Record<string, number> } {
+  const momentum = Math.max(0, Math.min(30, (r.chg + 5) * 3));         // 등락(모멘텀) 0~30
+  const flow = maxTurn ? (turnoverEok(r.turnover) / maxTurn) * 30 : 0; // 자금쏠림(유동성) 0~30
+  const rs = Math.max(0, Math.min(20, (r.chg - mktChg + 3) * 2.5));    // 상대강도: 시장 대비 0~20
+  const trust = Math.min(12, mcapJo(r.marketcap) >= 1 ? 7 + Math.min(5, mcapJo(r.marketcap) / 5) : 2); // 시총 신뢰 0~12
+  const stable = r.chg > 29 ? 1 : r.chg > 20 ? 4 : 8;                  // 과열 페널티 0~8
+  const score = Math.round(momentum + flow + rs + trust + stable);
+  return { score: Math.max(1, Math.min(100, score)), parts: { momentum: Math.round(momentum), flow: Math.round(flow), rs: Math.round(rs), trust: Math.round(trust), stable } };
 }
 
 function reason(r: Row, p: Record<string, number>): string {
   const bits: string[] = [];
   if (p.flow >= 18) bits.push("거래대금 상위로 돈이 몰려요");
   else if (p.flow >= 9) bits.push("거래대금이 늘고 있어요");
+  if (p.rs >= 14) bits.push("시장보다 강한 흐름(상대강도↑)");
   if (r.chg >= 5) bits.push(`오늘 ${r.chg.toFixed(1)}% 강세`);
   else if (r.chg <= -3) bits.push(`오늘 ${Math.abs(r.chg).toFixed(1)}% 약세`);
-  if (p.trust >= 14) bits.push("시총이 큰 편이라 변동성은 상대적으로 낮아요");
+  if (p.trust >= 10) bits.push("시총이 큰 편");
   if (r.chg > 20) bits.push("단기 급등 — 과열 주의");
   return bits.join(" · ") || "거래대금 상위 종목이에요";
 }
@@ -53,15 +55,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const base = `${proto}://${host}`;
 
   let stocks: Row[] = [];
+  let mktChg = 0;
   try {
-    const r = await fetch(`${base}/api/naver-stocks?limit=30`);
-    const j: any = await r.json();
-    stocks = j?.stocks || [];
+    const [sr, mr] = await Promise.all([
+      fetch(`${base}/api/naver-stocks?limit=30`).then(r => r.json()).catch(() => null),
+      fetch(`${base}/api/markets`).then(r => r.json()).catch(() => null),
+    ]);
+    stocks = sr?.stocks || [];
+    const kospi = (mr?.data || []).find((m: any) => m.name === "코스피");
+    mktChg = typeof kospi?.chg === "number" ? kospi.chg : 0;
   } catch { stocks = []; }
 
   const maxTurn = Math.max(1, ...stocks.map(s => turnoverEok(s.turnover)));
   const ranked = stocks.map(r => {
-    const { score, parts } = scoreOf(r, maxTurn);
+    const { score, parts } = scoreOf(r, maxTurn, mktChg);
     return { name: r.name, code: r.code, market: r.market, price: r.price, chg: r.chg, turnover: r.turnover, marketcap: r.marketcap, up: r.up, score, parts, reason: reason(r, parts) };
   }).sort((a, b) => b.score - a.score).slice(0, 10);
 

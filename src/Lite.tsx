@@ -150,7 +150,7 @@ export default function Lite({ b, live, onPro, pro = false, openStock, openNews 
           : <>
           <div className="dl-viewtoggle"><button onClick={() => setView("story")}><span className="ic">▶</span> 스토리로 보기</button></div>
           <div className="dl-hello">
-            <div className="dl-greet">{now.getMonth() + 1}월 {now.getDate()}일 {wd[now.getDay()]} · 좋은 아침이에요 · v47</div>
+            <div className="dl-greet">{now.getMonth() + 1}월 {now.getDate()}일 {wd[now.getDay()]} · 좋은 아침이에요 · v48</div>
             <h1 className="dl-htitle">오늘 아침,<br />시장을 5분이면 끝내요</h1>
           </div>
 
