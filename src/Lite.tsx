@@ -80,6 +80,8 @@ export default function Lite({ b, live, onPro, pro = false, openStock, openNews 
   const [theme, setTheme] = useState<"light" | "dark">("dark");
   const [markets, setMarkets] = useState<MItem[]>([]);
   const [nstocks, setNstocks] = useState<NStock[]>([]);
+  const [inbox, setInbox] = useState<{ summary: string; from: string; at: string }[]>([]);
+  const [picks, setPicks] = useState<any>({ picks: [], label: "오늘의 관찰 종목", sublabel: "정보 제공 · 매수 권유 아님", mode: "observe", disclaimer: "" });
   const [tab, setTab] = useState("today");
   const [flow, setFlow] = useState("turnover");
   const [screen, setScreen] = useState<"" | "my" | "alarm" | "login">("");
@@ -89,6 +91,8 @@ export default function Lite({ b, live, onPro, pro = false, openStock, openNews 
   useEffect(() => {
     fetch("/api/markets").then(r => r.json()).then(d => setMarkets(d.data || [])).catch(() => {});
     fetch("/api/naver-stocks?limit=12").then(r => r.json()).then(d => setNstocks(d.stocks || [])).catch(() => {});
+    fetch("/api/inbox").then(r => r.json()).then(d => setInbox(d.items || [])).catch(() => {});
+    fetch("/api/picks").then(r => r.json()).then(d => { if (d.picks) setPicks(d); }).catch(() => {});
   }, []);
 
   const grp = (g: string) => markets.filter(m => m.group === g);
@@ -121,7 +125,7 @@ export default function Lite({ b, live, onPro, pro = false, openStock, openNews 
   const storyCards: StoryCard[] = [
     { bg: "#142A63", tag: "밤사이 세계", k: "미국이 어땠는지부터", h: world[0].c >= 0 ? "밤사이, 미국이 올랐어요" : "밤사이, 미국이 내렸어요", big: `${world[0].n} ${sgn(world[0].c)}`, bc: world[0].c >= 0 ? "#FF7B86" : "#7FB0FF", sub: world[0].c >= 0 ? "미국이 오르면 우리 시장도 분위기를 이어받는 경우가 많아요." : "미국이 내리면 우리 시장도 조심스럽게 출발할 수 있어요." },
     { bg: "#122456", tag: "오늘 시장 점수", k: "그래서 오늘은?", h: `오늘 시장은 ${mood}`, big: `${score}점`, bc: "#FFC24D", sub: moodLine },
-    { bg: "#18316E", tag: "무슨 일이", k: "오늘을 움직인 한 가지", h: ISSUES[0].tt, big: "+3,260억", bc: "#FF7B86", sub: ISSUES[0].ez },
+    { bg: "#18316E", tag: "무슨 일이", k: "오늘을 움직인 한 가지", h: inbox.length ? inbox[0].summary : ISSUES[0].tt, big: inbox.length ? inbox[0].from : "+3,260억", bc: "#FF7B86", sub: inbox.length ? "방금 도착한 소식이에요." : ISSUES[0].ez },
     { bg: "#142A63", tag: "돈의 흐름", k: "큰손이 사는 곳", h: "돈이 어디로 몰리나", big: `${flows[0]?.name ?? "삼성전자"} ${sgn(flows[0]?.chg ?? 8.5)}`, bc: "#FF7B86", sub: "오늘 거래대금 상위. 사람들의 관심이 가장 많이 쏠린 곳이에요." },
     { bg: "#122456", tag: "내 관심종목", k: "여기서부터 내 얘기", h: "내 종목을 담아두면요", big: "내 소식만 쏙", bc: "#7FB0FF", sub: "매일 아침, 내가 담은 종목 소식만 모아서 보여드려요." },
     { bg: "#18316E", tag: "오늘 일정", k: "놓치면 손해예요", h: "오늘 챙길 일정", big: CAL[1].t, bc: "#FFC24D", sub: `${CAL[1].ev} — 소비가 둔화됐는지가 오늘 밤 변수예요.` },
@@ -146,7 +150,7 @@ export default function Lite({ b, live, onPro, pro = false, openStock, openNews 
           : <>
           <div className="dl-viewtoggle"><button onClick={() => setView("story")}><span className="ic">▶</span> 스토리로 보기</button></div>
           <div className="dl-hello">
-            <div className="dl-greet">{now.getMonth() + 1}월 {now.getDate()}일 {wd[now.getDay()]} · 좋은 아침이에요 · v45</div>
+            <div className="dl-greet">{now.getMonth() + 1}월 {now.getDate()}일 {wd[now.getDay()]} · 좋은 아침이에요 · v47</div>
             <h1 className="dl-htitle">오늘 아침,<br />시장을 5분이면 끝내요</h1>
           </div>
 
@@ -164,7 +168,7 @@ export default function Lite({ b, live, onPro, pro = false, openStock, openNews 
           </Step>
 
           <Step no={3} t="무슨 일이 있었나" sub="오늘 시장을 움직인 3가지">
-            <div className="dl-card2">{ISSUES.map((s, i) => <div className="dl-issue" key={i}><div className="dl-issuet"><span className="dl-itag">{s.tag}</span>{s.tt}</div><div className="dl-issueez">{s.ez}</div></div>)}</div>
+            <div className="dl-card2">{(inbox.length ? inbox.map((m, i) => ({ tag: m.from, tt: m.summary, ez: new Date(m.at).toLocaleString("ko-KR", { month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" }) })) : ISSUES).map((s, i) => <div className="dl-issue" key={i}><div className="dl-issuet"><span className="dl-itag">{s.tag}</span>{s.tt}</div><div className="dl-issueez">{s.ez}</div></div>)}</div>
           </Step>
 
           <Step no={4} t="돈은 어디로 몰리나" sub="큰손이 사는 곳">
@@ -213,10 +217,20 @@ export default function Lite({ b, live, onPro, pro = false, openStock, openNews 
                 <div className="dl-rp"><b>{comma(s.price)}</b><span className={"dl-badge " + cc(s.chg)}>{sgn(s.chg)}</span></div>
               </div>))}</div>
           </Step>
-          <Step no={2} t="주목할 종목·테마" sub="관찰 포인트">
+          <Step no={2} t={picks.label} sub={picks.sublabel}>
+            <div className="dl-rank">{(picks.picks || []).slice(0, 8).map((p: any) => (
+              <div className="dl-row" key={p.code} onClick={() => openNS({ ...p, volume: "", spark: undefined } as NStock)}>
+                <span className="dl-pickscore">{p.score}</span>
+                <span className="dl-logo" style={{ background: logoColor(p.name) }}>{p.name[0]}</span>
+                <div className="dl-rb"><div className="dl-rn">{p.name}</div><div className="dl-rs">{p.reason}</div></div>
+                <div className="dl-rp"><b>{comma(p.price)}</b><span className={"dl-badge " + cc(p.chg)}>{sgn(p.chg)}</span></div>
+              </div>))}</div>
+            <p className="dl-fine">{picks.disclaimer}</p>
+          </Step>
+          <Step no={3} t="섹터 흐름" sub="어디가 강한가">
             <div className="dl-card2">{WATCH.map(w => <div className="dl-issue" key={w.name}><div className="dl-issuet"><span className={"dl-badge " + cc(w.chg)} style={{ marginRight: 8 }}>{sgn(w.chg)}</span>{w.name}</div><div className="dl-issueez">{w.why}</div></div>)}</div>
           </Step>
-          <Step no={3} t="내 관심종목">
+          <Step no={4} t="내 관심종목">
             <div className="dl-watchempty">아직 관심종목이 없어요<button className="dl-addbtn" onClick={() => setScreen("my")}>＋ 관심종목 추가하기</button></div>
           </Step>
         </>}
